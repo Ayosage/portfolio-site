@@ -1,3 +1,5 @@
+import { DiskBay } from '@/components/diskbay/DiskBay'
+
 export default function Home() {
   return (
     <main className="p-4 sm:p-6">
@@ -13,7 +15,7 @@ export default function Home() {
         {'// full-stack engineer — payments, infra, web3: invisible by design'}
       </p>
 
-      {/* disk bay: task 11 */}
+      <DiskBay />
 
       <footer className="mt-10 border-t border-[var(--hairline)] pt-3 text-[10px]">
         <ul className="flex flex-wrap gap-x-6 gap-y-1">

@@ -1,0 +1,18 @@
+import { PROJECTS } from '@/lib/projects'
+import { Cartridge } from './Cartridge'
+
+export function DiskBay() {
+  return (
+    <section aria-label="disk bay — selected work" className="mt-10 border border-[var(--hairline)]">
+      <p className="flex justify-between border-b border-[var(--hairline)] px-2 py-1 text-[8px] text-[var(--phosphor-dim)]">
+        <span>DISK BAY — SELECT MEDIA</span>
+        <span>{PROJECTS.length} SLOTS</span>
+      </p>
+      <div className="grid grid-cols-2 gap-2 p-2 sm:grid-cols-4">
+        {PROJECTS.map((p) => (
+          <Cartridge key={p.slug} project={p} />
+        ))}
+      </div>
+    </section>
+  )
+}
