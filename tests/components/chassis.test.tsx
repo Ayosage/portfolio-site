@@ -5,6 +5,10 @@ vi.mock('next/navigation', () => ({
 }))
 
 import { render, screen } from '@testing-library/react'
+
+beforeEach(() => {
+  sessionStorage.setItem('bs01-booted', '1')
+})
 import userEvent from '@testing-library/user-event'
 import { Chassis } from '@/components/chassis/Chassis'
 import { HardwareSwitch } from '@/components/chassis/HardwareSwitch'
