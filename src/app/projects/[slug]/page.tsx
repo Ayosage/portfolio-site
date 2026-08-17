@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { ComponentType } from 'react'
 import { PROJECTS } from '@/lib/projects'
 import { EscBack } from '@/components/case-study/EscBack'
+import { GardenTracker } from '@/components/case-study/GardenTracker'
 import Stagepass from '../../../../content/projects/stagepass.mdx'
 
 const CASE_STUDIES: Record<string, ComponentType> = {
@@ -24,6 +25,7 @@ export default async function CaseStudy({
   if (!project || !Content) notFound()
   return (
     <main className="p-4 sm:p-6">
+      <GardenTracker slug={project.slug} />
       <EscBack />
       <p className="flex justify-between border-b border-[var(--hairline)] pb-2 text-[10px] text-[var(--phosphor-dim)]">
         <span>~/work/{project.slug}</span>

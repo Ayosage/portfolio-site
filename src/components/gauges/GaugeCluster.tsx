@@ -1,6 +1,7 @@
 import { SolarMeter } from './SolarMeter'
 import { UptimeGauge } from './UptimeGauge'
 import { ThemeDial } from './ThemeDial'
+import { PixelGarden } from './PixelGarden'
 
 export function GaugeCluster() {
   return (
@@ -8,11 +9,7 @@ export function GaugeCluster() {
       <SolarMeter />
       <UptimeGauge />
       <ThemeDial />
-      {/* pixel garden: task 14 */}
-      <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[8px] text-[var(--phosphor-dim)]">
-        STATUS
-        <div className="text-[var(--phosphor)]">● OPEN TO WORK</div>
-      </div>
+      <PixelGarden />
     </aside>
   )
 }
