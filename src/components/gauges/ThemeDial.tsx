@@ -20,14 +20,17 @@ export function ThemeDial() {
   return (
     <button
       onClick={cycle}
-      aria-label={`theme dial, current ${LABEL[theme]}`}
       className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-left text-[8px] text-[var(--phosphor-dim)]"
     >
       THEME DIAL
       <span aria-hidden="true" className="block text-center text-sm text-[var(--phosphor)]">◉</span>
-      <span aria-hidden="true" className="flex justify-between text-[7px]">
+      <span className="flex justify-between text-[7px]">
         {THEMES.map((t) => (
-          <span key={t} style={{ color: t === theme ? 'var(--phosphor)' : undefined }}>
+          <span
+            key={t}
+            aria-current={t === theme ? 'true' : undefined}
+            style={{ color: t === theme ? 'var(--phosphor)' : undefined }}
+          >
             {LABEL[t]}
           </span>
         ))}

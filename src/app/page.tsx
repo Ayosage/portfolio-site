@@ -20,17 +20,26 @@ export default function Home() {
       <footer className="mt-10 border-t border-[var(--hairline)] pt-3 text-[10px]">
         <ul className="flex flex-wrap gap-x-6 gap-y-1">
           <li>
-            <a href="https://github.com/Ayosage" className="hover:underline">
+            <a
+              href="https://github.com/Ayosage"
+              className="inline-block py-1.5 hover:underline"
+            >
               PORT-A ▸ GITHUB ↗
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/in/brandon-smith" className="hover:underline">
+            <a
+              href="https://www.linkedin.com/in/brandon-smith"
+              className="inline-block py-1.5 hover:underline"
+            >
               PORT-B ▸ LINKEDIN ↗
             </a>
           </li>
           <li>
-            <a href="mailto:aexbrandon@gmail.com" className="hover:underline">
+            <a
+              href="mailto:aexbrandon@gmail.com"
+              className="inline-block py-1.5 hover:underline"
+            >
               PORT-C ▸ EMAIL ↗
             </a>
           </li>

@@ -19,6 +19,7 @@
 /coverage
 /node_modules
 /out/
+lh-*.json
 # debug
 # dependencies
 # env files (can opt-in for committing if needed)
