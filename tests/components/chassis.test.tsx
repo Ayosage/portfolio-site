@@ -1,3 +1,9 @@
+import { vi } from 'vitest'
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn() }),
+  usePathname: () => '/',
+}))
+
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Chassis } from '@/components/chassis/Chassis'
