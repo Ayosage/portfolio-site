@@ -10,6 +10,10 @@ export function GaugeCluster() {
       <UptimeGauge />
       <ThemeDial />
       <PixelGarden />
+      <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[8px] text-[var(--chrome-dim)]">
+        STATUS
+        <div className="text-[var(--phosphor)]">● OPEN TO WORK</div>
+      </div>
     </aside>
   )
 }
