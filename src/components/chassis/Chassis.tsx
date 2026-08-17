@@ -12,7 +12,7 @@ export function Chassis({ children }: { children: React.ReactNode }) {
         <GaugeCluster />
       </div>
       <FKeyRow />
-      <p className="mt-1 flex items-center justify-between text-[8px] tracking-[0.2em] text-[var(--phosphor-dim)]">
+      <p className="mt-1 flex items-center justify-between text-[8px] tracking-[0.2em] text-[var(--chrome-dim)]">
         <span aria-hidden="true">⊕</span>
         MADE BY HAND ▪ RUNS ON SUNLIGHT
         <span aria-hidden="true">⊕</span>

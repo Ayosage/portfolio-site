@@ -1,11 +1,18 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { Project } from '@/lib/projects'
 
 export function Cartridge({ project }: { project: Project }) {
   const router = useRouter()
   const [spinning, setSpinning] = useState(false)
+  const spinUpTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+  useEffect(() => {
+    return () => {
+      if (spinUpTimeout.current) clearTimeout(spinUpTimeout.current)
+    }
+  }, [])
 
   if (!project.hasCaseStudy) {
     return (
@@ -22,13 +29,14 @@ export function Cartridge({ project }: { project: Project }) {
     <a
       href={href}
       onClick={(e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
         e.preventDefault()
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           router.push(href)
           return
         }
         setSpinning(true)
-        setTimeout(() => router.push(href), 500)
+        spinUpTimeout.current = setTimeout(() => router.push(href), 500)
       }}
       className="border border-[var(--phosphor)] bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] p-2 text-center text-[9px]"
     >

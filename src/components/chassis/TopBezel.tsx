@@ -5,7 +5,7 @@ import { setSoundEnabled } from '@/lib/sound'
 
 export function TopBezel() {
   return (
-    <header className="flex items-center justify-between px-3 py-2 text-[9px] tracking-[0.15em] text-[var(--phosphor-dim)]">
+    <header className="flex items-center justify-between px-3 py-2 text-[9px] tracking-[0.15em] text-[var(--chrome-dim)]">
       <span>
         BS-01 ▪ FIELD TERMINAL ▪ <span aria-label="serial number">SN {BUILD_HASH}</span>
       </span>

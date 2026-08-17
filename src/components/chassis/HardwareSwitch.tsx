@@ -33,7 +33,7 @@ export function HardwareSwitch(props: {
       aria-checked={on}
       aria-label={props.label}
       onClick={flip}
-      className="flex items-center gap-1 text-[9px] tracking-widest text-[var(--phosphor-dim)]"
+      className="flex items-center gap-1 text-[9px] tracking-widest text-[var(--chrome-dim)]"
     >
       {props.label}
       <span className="inline-block h-3 w-6 rounded-full bg-[var(--chassis-well)] relative">

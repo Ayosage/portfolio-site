@@ -12,7 +12,7 @@ export function PixelGarden() {
     return () => window.removeEventListener('bs01-garden', onGrow)
   }, [])
   return (
-    <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[8px] text-[var(--phosphor-dim)]">
+    <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[8px] text-[var(--chrome-dim)]">
       GARDEN
       <svg viewBox="0 0 40 30" className="mt-1 w-3/4" aria-hidden="true">
         {stage >= 1 && <path d="M20 30 L20 22" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}

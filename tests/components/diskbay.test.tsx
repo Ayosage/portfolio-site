@@ -38,3 +38,14 @@ test('reduced motion navigates immediately', () => {
   fireEvent.click(screen.getByRole('link', { name: /stagepass/i }))
   expect(push).toHaveBeenCalledWith('/projects/stagepass')
 })
+
+test('cmd/ctrl-click lets the browser open a new tab instead of intercepting', () => {
+  mockReducedMotion(false)
+  push.mockClear()
+  render(<DiskBay />)
+  const link = screen.getByRole('link', { name: /stagepass/i })
+  const event = fireEvent.click(link, { metaKey: true })
+  expect(event).toBe(true) // not preventDefault()'d — the browser is free to handle it
+  expect(push).not.toHaveBeenCalled()
+  expect(screen.queryByText(/SPIN-UP/)).not.toBeInTheDocument()
+})

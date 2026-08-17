@@ -12,6 +12,11 @@
   --alert: #7a3020;
   --alert-text: #f0d8c8;
   --glow: rgba(216, 242, 110, 0.4);
+  /* Dim text on chassis/chrome surfaces (TopBezel, footer, gauge wells). Must hold
+     4.5:1 against both --chassis and --chassis-well in every theme — see contrast
+     table in fixwave-report.md. Distinct from --phosphor-dim, which is screen-surface
+     only (inside .crt-screen) and is tuned against --screen instead. */
+  --chrome-dim: #8fa05c;
 }
 [data-theme='amber'] {
   --screen: #120e08;
@@ -19,6 +24,7 @@
   --phosphor-dim: #b37e3b;
   --hairline: #4a3a22;
   --glow: rgba(255, 180, 84, 0.4);
+  --chrome-dim: #c48a45;
 }
 [data-theme='paper'] {
   --screen: #f2edde;
@@ -31,6 +37,7 @@
   --alert: #b74626;
   --alert-text: #f2edde;
   --glow: transparent;
+  --chrome-dim: #4a4f42;
 }
 
 body {

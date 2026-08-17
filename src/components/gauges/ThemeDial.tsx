@@ -20,7 +20,7 @@ export function ThemeDial() {
   return (
     <button
       onClick={cycle}
-      className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-left text-[8px] text-[var(--phosphor-dim)]"
+      className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-left text-[8px] text-[var(--chrome-dim)]"
     >
       THEME DIAL
       <span aria-hidden="true" className="block text-center text-sm text-[var(--phosphor)]">◉</span>
@@ -32,6 +32,7 @@ export function ThemeDial() {
             style={{ color: t === theme ? 'var(--phosphor)' : undefined }}
           >
             {LABEL[t]}
+            {t === theme && <span className="sr-only"> (current)</span>}
           </span>
         ))}
       </span>

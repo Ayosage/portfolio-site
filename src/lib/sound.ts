@@ -1,13 +1,21 @@
 let enabled = false
+let sharedCtx: AudioContext | undefined
 export function setSoundEnabled(on: boolean): void {
   enabled = on
 }
 export function soundEnabled(): boolean {
   return enabled
 }
+function getContext(): AudioContext | undefined {
+  if (typeof AudioContext === 'undefined') return undefined
+  if (!sharedCtx) sharedCtx = new AudioContext()
+  if (sharedCtx.state === 'suspended') void sharedCtx.resume()
+  return sharedCtx
+}
 export function playClick(): void {
-  if (!enabled || typeof AudioContext === 'undefined') return
-  const ctx = new AudioContext()
+  if (!enabled) return
+  const ctx = getContext()
+  if (!ctx) return
   const osc = ctx.createOscillator()
   const gain = ctx.createGain()
   osc.frequency.value = 2200
