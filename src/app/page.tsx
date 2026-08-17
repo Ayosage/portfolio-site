@@ -9,10 +9,10 @@ export default function Home() {
       <h1 className="phosphor-glow mt-6 text-[clamp(3rem,14vw,7rem)] font-bold uppercase leading-[0.85] tracking-tighter">
         Brandon {' '}
         <br />
-        Smith<span aria-hidden="true">█</span>
+        Smith<span aria-hidden="true" className="cursor-blink" />
       </h1>
       <p className="mt-4 max-w-[46ch] text-xs text-[var(--phosphor-dim)]">
-        {'// full-stack engineer — payments, infra, web3: invisible by design'}
+        {"// full-stack engineer — payments, infra, web3, done properly and kept out of the user's way"}
       </p>
 
       <DiskBay />

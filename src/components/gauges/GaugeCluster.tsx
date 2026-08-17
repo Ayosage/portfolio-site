@@ -5,7 +5,10 @@ import { PixelGarden } from './PixelGarden'
 
 export function GaugeCluster() {
   return (
-    <aside aria-label="gauge cluster" className="flex flex-row gap-2 sm:flex-col">
+    <aside
+      aria-label="gauge cluster"
+      className="flex flex-row gap-1.5 overflow-x-auto sm:flex-col sm:gap-2 sm:overflow-visible [&>*]:min-w-[76px] [&>*]:shrink-0 sm:[&>*]:min-w-0"
+    >
       <SolarMeter />
       <UptimeGauge />
       <ThemeDial />

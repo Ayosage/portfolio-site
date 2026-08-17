@@ -5,9 +5,9 @@ import { GaugeCluster } from '@/components/gauges/GaugeCluster'
 
 export function Chassis({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto max-w-5xl p-2 sm:p-4">
+    <div className="mx-auto max-w-5xl px-1 pb-20 pt-1 sm:p-4 sm:pb-4">
       <TopBezel />
-      <div className="grid gap-2 sm:grid-cols-[1fr_96px]">
+      <div className="grid gap-1.5 sm:gap-2 sm:grid-cols-[1fr_96px]">
         <Screen>{children}</Screen>
         <GaugeCluster />
       </div>

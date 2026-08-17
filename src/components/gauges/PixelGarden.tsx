@@ -14,7 +14,7 @@ export function PixelGarden() {
   return (
     <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[8px] text-[var(--chrome-dim)]">
       GARDEN
-      <svg viewBox="0 0 40 30" className="mt-1 w-3/4" aria-hidden="true">
+      <svg viewBox="0 0 40 30" className="mt-1 h-9 w-auto" aria-hidden="true">
         {stage >= 1 && <path d="M20 30 L20 22" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}
         {stage >= 2 && <path d="M20 30 L20 14" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}
         {stage >= 3 && <path d="M20 24 C17 20 14 18 10 16" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}

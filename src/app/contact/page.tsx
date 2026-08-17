@@ -8,16 +8,16 @@ export default function Contact() {
   })
   return (
     <main className="p-4 sm:p-6">
-      <h1 className="phosphor-glow text-4xl font-bold uppercase tracking-tighter">Ping</h1>
+      <h1 className="phosphor-glow text-4xl font-bold uppercase tracking-tighter">Contact</h1>
       <p className="mt-2 text-xs text-[var(--phosphor-dim)]">
-        {'// open a channel — or transmit direct: '}
+        {'// or email direct: '}
         <a className="underline" href="mailto:aexbrandon@gmail.com">
           aexbrandon@gmail.com
         </a>
       </p>
       <form action={action} className="mt-6 flex max-w-md flex-col gap-3 text-xs">
         <label className="flex flex-col gap-1">
-          RETURN ADDRESS
+          EMAIL
           <input
             name="from"
             type="email"
@@ -26,7 +26,7 @@ export default function Contact() {
           />
         </label>
         <label className="flex flex-col gap-1">
-          TRANSMISSION
+          MESSAGE
           <textarea
             name="message"
             required
@@ -38,10 +38,10 @@ export default function Contact() {
           disabled={pending}
           className="border border-[var(--phosphor)] p-2 uppercase disabled:opacity-50"
         >
-          {pending ? 'Transmitting…' : 'Transmit ▸'}
+          {pending ? 'Sending…' : 'Send ▸'}
         </button>
         <p role="status" className="min-h-4 text-[var(--phosphor-dim)]">
-          {state.status === 'sent' && '▸ TRANSMISSION RECEIVED. I read every ping.'}
+          {state.status === 'sent' && '▸ SENT. I read everything that comes through.'}
           {state.status === 'error' && `▸ ERROR: ${state.error}`}
         </p>
       </form>
