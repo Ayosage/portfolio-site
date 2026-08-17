@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
+import { Chassis } from '@/components/chassis/Chassis'
 import './globals.css'
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
@@ -19,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={mono.variable}>
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
-        {children}
+        <Chassis>{children}</Chassis>
       </body>
     </html>
   )
