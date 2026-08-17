@@ -14,6 +14,7 @@ export function BootOverlay() {
     try {
       sessionStorage.setItem('bs01-booted', '1')
     } catch {}
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setVisible(true)
     const dismiss = () => setVisible(false)
     const timer = setTimeout(dismiss, 1200)
