@@ -1,3 +1,11 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description:
+    'Brandon Smith — full-stack engineer working across web and web3.',
+}
+
 export default function About() {
   return (
     <main className="p-4 sm:p-6">

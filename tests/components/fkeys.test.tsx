@@ -8,6 +8,7 @@ vi.mock('next/navigation', () => ({
 }))
 
 import { FKeyRow } from '@/components/chassis/FKeyRow'
+import { setKeysEnabled } from '@/lib/keys'
 
 test('renders four real links', () => {
   render(<FKeyRow />)
@@ -21,6 +22,15 @@ test('keyboard shortcut navigates', () => {
   render(<FKeyRow />)
   fireEvent.keyDown(window, { key: '2' })
   expect(push).toHaveBeenCalledWith('/about')
+})
+
+test('shortcuts ignored when KEYS switch is off', () => {
+  push.mockClear()
+  setKeysEnabled(false)
+  render(<FKeyRow />)
+  fireEvent.keyDown(window, { key: '2' })
+  expect(push).not.toHaveBeenCalled()
+  setKeysEnabled(true)
 })
 
 test('shortcuts ignored while typing', () => {

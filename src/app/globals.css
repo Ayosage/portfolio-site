@@ -73,6 +73,10 @@ body {
 [data-theme='paper'] .crt-screen::after {
   display: none;
 }
+/* Paper has no scanlines at all, so the switch would be a no-op — hide it. */
+[data-theme='paper'] [data-switch='scanlines'] {
+  display: none;
+}
 
 .phosphor-glow {
   text-shadow: 0 0 14px var(--glow);

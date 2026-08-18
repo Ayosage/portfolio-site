@@ -18,7 +18,7 @@ export function SolarMeter() {
         {'▮'.repeat(blocks)}
         {'▯'.repeat(5 - blocks)}
       </div>
-      <span aria-label={`solar charge ${pct ?? 0} percent`}>{pct ?? '—'}%</span>
+      <span>{pct ?? '—'}%</span>
     </div>
   )
 }

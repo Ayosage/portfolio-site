@@ -24,6 +24,21 @@ test('children render inside the screen region', () => {
   expect(screen.getByText('hello-screen')).toBeInTheDocument()
 })
 
+test('bezel has a KEYS switch for disabling shortcuts', () => {
+  render(<Chassis>content</Chassis>)
+  expect(screen.getByRole('switch', { name: /keys/i })).toBeInTheDocument()
+})
+
+test('switch button carries its id as data-switch for theme CSS', () => {
+  render(
+    <HardwareSwitch id="scan" label="SCANLINES" storageKey="k" onFlip={() => {}} />,
+  )
+  expect(screen.getByRole('switch', { name: /scanlines/i })).toHaveAttribute(
+    'data-switch',
+    'scan',
+  )
+})
+
 test('scanline switch flips html data attribute', async () => {
   render(
     <HardwareSwitch

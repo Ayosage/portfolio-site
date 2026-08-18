@@ -15,6 +15,12 @@ test('empty message fails', () => {
     error: 'MESSAGE IS EMPTY',
   })
 })
+test('oversized email fails', () => {
+  expect(validatePing({ from: 'x'.repeat(250) + '@b.co', message: 'hello there' })).toEqual({
+    ok: false,
+    error: 'EMAIL TOO LONG',
+  })
+})
 test('oversized message fails', () => {
   expect(validatePing({ from: 'a@b.co', message: 'x'.repeat(5001) })).toEqual({
     ok: false,

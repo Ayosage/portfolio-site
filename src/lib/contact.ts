@@ -2,6 +2,7 @@ export function validatePing(input: {
   from: string
   message: string
 }): { ok: true } | { ok: false; error: string } {
+  if (input.from.length > 254) return { ok: false, error: 'EMAIL TOO LONG' }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.from))
     return { ok: false, error: 'INVALID EMAIL' }
   const msg = input.message.trim()

@@ -6,7 +6,10 @@ import './globals.css'
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
 export const metadata: Metadata = {
-  title: 'Brandon Smith — BS-01 Field Terminal',
+  title: {
+    default: 'Brandon Smith — BS-01 Field Terminal',
+    template: '%s — Brandon Smith',
+  },
   description:
     'Full-stack engineer. Payments, infra, web3 — the hard parts stay invisible.',
 }

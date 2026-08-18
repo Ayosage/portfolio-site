@@ -30,6 +30,7 @@ export function HardwareSwitch(props: {
   return (
     <button
       role="switch"
+      data-switch={props.id}
       aria-checked={on}
       aria-label={props.label}
       onClick={flip}
