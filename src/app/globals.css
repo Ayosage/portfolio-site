@@ -80,7 +80,7 @@ body {
 
 .cursor-blink {
   display: inline-block;
-  width: 0.45em;
+  width: 0.3em;
   height: 0.78em;
   margin-left: 0.06em;
   background: var(--phosphor);

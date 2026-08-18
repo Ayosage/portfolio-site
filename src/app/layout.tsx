@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 // Static hardcoded string — no user input ever flows into this
 // dangerouslySetInnerHTML; it exists solely to set data-theme pre-paint.
-const themeBoot = `(function(){try{var t=localStorage.getItem('bs01-theme');var v=['green','amber','paper'];if(v.indexOf(t)<0){t=matchMedia('(prefers-color-scheme: light)').matches?'paper':'green'}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='green'}})()`
+const themeBoot = `(function(){try{var t=localStorage.getItem('bs01-theme');var v=['green','amber','paper'];if(v.indexOf(t)<0){t='green'}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='green'}})()`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
