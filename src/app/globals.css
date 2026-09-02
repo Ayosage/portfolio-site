@@ -50,6 +50,11 @@ body {
   font-family:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
+/* MDX case-study bodies are several <p>s inside one .prose-body; preflight
+   zeroes their margins, so restore a paragraph gap here. */
+.prose-body p + p {
+  margin-top: 0.75rem;
+}
 
 .crt-screen {
   position: relative;

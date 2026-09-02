@@ -8,7 +8,10 @@ export function ContactForm() {
   })
   return (
     <main className="p-4 sm:p-6">
-      <h1 className="phosphor-glow text-4xl font-bold uppercase tracking-tighter">Contact</h1>
+      <p className="border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
+        ~/contact
+      </p>
+      <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">Contact</h1>
       <p className="mt-2 text-xs text-[var(--phosphor-dim)]">
         {'// or email direct: '}
         <a className="underline" href="mailto:aexbrandon@gmail.com">

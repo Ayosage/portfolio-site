@@ -1,24 +1,53 @@
 import { CaseStudyMeta } from '@/components/case-study/CaseStudyMeta'
 import { SectionHeading } from '@/components/case-study/SectionHeading'
 
-<CaseStudyMeta role="Full-stack" stack="Next.js / Solidity" year="2026" />
+<CaseStudyMeta role="Full-stack" stack="Next.js / Drizzle / Solidity" year="2026" />
 
 <SectionHeading index={1} title="The Problem" />
 
 <div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
-Event ticketing is hostile to fans. StagePass makes tickets portable and
-scalping-resistant — the web3 machinery stays invisible to users.
-*(Placeholder — real case-study content is blocked on the StagePass build.)*
+Event ticketing is hostile to fans: tickets get duplicated, scalped, and lost
+in email. StagePass is a two-sided ticketing product where organizers create
+events and sell tickets, and attendees buy with a normal card checkout, get a
+QR ticket, and get scanned in at the door.
+
+Under the hood every ticket is an ERC-721 on Base Sepolia and every ownership
+change is an on-chain transfer. No end user ever sees that. No wallets to
+connect, no crypto language, no NFT branding. The chain is there for the
+guarantees a plain database can't give: supply caps enforced at the ledger,
+append-only ownership history, no double-entry.
 </div>
 
 <SectionHeading index={2} title="Architecture" />
 
 <div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
-*(Blocked on StagePass.)*
+Postgres is the source of truth for everything the UI renders. The chain is
+an ownership ledger written asynchronously by a worker through a job-queue
+table. The UI never waits on an RPC call, so chain latency or a failed RPC
+degrades the ledger's freshness, never the user's experience.
+
+Turborepo monorepo: a Next.js app holds the storefront, organizer dashboard
+and API; a shared Drizzle package owns the schema and migrations; a shared
+zod package holds status enums, request schemas and wallet derivation. Stripe
+runs in test mode, and its webhooks drive the order state machine.
 </div>
 
 <SectionHeading index={3} title="Decisions" />
 
 <div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
-*(Blocked on StagePass.)*
+**Database-first, chain second.** A ticket's status in Postgres is what the
+door trusts. The queue of chain jobs is how the database converges with the
+chain, and a failed mint refunds automatically instead of leaving a fan
+holding nothing.
+
+**Custodial wallets derived per user.** Attendees never manage keys. Each user
+gets a wallet derived from a master mnemonic, so transfers are just in-app
+actions that happen to land on-chain.
+
+**Rotating QR secret.** Each ticket carries its own random secret in the
+database, separate from the token id. The door scans the secret, not the
+chain, so a screenshot of an old ticket doesn't get anyone in.
+
+**Status:** foundations merged (schema, auth, wallet derivation). Contracts
+and the checkout flow are in progress.
 </div>

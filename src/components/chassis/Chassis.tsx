@@ -7,12 +7,12 @@ export function Chassis({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-1 pb-20 pt-1 sm:block sm:min-h-0 sm:p-4 sm:pb-4">
       <TopBezel />
-      <div className="grid flex-1 grid-rows-[1fr_auto] gap-1.5 sm:flex-none sm:grid-rows-none sm:grid-cols-[1fr_96px] sm:gap-2">
+      <div className="grid flex-1 grid-rows-[1fr_auto] gap-1.5 sm:flex-none sm:grid-rows-none sm:grid-cols-[1fr_112px] sm:gap-2">
         <Screen>{children}</Screen>
         <GaugeCluster />
       </div>
       <FKeyRow />
-      <p className="mt-1 flex items-center justify-between text-[8px] tracking-[0.2em] text-[var(--chrome-dim)]">
+      <p className="mt-1 flex items-center justify-between text-[9px] tracking-[0.2em] text-[var(--chrome-dim)]">
         <span aria-hidden="true">⊕</span>
         MADE BY HAND ▪ RUNS ON SUNLIGHT
         <span aria-hidden="true">⊕</span>

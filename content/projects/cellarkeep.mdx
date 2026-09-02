@@ -1,0 +1,54 @@
+import { CaseStudyMeta } from '@/components/case-study/CaseStudyMeta'
+import { SectionHeading } from '@/components/case-study/SectionHeading'
+
+<CaseStudyMeta role="Full-stack" stack="Next.js / Drizzle / Better Auth" year="2026" />
+
+<SectionHeading index={1} title="The Problem" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+Fermentation apps are built for beer or for commercial wineries. Small-batch
+wine, mead and cider makers get long timelines, staggered nutrient additions,
+rackings between a handful of shared vessels, and bottles that need years,
+and they end up in spreadsheets. CellarKeep is an open-source, self-host-first
+production tracker built around how those batches actually get made.
+</div>
+
+<SectionHeading index={2} title="Architecture" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+Everything in a batch's life is one event journal: measurements, additions,
+rackings, stabilizing, sweetening, bottling, notes. Each event is planned,
+done or skipped, so the guided schedule and the freeform log are the same
+feature. The Today view is simply the planned events that are due.
+
+Recipes carry steps anchored to the batch start or to the previous step. A
+pure schedule engine stamps them onto a new batch and scales the ingredient
+bill to the actual volume. Vessel occupancy is derived from racking and
+bottling events rather than stored. Measurement fields live in JSONB typed by
+per-event zod schemas, shared by server actions and client forms, so a new
+measurement kind needs no migration.
+
+Single Next.js app, Postgres with Drizzle, Better Auth. A docker-compose file
+brings up the app and database, migrations run on container start, and the
+first visit creates the admin account. GitHub Actions runs typecheck, lint,
+unit, database and Playwright suites.
+</div>
+
+<SectionHeading index={3} title="Decisions" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+**Late steps reflow the chain.** Anchors encode drift intent at authoring
+time: completing a step late shifts everything anchored to it and leaves
+start-anchored steps alone. No cascade prompts.
+
+**Inventory deducts on confirmed reality.** An addition marked done deducts
+stock through an explicit, editable confirmation, never silently and never on
+plan. That is the drift bug other tools have.
+
+**Editing a recipe never touches in-flight batches.** Stamped events belong to
+the batch.
+
+**Calculators live where the numbers are needed.** TOSNA, ABV, sulfite dosing
+by pH, backsweetening and chaptalization are pure, exhaustively tested
+functions that surface inside the forms that use them.
+</div>

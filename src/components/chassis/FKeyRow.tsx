@@ -21,7 +21,7 @@ export function FKeyRow() {
         const shared = {
           onClick: playClick,
           className:
-            'flex-1 rounded-[3px] border border-[var(--chassis-well)] border-b-[3px] px-2 py-2.5 text-center text-[10px] active:translate-y-[2px] active:border-b sm:py-1.5',
+            'flex-1 rounded-[3px] border border-[var(--chassis-well)] border-b-[3px] px-2 py-2.5 text-center text-[11px] active:translate-y-[2px] active:border-b sm:py-1.5',
           style: {
             background: k.alert ? 'var(--alert)' : 'var(--keycap)',
             color: k.alert ? 'var(--alert-text)' : 'var(--phosphor)',

@@ -4,9 +4,15 @@ import { PROJECTS } from '@/lib/projects'
 import { EscBack } from '@/components/case-study/EscBack'
 import { GardenTracker } from '@/components/case-study/GardenTracker'
 import Stagepass from '../../../../content/projects/stagepass.mdx'
+import Meridian from '../../../../content/projects/meridian.mdx'
+import Steward from '../../../../content/projects/steward.mdx'
+import Cellarkeep from '../../../../content/projects/cellarkeep.mdx'
 
 const CASE_STUDIES: Record<string, ComponentType> = {
   stagepass: Stagepass,
+  meridian: Meridian,
+  steward: Steward,
+  cellarkeep: Cellarkeep,
 }
 
 export function generateStaticParams() {
@@ -37,7 +43,7 @@ export default async function CaseStudy({
     <main className="p-4 sm:p-6">
       <GardenTracker slug={project.slug} />
       <EscBack />
-      <p className="flex justify-between border-b border-[var(--hairline)] pb-2 text-[10px] text-[var(--phosphor-dim)]">
+      <p className="flex justify-between border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         <span>~/work/{project.slug}</span>
         <span>[ESC] BACK</span>
       </p>

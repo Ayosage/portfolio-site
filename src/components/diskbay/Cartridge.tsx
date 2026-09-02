@@ -16,10 +16,9 @@ export function Cartridge({ project }: { project: Project }) {
 
   if (!project.hasCaseStudy) {
     return (
-      <div className="border border-[var(--hairline)] p-2 text-center text-[9px] text-[var(--phosphor-dim)]">
-        ▢ {project.title.toUpperCase()}
-        <br />
-        EJECTED — {project.oneLiner.toUpperCase()}
+      <div className="flex flex-col gap-1 border border-[var(--hairline)] p-2.5 text-[11px] text-[var(--phosphor-dim)]">
+        <span className="font-bold tracking-wider">▢ {project.title.toUpperCase()}</span>
+        <span className="leading-snug">EJECTED — {project.oneLiner.toUpperCase()}</span>
       </div>
     )
   }
@@ -38,12 +37,14 @@ export function Cartridge({ project }: { project: Project }) {
         setSpinning(true)
         spinUpTimeout.current = setTimeout(() => router.push(href), 500)
       }}
-      className="border border-[var(--phosphor)] bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] p-2 text-center text-[9px]"
+      className="flex flex-col gap-1 border border-[var(--phosphor)] bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] p-2.5 text-[11px]"
     >
-      ▣ {project.title.toUpperCase()}
-      <br />
-      <span className="text-[var(--phosphor-dim)]">
-        {spinning ? '▸ SPIN-UP…' : project.tags.join(' / ') || project.oneLiner.toUpperCase()}
+      <span className="font-bold tracking-wider">▣ {project.title.toUpperCase()}</span>
+      <span className="leading-snug text-[var(--phosphor-dim)]">
+        {spinning ? '▸ SPIN-UP…' : project.oneLiner}
+      </span>
+      <span className="mt-0.5 text-[9px] tracking-[0.08em] text-[var(--phosphor-dim)]">
+        {project.tags.join(' / ')}
       </span>
     </a>
   )
