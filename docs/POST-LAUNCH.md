@@ -62,8 +62,8 @@ Status key: `TODO` · `IN PR #n` · `DONE yyyy-mm-dd` · `WONTFIX (reason)`
 
 | # | Item | Status | Evidence | Fix | Owner | Done when |
 |---|---|---|---|---|---|---|
-| E1 | No CI | TODO | No `.github/workflows`; branch protection unavailable on a private free repo | One workflow on `pull_request` + `push` to main: `npm ci`, `npm test`, `npm run lint`, `npx tsc --noEmit`, `npm run build` | Claude | Green check on the next PR |
-| E2 | Two stale eslint-disable directives | TODO | `ThemeDial.tsx:13`, `UptimeGauge.tsx:10` warn "unused eslint-disable" | Delete the two comments | Claude | `eslint` → 0 warnings |
+| E1 | No CI | IN PR #6 | No `.github/workflows`; branch protection unavailable on a private free repo | One workflow on `pull_request` + `push` to main: `npm ci`, `npm test`, `npm run lint`, `npx tsc --noEmit`, `npm run build` | Claude | Green check on the next PR |
+| E2 | Two stale eslint-disable directives | IN PR #6 | `ThemeDial.tsx:13`, `UptimeGauge.tsx:10` warn "unused eslint-disable" | Delete the two comments | Claude | `eslint` → 0 warnings |
 | E3 | No error visibility in production | TODO | Server-action failures only `console.error`; nobody reads Vercel logs | Enable Vercel log drain or at least check Runtime Logs after A3; optional Sentry later | Brandon | Decision recorded |
 
 ### F. Post-launch nice-to-haves (from `docs/PLAN.md`)
