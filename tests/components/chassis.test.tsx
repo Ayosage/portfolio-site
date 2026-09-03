@@ -53,3 +53,11 @@ test('scanline switch flips html data attribute', async () => {
   await userEvent.click(screen.getByRole('switch', { name: /scanlines/i }))
   expect(document.documentElement.dataset.scanlines).toBe('off')
 })
+
+test('screen content lives in a focusable scroll pane, not the page', () => {
+  render(<Chassis>long-content</Chassis>)
+  const pane = screen.getByRole('region', { name: /screen/i })
+  expect(pane).toContainElement(screen.getByText('long-content'))
+  expect(pane).toHaveAttribute('tabindex', '0')
+  expect(pane.className).toMatch(/overflow-y-auto/)
+})

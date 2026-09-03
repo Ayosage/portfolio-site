@@ -63,6 +63,11 @@ body {
   box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
+/* Content scrolls inside the glass; keep the scrollbar thin and phosphor-tinted. */
+.screen-pane {
+  scrollbar-width: thin;
+  scrollbar-color: var(--phosphor-dim) transparent;
+}
 .crt-screen::after {
   content: '';
   position: absolute;
