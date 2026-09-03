@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import { vi } from 'vitest'
+import { StrictMode } from 'react'
 import { BootOverlay } from '@/components/screen/BootOverlay'
 
 function mockReducedMotion(matches: boolean) {
@@ -46,4 +47,18 @@ test('respects prefers-reduced-motion', () => {
   mockReducedMotion(true)
   render(<BootOverlay />)
   expect(screen.queryByText(/LOADING PORTFOLIO.SYS/)).not.toBeInTheDocument()
+})
+
+test('still dismisses when React Strict Mode double-runs the effect (dev)', () => {
+  vi.useFakeTimers()
+  mockReducedMotion(false)
+  render(
+    <StrictMode>
+      <BootOverlay />
+    </StrictMode>,
+  )
+  expect(screen.getByText(/LOADING PORTFOLIO.SYS/)).toBeInTheDocument()
+  act(() => vi.advanceTimersByTime(1300))
+  expect(screen.queryByText(/LOADING PORTFOLIO.SYS/)).not.toBeInTheDocument()
+  vi.useRealTimers()
 })

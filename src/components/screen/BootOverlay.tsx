@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react'
 export function BootOverlay() {
   const [visible, setVisible] = useState(false)
 
+  // Decide once per session whether to boot. Kept separate from the dismiss
+  // effect below so React Strict Mode's mount/cleanup/mount in dev can't
+  // strand the overlay: the re-run sees "booted" and leaves `visible` alone.
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     let booted = false
@@ -16,6 +19,12 @@ export function BootOverlay() {
     } catch {}
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setVisible(true)
+  }, [])
+
+  // Arm the dismiss timer and key/pointer listeners whenever the overlay is
+  // showing; re-arms cleanly if the effect is torn down and re-run.
+  useEffect(() => {
+    if (!visible) return
     const dismiss = () => setVisible(false)
     const timer = setTimeout(dismiss, 1200)
     window.addEventListener('keydown', dismiss)
@@ -25,7 +34,7 @@ export function BootOverlay() {
       window.removeEventListener('keydown', dismiss)
       window.removeEventListener('pointerdown', dismiss)
     }
-  }, [])
+  }, [visible])
 
   if (!visible) return null
   return (
