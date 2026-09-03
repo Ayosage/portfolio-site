@@ -1,0 +1,50 @@
+import { CaseStudyMeta } from '@/components/case-study/CaseStudyMeta'
+import { SectionHeading } from '@/components/case-study/SectionHeading'
+
+<CaseStudyMeta role="Full-stack" stack="React Three Fiber / Colyseus / Turborepo" year="2026" />
+
+<SectionHeading index={1} title="The Problem" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+Online board games usually pick one: they look good, or they can't be
+cheated. Meridian is a full implementation of the Catan base game, with
+original name and art, that does both. Snake-draft setup, dice production,
+the robber and discards, building, trades and development cards, played on a
+painted-miniature 3D board with friends in their own browsers.
+</div>
+
+<SectionHeading index={2} title="Architecture" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+Three packages in a Turborepo. A pure TypeScript rules engine with no
+rendering or networking dependencies: hex math, zod-validated declarative
+rulesets, a single intent reducer, and win detection, fully unit-tested
+without a browser. A zod protocol package for every client-server message.
+An authoritative Colyseus server that owns all game state: clients send
+intents, the engine validates them, and each seat receives a redacted
+snapshot so a player only ever sees what they are allowed to know.
+
+The client is Vite and React Three Fiber: a lobby with four-letter join codes,
+the 3D board, click-to-build with legality glow, and the HUD for discards,
+steals and the win screen. The end-to-end suite drives a full three-browser
+match and captures a performance snapshot.
+</div>
+
+<SectionHeading index={3} title="Decisions" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+**Secrets never leave the server.** Hidden development cards and hands are
+redacted per seat before a snapshot is sent, so the spoof-proof guarantee
+lives in the protocol rather than in client discipline.
+
+**Absent players don't stall the table.** A caretaker pilot plays empty or
+disconnected seats, and a reconnecting player can reclaim their seat until
+the game ends. Server-side bots fill seats for a solo game.
+
+**Rules are data.** Rulesets are declarative and validated at load, so
+variants and expansions are content drops rather than engine changes.
+
+**Performance is a budget, not a hope.** Instanced geometry, a draw-call
+budget, and a low quality tier that drops the ambient-occlusion pass keep
+mid-range laptops at a steady frame rate.
+</div>

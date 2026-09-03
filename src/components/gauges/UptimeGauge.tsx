@@ -10,9 +10,9 @@ export function UptimeGauge() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[8px] text-[var(--chrome-dim)]">
+    <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[10px] text-[var(--chrome-dim)]">
       UPTIME
-      <div className="text-[var(--phosphor)]">{days ?? '—'}d</div>
+      <div className="text-[12px] text-[var(--phosphor)]">{days ?? '—'}d</div>
     </div>
   )
 }

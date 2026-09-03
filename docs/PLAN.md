@@ -20,6 +20,8 @@ checklist below tracks the same work at PR granularity.
 - [x] About page + resume.pdf; Contact (PING form server action + mailto)
 - [x] Pixel garden (grows with case-study reading)
 - [x] Lighthouse ≥95 + WCAG AA pass on home + StagePass (all three themes)
-- [ ] (blocked) StagePass real case-study content
-- [ ] (blocked) Meridian / Steward / CellarKeep case-study content
+- [x] Design pass 2026-09-02: screen min-height, 10px chrome type floor, cartridge labels, ~/path lines on About/Contact, About spec sheet
+- [x] StagePass case study (written from spec + schema; marks contracts/checkout as in progress — refresh when the build lands)
+- [x] Meridian / Steward / CellarKeep case studies (written from each repo's README + design spec)
+- [ ] Screenshots / LIVE flags on case studies once the demo deploys exist
 - [ ] (post-launch) LED ticker, type-in hero, oscilloscope, easter eggs

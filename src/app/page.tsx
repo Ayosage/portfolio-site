@@ -3,21 +3,21 @@ import { DiskBay } from '@/components/diskbay/DiskBay'
 export default function Home() {
   return (
     <main className="p-4 sm:p-6">
-      <p className="border-b border-[var(--hairline)] pb-2 text-[10px] text-[var(--phosphor-dim)]">
+      <p className="border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         ~/brandon-smith
       </p>
-      <h1 className="phosphor-glow mt-6 text-[clamp(3rem,14vw,7rem)] font-bold uppercase leading-[0.85] tracking-tighter">
+      <h1 className="phosphor-glow mt-5 text-[clamp(3rem,14vw,7rem)] font-bold uppercase leading-[0.85] tracking-tighter">
         Brandon {' '}
         <br />
         Smith<span aria-hidden="true" className="cursor-blink" />
       </h1>
-      <p className="mt-4 max-w-[46ch] text-xs text-[var(--phosphor-dim)]">
-        {"// full-stack engineer — payments, infra, web3, done properly and kept out of the user's way"}
+      <p className="mt-4 max-w-[52ch] text-sm leading-relaxed text-[var(--phosphor-dim)]">
+        {"// full-stack engineer — payments, infra and web3, built properly and kept out of the user's way"}
       </p>
 
       <DiskBay />
 
-      <footer className="mt-10 border-t border-[var(--hairline)] pt-3 text-[10px]">
+      <footer className="mt-7 border-t sm:mt-10 border-[var(--hairline)] pt-3 text-[11px]">
         <ul className="flex flex-wrap gap-x-6 gap-y-1">
           <li>
             <a

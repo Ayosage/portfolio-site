@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 export function HardwareSwitch(props: {
   id: string
   label: string
+  /** Shorter caption for narrow screens; aria-label always uses `label`. */
+  shortLabel?: string
   storageKey: string
   onFlip: (on: boolean) => void
   defaultOn?: boolean
@@ -34,9 +36,16 @@ export function HardwareSwitch(props: {
       aria-checked={on}
       aria-label={props.label}
       onClick={flip}
-      className="flex items-center gap-1 text-[9px] tracking-widest text-[var(--chrome-dim)]"
+      className="flex items-center gap-1 text-[10px] tracking-widest text-[var(--chrome-dim)]"
     >
-      {props.label}
+      {props.shortLabel ? (
+        <>
+          <span aria-hidden="true" className="sm:hidden">{props.shortLabel}</span>
+          <span className="hidden sm:inline">{props.label}</span>
+        </>
+      ) : (
+        props.label
+      )}
       <span className="inline-block h-3 w-6 rounded-full bg-[var(--chassis-well)] relative">
         <span
           className="absolute top-[2px] h-2 w-2 rounded-full transition-none"

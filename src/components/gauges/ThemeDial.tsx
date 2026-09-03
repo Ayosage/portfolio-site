@@ -20,10 +20,10 @@ export function ThemeDial() {
   return (
     <button
       onClick={cycle}
-      className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-left text-[8px] text-[var(--chrome-dim)]"
+      className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-left text-[10px] text-[var(--chrome-dim)]"
     >
       THEME DIAL
-      <span className="mt-1 grid grid-cols-3 text-center text-[7px]">
+      <span className="mt-1 grid grid-cols-3 text-center text-[9px]">
         {THEMES.map((t) => (
           <span
             key={t}

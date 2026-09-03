@@ -12,9 +12,9 @@ export function SolarMeter() {
   }, [])
   const blocks = pct === null ? 0 : Math.round(pct / 20)
   return (
-    <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[8px] text-[var(--chrome-dim)]">
+    <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[10px] text-[var(--chrome-dim)]">
       SOLAR
-      <div aria-hidden="true" className="text-[10px] text-[var(--phosphor)]">
+      <div aria-hidden="true" className="text-[12px] text-[var(--phosphor)]">
         {'▮'.repeat(blocks)}
         {'▯'.repeat(5 - blocks)}
       </div>

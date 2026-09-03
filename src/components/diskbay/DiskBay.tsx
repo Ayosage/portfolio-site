@@ -3,8 +3,8 @@ import { Cartridge } from './Cartridge'
 
 export function DiskBay() {
   return (
-    <section aria-label="disk bay — selected work" className="mt-10 border border-[var(--hairline)]">
-      <p className="flex justify-between border-b border-[var(--hairline)] px-2 py-1 text-[8px] text-[var(--phosphor-dim)]">
+    <section aria-label="disk bay — selected work" className="mt-7 border sm:mt-9 border-[var(--hairline)]">
+      <p className="flex justify-between border-b border-[var(--hairline)] px-2 py-1 text-[10px] tracking-[0.06em] text-[var(--phosphor-dim)]">
         <span>DISK BAY — SELECT MEDIA</span>
         <span>{PROJECTS.length} SLOTS</span>
       </p>

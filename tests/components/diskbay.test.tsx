@@ -10,12 +10,22 @@ function mockReducedMotion(matches: boolean) {
   window.matchMedia = vi.fn().mockReturnValue({ matches }) as unknown as typeof window.matchMedia
 }
 
-test('stagepass is a real link, empty slots are not', () => {
+test('every slot is a live link to its case study', () => {
   mockReducedMotion(false)
   render(<DiskBay />)
-  expect(screen.getByRole('link', { name: /stagepass/i })).toHaveAttribute('href', '/projects/stagepass')
-  expect(screen.queryByRole('link', { name: /meridian/i })).not.toBeInTheDocument()
-  expect(screen.getAllByText(/EJECTED/)).toHaveLength(3)
+  for (const slug of ['stagepass', 'meridian', 'steward', 'cellarkeep']) {
+    expect(screen.getByRole('link', { name: new RegExp(slug, 'i') })).toHaveAttribute('href', `/projects/${slug}`)
+  }
+  expect(screen.queryByText(/EJECTED/)).not.toBeInTheDocument()
+})
+
+test('a cartridge label shows title, one-liner and tags', () => {
+  mockReducedMotion(false)
+  render(<DiskBay />)
+  const link = screen.getByRole('link', { name: /cellarkeep/i })
+  expect(link).toHaveTextContent(/CELLARKEEP/)
+  expect(link).toHaveTextContent(/cellar/i)
+  expect(link).toHaveTextContent(/NEXT\.JS/)
 })
 
 test('click spins up then navigates', () => {
