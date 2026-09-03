@@ -46,9 +46,9 @@ Status key: `TODO` · `IN PR #n` · `DONE yyyy-mm-dd` · `WONTFIX (reason)`
 
 | # | Item | Status | Evidence | Fix | Owner | Done when |
 |---|---|---|---|---|---|---|
-| C1 | No Open Graph image / metadataBase / canonical | TODO | Live `<head>` has title + description only; `/opengraph-image` → 404 | `metadataBase: new URL('https://www.brandon.party')`, `alternates.canonical`, `openGraph` + `twitter` blocks in `layout.tsx`; `src/app/opengraph-image.tsx` rendering the bezel + name in phosphor green | Claude | Pasting the URL into LinkedIn/Slack/iMessage shows a card with image and title |
-| C2 | No robots.txt | TODO | `/robots.txt` → 404 | `src/app/robots.ts` allowing all, pointing at the sitemap | Claude | 200 with `Sitemap:` line |
-| C3 | No sitemap | TODO | `/sitemap.xml` → 404 | `src/app/sitemap.ts` listing `/`, `/about`, `/contact`, four case studies | Claude | 200, valid XML, all seven routes |
+| C1 | No Open Graph image / metadataBase / canonical | IN PR #4 | Live `<head>` has title + description only; `/opengraph-image` → 404 | `metadataBase: new URL('https://www.brandon.party')`, `alternates.canonical`, `openGraph` + `twitter` blocks in `layout.tsx`; `src/app/opengraph-image.tsx` rendering the bezel + name in phosphor green | Claude | Pasting the URL into LinkedIn/Slack/iMessage shows a card with image and title |
+| C2 | No robots.txt | IN PR #4 | `/robots.txt` → 404 | `src/app/robots.ts` allowing all, pointing at the sitemap | Claude | 200 with `Sitemap:` line |
+| C3 | No sitemap | IN PR #4 | `/sitemap.xml` → 404 | `src/app/sitemap.ts` listing `/`, `/about`, `/contact`, four case studies | Claude | 200, valid XML, all seven routes |
 
 ### D. Content only Brandon can supply
 
