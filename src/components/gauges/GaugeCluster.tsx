@@ -1,6 +1,8 @@
 import { SolarMeter } from './SolarMeter'
 import { UptimeGauge } from './UptimeGauge'
 import { ThemeDial } from './ThemeDial'
+import { Scope } from './Scope'
+import { BrightnessKnob } from './BrightnessKnob'
 
 export function GaugeCluster() {
   return (
@@ -15,6 +17,9 @@ export function GaugeCluster() {
         STATUS
         <div className="text-[var(--phosphor)]">● OPEN TO WORK</div>
       </div>
+      <Scope />
+      <BrightnessKnob />
+      <div data-grille aria-hidden="true" className="grille hidden min-h-8 flex-1 sm:block" />
     </aside>
   )
 }

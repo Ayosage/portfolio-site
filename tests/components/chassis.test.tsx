@@ -61,3 +61,10 @@ test('screen content lives in a focusable scroll pane, not the page', () => {
   expect(pane).toHaveAttribute('tabindex', '0')
   expect(pane.className).toMatch(/overflow-y-auto/)
 })
+
+test('chassis plate has four decorative rivets, hidden from assistive tech', () => {
+  const { container } = render(<Chassis>content</Chassis>)
+  const rivets = container.querySelectorAll('[data-rivet]')
+  expect(rivets).toHaveLength(4)
+  rivets.forEach((r) => expect(r).toHaveAttribute('aria-hidden', 'true'))
+})
