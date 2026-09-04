@@ -18,10 +18,11 @@ test('sitemap lists every public route on the canonical host', () => {
     'https://www.brandon.party',
     'https://www.brandon.party/about',
     'https://www.brandon.party/contact',
-    'https://www.brandon.party/projects/stagepass',
     'https://www.brandon.party/projects/meridian',
     'https://www.brandon.party/projects/steward',
     'https://www.brandon.party/projects/cellarkeep',
+    'https://www.brandon.party/projects/misc',
+    'https://www.brandon.party/projects/stagepass',
   ])
 })
 

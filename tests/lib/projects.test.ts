@@ -1,7 +1,8 @@
-import { PROJECTS } from '@/lib/projects'
+import { PROJECTS, FEATURED } from '@/lib/projects'
 
-test('all four projects are live with a case study, one-liner and tags', () => {
-  expect(PROJECTS.map((p) => p.slug)).toEqual(['stagepass', 'meridian', 'steward', 'cellarkeep'])
+test('four featured slots, StagePass demoted to the misc index but still routable', () => {
+  expect(FEATURED.map((p) => p.slug)).toEqual(['meridian', 'steward', 'cellarkeep', 'misc'])
+  expect(PROJECTS.map((p) => p.slug)).toEqual(['meridian', 'steward', 'cellarkeep', 'misc', 'stagepass'])
   for (const p of PROJECTS) {
     expect(p.hasCaseStudy).toBe(true)
     expect(p.oneLiner).not.toMatch(/in progress/i)
