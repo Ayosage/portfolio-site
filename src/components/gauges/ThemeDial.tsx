@@ -10,7 +10,6 @@ export function ThemeDial() {
     const t = document.documentElement.dataset.theme as Theme | undefined
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (t && THEMES.includes(t)) setTheme(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   function cycle() {
     const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]

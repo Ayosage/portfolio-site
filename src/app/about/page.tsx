@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/site'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'About',
-  description:
-    'Brandon Smith — full-stack engineer working across web and web3.',
-}
+  description: 'Brandon Smith — full-stack engineer working across web and web3.',
+  path: '/about',
+})
 
 const SPEC: [string, React.ReactNode][] = [
   ['Role', 'Full-stack engineer'],

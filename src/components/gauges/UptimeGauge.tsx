@@ -7,7 +7,6 @@ export function UptimeGauge() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDays(uptimeDays(BUILD_TIME, Date.now()))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[10px] text-[var(--chrome-dim)]">
