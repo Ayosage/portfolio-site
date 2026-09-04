@@ -1,18 +1,12 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import { Chassis } from '@/components/chassis/Chassis'
+import { siteMetadata } from '@/lib/site'
 import './globals.css'
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Brandon Smith — BS-01 Field Terminal',
-    template: '%s — Brandon Smith',
-  },
-  description:
-    'Full-stack engineer. Payments, infra, web3 — the hard parts stay invisible.',
-}
+export const metadata: Metadata = siteMetadata
 
 // Static hardcoded string — no user input ever flows into this
 // dangerouslySetInnerHTML; it exists solely to set data-theme pre-paint.

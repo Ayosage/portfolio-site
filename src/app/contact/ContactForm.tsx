@@ -1,11 +1,17 @@
 'use client'
-import { useActionState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { sendPing, type PingState } from './actions'
 
 export function ContactForm() {
   const [state, action, pending] = useActionState<PingState, FormData>(sendPing, {
     status: 'idle',
   })
+  // Stamped after mount (not during render) so server and client HTML match.
+  const [renderedAt, setRenderedAt] = useState('')
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRenderedAt(String(Date.now()))
+  }, [])
   return (
     <main className="p-4 sm:p-6">
       <p className="border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
@@ -19,6 +25,11 @@ export function ContactForm() {
         </a>
       </p>
       <form action={action} className="mt-6 flex max-w-md flex-col gap-3 text-xs">
+        {/* Bot traps: a field nobody sees, and when the form was drawn. */}
+        <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+          <input name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+        </div>
+        <input type="hidden" name="t" value={renderedAt} readOnly />
         <label className="flex flex-col gap-1">
           EMAIL
           <input

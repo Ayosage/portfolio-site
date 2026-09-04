@@ -2,6 +2,7 @@ import type { NextConfig } from 'next'
 import createMDX from '@next/mdx'
 import { execSync } from 'node:child_process'
 import { resolveBuildHash } from './src/lib/build-info'
+import { securityHeaders } from './src/lib/headers'
 
 let gitShort: string | null = null
 try {
@@ -16,6 +17,9 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_BUILD_HASH: hash,
     NEXT_PUBLIC_BUILD_TIME: String(Date.now()),
+  },
+  async headers() {
+    return [{ source: '/(.*)', headers: securityHeaders() }]
   },
 }
 export default createMDX()(nextConfig)

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { ComponentType } from 'react'
 import { PROJECTS } from '@/lib/projects'
+import { pageMetadata } from '@/lib/site'
 import { EscBack } from '@/components/case-study/EscBack'
 import { GardenTracker } from '@/components/case-study/GardenTracker'
 import Stagepass from '../../../../content/projects/stagepass.mdx'
@@ -27,7 +28,12 @@ export async function generateMetadata({
 }) {
   const { slug } = await params
   const project = PROJECTS.find((p) => p.slug === slug)
-  return { title: project?.title, description: project?.oneLiner }
+  if (!project) return {}
+  return pageMetadata({
+    title: project.title,
+    description: project.oneLiner,
+    path: `/projects/${project.slug}`,
+  })
 }
 
 export default async function CaseStudy({
