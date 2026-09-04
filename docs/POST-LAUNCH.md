@@ -30,8 +30,8 @@ Status key: `TODO` · `IN PR #n` · `DONE yyyy-mm-dd` · `WONTFIX (reason)`
 
 | # | Item | Status | Evidence | Fix | Owner | Done when |
 |---|---|---|---|---|---|---|
-| A1 | Contact form has no abuse guard | IN PR #3 | `sendPing` server action validates email + length only; no honeypot, no timing check, no rate limit. Anyone can script it and burn the Resend quota (100/day free) or flood the inbox | Hidden honeypot input + minimum time-to-submit (render timestamp in a hidden field, reject < 2 s) + per-IP token bucket (in-memory is fine on Vercel; Upstash if it ever matters) | Claude | Scripted burst of 20 submissions yields ≤ 3 deliveries; honest submission still delivers; tests cover each guard |
-| A2 | Security headers: only HSTS | IN PR #5 | `curl -sI https://www.brandon.party/` shows no CSP, X-Content-Type-Options, frame-ancestors, Referrer-Policy, Permissions-Policy | `headers()` in `next.config.ts`. CSP needs a hash (or nonce) for the inline theme-boot script in `layout.tsx`; start with `frame-ancestors 'none'`, `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, a minimal Permissions-Policy, then add CSP in report-only first | Claude | All five headers present on `/`; site renders in all three themes with CSP enforced; no console CSP violations |
+| A1 | Contact form has no abuse guard | DONE 2026-09-03 | `sendPing` server action validates email + length only; no honeypot, no timing check, no rate limit. Anyone can script it and burn the Resend quota (100/day free) or flood the inbox | Hidden honeypot input + minimum time-to-submit (render timestamp in a hidden field, reject < 2 s) + per-IP token bucket (in-memory is fine on Vercel; Upstash if it ever matters) | Claude | Scripted burst of 20 submissions yields ≤ 3 deliveries; honest submission still delivers; tests cover each guard |
+| A2 | Security headers: only HSTS | DONE 2026-09-03 | `curl -sI https://www.brandon.party/` shows no CSP, X-Content-Type-Options, frame-ancestors, Referrer-Policy, Permissions-Policy | `headers()` in `next.config.ts`. CSP needs a hash (or nonce) for the inline theme-boot script in `layout.tsx`; start with `frame-ancestors 'none'`, `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, a minimal Permissions-Policy, then add CSP in report-only first | Claude | All five headers present on `/`; site renders in all three themes with CSP enforced; no console CSP violations |
 | A3 | Mail delivery unverified in production | TODO | Cannot tell from outside whether `RESEND_API_KEY` is set in Vercel. Without it the form returns `MAIL NOT CONFIGURED` | Submit one ping from the live form and confirm it lands. If not, set `RESEND_API_KEY` (Production scope) and optionally `CONTACT_TO` / `CONTACT_FROM` | Brandon | Test ping received in inbox with working reply-to |
 
 ### B. Verifiability (what a recruiter can actually check)
@@ -46,9 +46,9 @@ Status key: `TODO` · `IN PR #n` · `DONE yyyy-mm-dd` · `WONTFIX (reason)`
 
 | # | Item | Status | Evidence | Fix | Owner | Done when |
 |---|---|---|---|---|---|---|
-| C1 | No Open Graph image / metadataBase / canonical | IN PR #4 | Live `<head>` has title + description only; `/opengraph-image` → 404 | `metadataBase: new URL('https://www.brandon.party')`, `alternates.canonical`, `openGraph` + `twitter` blocks in `layout.tsx`; `src/app/opengraph-image.tsx` rendering the bezel + name in phosphor green | Claude | Pasting the URL into LinkedIn/Slack/iMessage shows a card with image and title |
-| C2 | No robots.txt | IN PR #4 | `/robots.txt` → 404 | `src/app/robots.ts` allowing all, pointing at the sitemap | Claude | 200 with `Sitemap:` line |
-| C3 | No sitemap | IN PR #4 | `/sitemap.xml` → 404 | `src/app/sitemap.ts` listing `/`, `/about`, `/contact`, four case studies | Claude | 200, valid XML, all seven routes |
+| C1 | No Open Graph image / metadataBase / canonical | DONE 2026-09-03 | Live `<head>` has title + description only; `/opengraph-image` → 404 | `metadataBase: new URL('https://www.brandon.party')`, `alternates.canonical`, `openGraph` + `twitter` blocks in `layout.tsx`; `src/app/opengraph-image.tsx` rendering the bezel + name in phosphor green | Claude | Pasting the URL into LinkedIn/Slack/iMessage shows a card with image and title |
+| C2 | No robots.txt | DONE 2026-09-03 | `/robots.txt` → 404 | `src/app/robots.ts` allowing all, pointing at the sitemap | Claude | 200 with `Sitemap:` line |
+| C3 | No sitemap | DONE 2026-09-03 | `/sitemap.xml` → 404 | `src/app/sitemap.ts` listing `/`, `/about`, `/contact`, four case studies | Claude | 200, valid XML, all seven routes |
 
 ### D. Content only Brandon can supply
 
@@ -62,13 +62,29 @@ Status key: `TODO` · `IN PR #n` · `DONE yyyy-mm-dd` · `WONTFIX (reason)`
 
 | # | Item | Status | Evidence | Fix | Owner | Done when |
 |---|---|---|---|---|---|---|
-| E1 | No CI | IN PR #6 | No `.github/workflows`; branch protection unavailable on a private free repo | One workflow on `pull_request` + `push` to main: `npm ci`, `npm test`, `npm run lint`, `npx tsc --noEmit`, `npm run build` | Claude | Green check on the next PR |
-| E2 | Two stale eslint-disable directives | IN PR #6 | `ThemeDial.tsx:13`, `UptimeGauge.tsx:10` warn "unused eslint-disable" | Delete the two comments | Claude | `eslint` → 0 warnings |
+| E1 | No CI | DONE 2026-09-03 | No `.github/workflows`; branch protection unavailable on a private free repo | One workflow on `pull_request` + `push` to main: `npm ci`, `npm test`, `npm run lint`, `npx tsc --noEmit`, `npm run build` | Claude | Green check on the next PR |
+| E2 | Two stale eslint-disable directives | DONE 2026-09-03 | `ThemeDial.tsx:13`, `UptimeGauge.tsx:10` warn "unused eslint-disable" | Delete the two comments | Claude | `eslint` → 0 warnings |
 | E3 | No error visibility in production | TODO | Server-action failures only `console.error`; nobody reads Vercel logs | Enable Vercel log drain or at least check Runtime Logs after A3; optional Sentry later | Brandon | Decision recorded |
 
 ### F. Post-launch nice-to-haves (from `docs/PLAN.md`)
 
 LED ticker, type-in hero, oscilloscope, easter eggs. Not before A–E.
+
+### G. Chassis and "you are holding the rig" ideas — for discussion
+
+Raised 2026-09-03 after looking at the live site on a 1920-wide desktop. None of
+these are scheduled; they are here so the discussion has a home. Framing
+comparison (four monitors at true scale, metal corner detail):
+https://claude.ai/code/artifact/706d7739-c4ad-4689-aaa2-910d499ecf60
+
+| # | Idea | Status | Notes | Open questions |
+|---|---|---|---|---|
+| G1 | Rig as an object on a lit bench | PROPOSED | Keep the 1024 px rig. Page behind it becomes a darker bench with a radial light pool so the empty sides read as deliberate. Rig gets a chamfered edge, drop shadow, corner rivets. Brandon prefers this framing over "rig fills the monitor" and "wider rig" | Lit bench is a gradient; spec currently allows gradients only for CRT effects. Amend the spec to allow lighting, or use a flat darker bench? |
+| G2 | Metal chassis instead of moulded plastic | PROPOSED | Brandon's call: the chassis should read as powder-coated metal. Brushed directional grain, domed rivets, paint worn to bare metal at corners and grab edges, one faint rust bloom under one rivet as the only oxidation. Spec's "molded plastic" line and the small-radius rule need updating | Keep the small radii (moulded look) or go sharper for stamped metal? |
+| G3 | Fill the right column, not the bench | PROPOSED | Below the four gauge wells the chassis is bare down to the F-keys. Candidates: SCOPE trace (already in F), a BRIGHTNESS dial wired to phosphor glow, a speaker grille as texture at the bottom. Nothing goes on the bench: props pull the eye off the screen | Functional or decorative for the first pass? Recommendation: BRIGHTNESS live, SCOPE static until F, grille texture only |
+| G4 | Compass gauge that always points north | IDEA | A needle gauge in the column. Desktop: points to true north as drawn. Mobile: read the device heading (`DeviceOrientationEvent`, `webkitCompassHeading` on iOS) and rotate the needle against the phone so it keeps pointing north as the user turns. iOS needs a user-gesture permission prompt (`DeviceOrientationEvent.requestPermission`); Android needs HTTPS (we have it). No heading available: needle drifts idle and the gauge reads NO FIX | Where does the permission prompt live so it doesn't feel like a tracking request? Probably a tap on the gauge itself, labelled CALIBRATE |
+| G5 | Weather gauge from location | IDEA | Ask for coarse location, pull current conditions from a free API (Open-Meteo needs no key), show temp / conditions / wind as a gauge. Makes SOLAR real too: cloud cover could drive the SOLAR meter instead of the current placeholder | Location is a bigger ask than heading; must degrade gracefully and never block. Do we want an outbound fetch in CSP `connect-src` for one API host? Cache result per session |
+| G6 | The theme: things that make people feel they are operating the rig | IDEA | G4 and G5 are the first two. Same family: tilt the phone and the sprouts lean (`DeviceMotion`), ambient-light sensor dims the phosphor, battery level drives an on-chassis cell gauge (`navigator.getBattery`, Chromium only). Each must be optional, permission-gated, and the rig must look complete without it | Pick one that works on iOS Safari first; that is the phone most recruiters open the link on |
 
 ## Suggested order
 
@@ -77,3 +93,4 @@ A1 → C1+C2+C3 (one PR) → A2 → E1+E2 (one PR) → B2 (once B1 is decided). 
 ## Log
 
 - 2026-09-03 — Site live; PR #1 (design pass + deploy prep) and PR #2 (in-glass scrolling, Strict Mode boot fix) merged. Audit run; this file created.
+- 2026-09-03 — PRs #3–#6 merged (form guard, SEO, security headers, CI). Timing-guard bypass caught in review and fixed before merge. Section G added.

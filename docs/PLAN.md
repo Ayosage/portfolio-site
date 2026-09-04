@@ -25,3 +25,4 @@ checklist below tracks the same work at PR granularity.
 - [x] Meridian / Steward / CellarKeep case studies (written from each repo's README + design spec)
 - [ ] Screenshots / LIVE flags on case studies once the demo deploys exist
 - [ ] (post-launch) LED ticker, type-in hero, oscilloscope, easter eggs
+- [ ] (post-launch, for discussion) metal chassis on a lit bench, full right column, compass/weather gauges — see `docs/POST-LAUNCH.md` section G
