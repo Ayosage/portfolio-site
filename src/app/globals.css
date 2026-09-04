@@ -17,6 +17,19 @@
      table in fixwave-report.md. Distinct from --phosphor-dim, which is screen-surface
      only (inside .crt-screen) and is tuned against --screen instead. */
   --chrome-dim: #8fa05c;
+  /* Bench (the surface the rig sits on) and the metal finish of the plate. */
+  --bench: #0f110b;
+  --bench-light: #1b1e15;
+  --sheen-hi: #292c22;
+  --sheen-lo: #1e2118;
+  --edge-hi: rgba(255, 255, 255, 0.14);
+  --edge-lo: rgba(0, 0, 0, 0.6);
+  --wear: 190, 192, 175;
+  --rivet-hi: #7d8072;
+  --rivet-mid: #4e5246;
+  --rivet-lo: #1d1f17;
+  --knob-hi: #3a3e33;
+  --knob-lo: #23261d;
 }
 [data-theme='amber'] {
   --screen: #120e08;
@@ -38,12 +51,153 @@
   --alert-text: #f2edde;
   --glow: transparent;
   --chrome-dim: #4a4f42;
+  --bench: #b3ac97;
+  --bench-light: #c9c2ad;
+  --sheen-hi: #e2dcc9;
+  --sheen-lo: #d2cbb6;
+  --edge-hi: rgba(255, 255, 255, 0.55);
+  --edge-lo: rgba(0, 0, 0, 0.22);
+  --wear: 120, 118, 108;
+  --rivet-hi: #f0ece0;
+  --rivet-mid: #b8b3a2;
+  --rivet-lo: #6e6a5e;
+  --knob-hi: #efe9d6;
+  --knob-lo: #cfc7b0;
 }
 
+/* BRIGHTNESS detents → veil over the CRT (below 1) and glow radius (above 1). */
+:root {
+  --bright: 1;
+}
+[data-brightness='1'] { --bright: 0.55; }
+[data-brightness='2'] { --bright: 0.78; }
+[data-brightness='4'] { --bright: 1.18; }
+[data-brightness='5'] { --bright: 1.35; }
+
+html {
+  min-height: 100dvh;
+}
 body {
-  background: var(--chassis);
+  /* The rig sits in a pool of light; the bench falls off toward the edges.
+     A lighting gradient, allowed by the spec's lighting exception. */
+  background: radial-gradient(ellipse 62% 78% at 50% 48%, var(--bench-light) 0%, var(--bench) 60%)
+    var(--bench);
   color: var(--phosphor);
   font-family: var(--font-mono), monospace;
+}
+
+/* ---- Chassis plate: powder-coated metal ------------------------------- */
+.rig {
+  isolation: isolate;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.022) 0 1px,
+      transparent 1px 3px,
+      rgba(0, 0, 0, 0.045) 3px 4px,
+      transparent 4px 7px
+    ),
+    linear-gradient(180deg, var(--sheen-hi) 0%, var(--chassis) 40%, var(--sheen-lo) 100%);
+}
+/* Grain, then paint worn through to bare metal at the corners and grab edges.
+   Both sit above the plate's fill and below everything mounted on it. */
+.rig::before,
+.rig::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.rig::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+.rig::after {
+  background:
+    /* one scratch, on the bare plate of the top bezel between serial and switches */
+    linear-gradient(168deg, transparent 47%, rgba(var(--wear), 0.3) 49.5%, transparent 51%) left 46% top 10px / 140px 26px no-repeat,
+    radial-gradient(ellipse 44px 10px at 0% 0%, rgba(var(--wear), 0.28), transparent 70%),
+    radial-gradient(ellipse 28px 10px at 100% 100%, rgba(var(--wear), 0.22), transparent 70%),
+    linear-gradient(180deg, rgba(var(--wear), 0.16), transparent 2px),
+    linear-gradient(90deg, rgba(var(--wear), 0.1), transparent 2px);
+}
+@media (min-width: 640px) {
+  .rig {
+    box-shadow:
+      inset 1px 1px 0 var(--edge-hi),
+      inset -1px -1px 0 var(--edge-lo),
+      inset 0 0 0 3px rgba(0, 0, 0, 0.16),
+      0 18px 40px rgba(0, 0, 0, 0.55);
+  }
+}
+.rivet {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 32%, var(--rivet-hi) 0 12%, var(--rivet-mid) 30% 58%, var(--rivet-lo) 72% 100%);
+  box-shadow:
+    inset 0 -1px 1px rgba(0, 0, 0, 0.6),
+    0 1px 1px rgba(0, 0, 0, 0.7),
+    0 0 0 1.5px rgba(0, 0, 0, 0.25);
+}
+.rivet-rust {
+  box-shadow:
+    inset 0 -1px 1px rgba(0, 0, 0, 0.6),
+    0 1px 1px rgba(0, 0, 0, 0.7),
+    0 0 0 1.5px rgba(0, 0, 0, 0.25),
+    2px 6px 6px rgba(120, 60, 20, 0.28);
+}
+
+/* ---- Column hardware --------------------------------------------------- */
+.knob {
+  display: block;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(0, 0, 0, 0.25) 0 4deg, transparent 4deg 12deg),
+    radial-gradient(circle at 40% 35%, var(--knob-hi) 0 40%, var(--knob-lo) 42% 100%);
+  box-shadow:
+    inset 0 1px 1px var(--edge-hi),
+    inset 0 -2px 2px var(--edge-lo),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: transform 160ms ease-out;
+}
+.knob::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 3px;
+  width: 2px;
+  height: 12px;
+  margin-left: -1px;
+  background: var(--phosphor);
+  box-shadow: 0 0 4px var(--glow);
+}
+@media (prefers-reduced-motion: reduce) {
+  .knob {
+    transition: none;
+  }
+}
+.grille {
+  background-color: var(--chassis-well);
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.75) 0 2px, transparent 2.3px);
+  background-size: 8px 8px;
+  background-position: 2px 2px;
+}
+[data-theme='paper'] .grille {
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.28) 0 2px, transparent 2.3px);
+}
+[data-theme='paper'] .knob {
+  background:
+    repeating-conic-gradient(from 0deg, rgba(0, 0, 0, 0.09) 0 4deg, transparent 4deg 12deg),
+    radial-gradient(circle at 40% 35%, var(--knob-hi) 0 40%, var(--knob-lo) 42% 100%);
 }
 
 .prose-body {
@@ -68,6 +222,19 @@ body {
   scrollbar-width: thin;
   scrollbar-color: var(--phosphor-dim) transparent;
 }
+.crt-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: #000;
+  opacity: clamp(0, calc(1 - var(--bright)), 0.5);
+}
+/* Paper is a reflective screen: dimming it a little is plausible, blacking it out is not. */
+[data-theme='paper'] .crt-screen::before {
+  opacity: clamp(0, calc((1 - var(--bright)) * 0.5), 0.25);
+}
 .crt-screen::after {
   content: '';
   position: absolute;
@@ -89,7 +256,7 @@ body {
 }
 
 .phosphor-glow {
-  text-shadow: 0 0 14px var(--glow);
+  text-shadow: 0 0 calc(14px * var(--bright)) var(--glow);
 }
 
 .cursor-blink {

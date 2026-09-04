@@ -39,8 +39,22 @@ risk).
 - System `prefers-color-scheme: light` defaults the dial to PAPER; dark defaults
   to GREEN. Dial choice persists (localStorage) and overrides.
 - No gradients anywhere except CRT glow effects (text-shadow, inset screen
-  shadow, vignette). Zero border-radius on screen content; small radii allowed
-  on chassis hardware only (it's molded plastic).
+  shadow, vignette) and **lighting** (amended 2026-09-03): the light pool on
+  the bench behind the rig, the top-to-bottom sheen on the chassis plate, and
+  the domed highlights on rivets and the knob. Lighting gradients describe how
+  light falls on a surface; they never decorate one. Zero border-radius on
+  screen content; small radii allowed on chassis hardware only.
+- **Chassis material (amended 2026-09-03): powder-coated metal, not moulded
+  plastic.** Brushed grain runs left to right; a chamfered edge catches light
+  top-left and falls dark bottom-right; the coat is worn to bare metal at the
+  corners and along the top edge where a hand grabs it; one scratch; domed
+  rivets at the four corners with a faint rust bloom under one of them as the
+  only oxidation on the rig. Nothing on the chassis glows: the LED and the CRT
+  remain the only light sources.
+- **The bench (amended 2026-09-03):** on wide viewports the rig sits as an
+  object on a darker bench surface. The bench stays empty — no props, no
+  cables — so the negative space reads as a lit workspace, not as unfilled
+  page. Anything new that needs a home goes on the rig, not the bench.
 - All text/ground pairs must clear WCAG AA 4.5:1 — phosphor dim on screen
   ground included.
 
@@ -70,8 +84,12 @@ flicker, type-in, degauss, garden growth animation) obey `prefers-reduced-motion
 - **Screen module (dominant, ~80% width):** all page content.
 - **F-key row (below screen):** F1 WORK / F2 ABOUT / F3 CV / F4 PING (contact,
   alert-colored). Primary nav.
-- **Gauge cluster (right sidebar):** SOLAR meter, THEME dial, GARDEN, (post-launch:
-  SCOPE).
+- **Gauge cluster (right sidebar):** SOLAR meter, UPTIME, THEME dial, STATUS,
+  then (added 2026-09-03) SCOPE (static trace until the oscilloscope task),
+  BRIGHTNESS knob (five detents, persisted; dims the CRT below 3, widens the
+  phosphor glow above), and a speaker grille that fills whatever height is
+  left down to the F-keys. The column runs full height; the grille is texture,
+  not a control. Mobile keeps the four-well grid only.
 - **LED ticker (below keys):** status marquee.
 - **Chassis lore:** screws, worn decals, `RUNS ON SUNLIGHT` etching, sticker
   patches. Pure CSS/SVG texture.
