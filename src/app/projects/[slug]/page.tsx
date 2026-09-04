@@ -17,7 +17,7 @@ const CASE_STUDIES: Record<string, ComponentType> = {
 }
 
 export function generateStaticParams() {
-  return PROJECTS.filter((p) => p.hasCaseStudy).map((p) => ({ slug: p.slug }))
+  return PROJECTS.filter((p) => p.slug in CASE_STUDIES).map((p) => ({ slug: p.slug }))
 }
 export const dynamicParams = false
 

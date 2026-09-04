@@ -24,7 +24,7 @@ test('case study title names the project', async () => {
 })
 
 test('all four case studies are statically generated', () => {
-  expect(generateStaticParams().map((p) => p.slug)).toEqual(['stagepass', 'meridian', 'steward', 'cellarkeep'])
+  expect(generateStaticParams().map((p) => p.slug)).toEqual(['meridian', 'steward', 'cellarkeep', 'stagepass'])
 })
 
 test('meridian case study title names the project', async () => {
