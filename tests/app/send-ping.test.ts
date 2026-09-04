@@ -45,3 +45,11 @@ test('a burst from one address is throttled after three', async () => {
   expect(r).toEqual({ status: 'error', error: 'RATE LIMITED — EMAIL DIRECT INSTEAD' })
   expect(deliver).toHaveBeenCalledTimes(3)
 })
+
+test('a submission with no render timestamp at all is refused, not trusted', async () => {
+  const fd = form(human())
+  fd.delete('t')
+  const r = await sendPing(idle, fd)
+  expect(r).toEqual({ status: 'error', error: 'TOO FAST — TRY AGAIN' })
+  expect(deliver).not.toHaveBeenCalled()
+})

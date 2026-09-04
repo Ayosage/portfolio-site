@@ -28,9 +28,12 @@ export async function sendPing(_prev: PingState, formData: FormData): Promise<Pi
   const result = validatePing(input)
   if (!result.ok) return { status: 'error', error: result.error }
 
+  // Number('') is 0, which would read as an hours-long fill time; an absent
+  // or empty stamp must fail the timing check, not sail through it.
+  const stamp = formData.get('t')
   const verdict = checkTrap({
     honeypot: String(formData.get('website') ?? ''),
-    renderedAt: Number(formData.get('t')),
+    renderedAt: typeof stamp === 'string' && stamp !== '' ? Number(stamp) : NaN,
     now: Date.now(),
   })
   // Bots get a convincing success and nothing is sent.
