@@ -86,6 +86,37 @@ https://claude.ai/code/artifact/706d7739-c4ad-4689-aaa2-910d499ecf60
 | G5 | Weather gauge from location | IDEA | Ask for coarse location, pull current conditions from a free API (Open-Meteo needs no key), show temp / conditions / wind as a gauge. Makes SOLAR real too: cloud cover could drive the SOLAR meter instead of the current placeholder | Location is a bigger ask than heading; must degrade gracefully and never block. Do we want an outbound fetch in CSP `connect-src` for one API host? Cache result per session |
 | G6 | The theme: things that make people feel they are operating the rig | IDEA | G4 and G5 are the first two. Same family: tilt the phone and the sprouts lean (`DeviceMotion`), ambient-light sensor dims the phosphor, battery level drives an on-chassis cell gauge (`navigator.getBattery`, Chromium only). Each must be optional, permission-gated, and the rig must look complete without it | Pick one that works on iOS Safari first; that is the phone most recruiters open the link on |
 
+### H. UI/UX review 2026-09-05
+
+Walked /, /about, /contact, /projects/meridian and /projects/misc at 1280 and
+390 px on the `misc-bay` build, checked against the ui-ux-pro-max guideline set
+and Emil Kowalski's design-engineering review. Passing: h1 on every page, no
+horizontal scroll, inputs wrapped in labels, reduced motion honoured wherever
+motion exists, boot skippable and once per session. Targets measured on the
+live build with `getBoundingClientRect`.
+
+| # | Item | Status | Evidence | Fix | Owner | Done when |
+|---|---|---|---|---|---|---|
+| H1 | Hardware switches are 15 px tall | TODO | SCANLINES / SOUND / KEYS buttons measure 91×15, 63×15, 56×15 at both widths; minimum is 44×44 | Keep the pill visual, give the `<button>` a 44 px hit area (padding or `::before` inset) | Claude | Every switch ≥ 44 px in both axes |
+| H2 | Mobile F-keys under the minimum | TODO | 90×41 at 390 px (33 px tall on desktop, where pointer precision makes it acceptable) — this is the primary nav | `py-3` on mobile in `FKeyRow` | Claude | ≥ 44 px tall at 390 px, Lighthouse a11y still 100 |
+| H3 | PORT-A/B/C links 29 px tall | TODO | Home footer + About spec sheet | `py-2` and `inline-flex items-center min-h-11` | Claude | ≥ 44 px |
+| H4 | Focus invisible on the chassis | TODO | Zero `focus-visible` rules in Cartridge, FKeyRow, HardwareSwitch, ThemeDial, BrightnessKnob, ContactForm; only the MISC page links have one | One global rule in `globals.css`: `:focus-visible { outline: 2px solid var(--phosphor); outline-offset: 2px }`, remove per-component one-offs | Claude | Tabbing through / shows focus on every control |
+| H5 | "[ESC] BACK" is a span, not a control | TODO | `projects/[slug]/page.tsx:54`, `projects/misc/page.tsx:34`. Phones have no Escape; mouse users can't click it | Make it a `<button>` that calls the same `router.back()` as `EscBack`; keep the label | Claude | Tap/click returns to the bay on mobile and desktop |
+| H6 | Type below the 10 px floor | TODO | `text-[8px]` on knob LO/HI, `text-[9px]` on cartridge tags, theme-dial labels, chassis footer. 31–48 sub-12 px text nodes per page overall (accepted trade for the hardware look) | Raise the four 8/9 px spots to 10 px; leave the 10 px chrome | Claude | No `text-[8px]`/`text-[9px]` in src |
+| H7 | STATUS wraps on mobile | TODO | "OPEN TO WORK" breaks to two lines in the 390 px gauge well | `whitespace-nowrap` + shorter mobile label, or drop the dot at 390 | Claude | Single line at 390 |
+| H8 | Contact inputs have no focus/filled state | TODO | `border-[var(--hairline)]` only; browser outline likely suppressed | Covered by H4 ring; add `focus:border-[var(--phosphor-dim)]` | Claude | Visible focus on both fields |
+| H9 | Cartridge spin-up costs 500 ms and is a text swap | TODO | `Cartridge.tsx` `setTimeout(router.push, 500)`; "▸ SPIN-UP…" replaces the one-liner, nothing moves | Navigate at 250 ms; `translateY(1px)` + phosphor border pulse during the wait; reduced-motion path unchanged | Claude | Click-to-route ≤ 250 ms, motion visible |
+| H10 | Boot overlay vanishes in one frame | TODO | `BootOverlay` unmounts at 1200 ms with no transition | `opacity 150ms ease-out` exit; keep instant dismiss on key/pointer | Claude | Fade visible, skip still instant |
+| H11 | Garden sprouts pop in fully drawn | TODO | `ScreenGarden` paths appear on stage change | Draw new paths with `stroke-dashoffset` over 600 ms ease-out (rare, first-time moment — longer is allowed) | Claude | New sprout visibly grows |
+| H12 | Hardware switch knob `transition-none` | TODO | `HardwareSwitch.tsx:51` | `transition: transform 120ms ease-out` on the knob translate | Claude | Toggle slides |
+| H13 | No hover on cartridges / F-keys | TODO | Only `hover:underline` on text links | `transition: border-color 120ms ease` to a brighter phosphor border, gated by `@media (hover: hover) and (pointer: fine)` | Claude | Hover visible on desktop, inert on touch |
+| H14 | F-key release snaps back | TODO | `active:translate-y-[2px]` with no transition | Keep instant press; `transition: transform 100ms ease-out` for release | Claude | Press instant, release eased |
+| H15 | Theme dial swaps every colour instantly | WONTFIX (hardware switch; transitioning phosphor site-wide is expensive) | — | — | — | — |
+
+Order: H1–H8 in one PR (accessibility + targets, ~an hour, Lighthouse stays
+100). H9–H14 in a second, smaller motion PR, H9 first since it is the only
+row that costs the visitor time. Resume placeholder is D1.
+
 ## Suggested order
 
 A1 → C1+C2+C3 (one PR) → A2 → E1+E2 (one PR) → B2 (once B1 is decided). D1–D3 and A3 whenever Brandon has them; they're each a five-minute change.
