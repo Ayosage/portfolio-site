@@ -6,7 +6,7 @@ import { setKeysEnabled } from '@/lib/keys'
 
 export function TopBezel() {
   return (
-    <header className="flex items-center justify-between px-2 py-1.5 text-[10px] tracking-[0.15em] text-[var(--chrome-dim)] sm:px-3 sm:py-2">
+    <header className="relative z-10 flex items-center justify-between px-2 py-1.5 text-[10px] tracking-[0.15em] text-[var(--chrome-dim)] sm:px-3 sm:py-2">
       <span>
         BS-01 <span className="hidden sm:inline">▪ FIELD TERMINAL </span>▪{' '}
         <span>SN {BUILD_HASH}</span>
