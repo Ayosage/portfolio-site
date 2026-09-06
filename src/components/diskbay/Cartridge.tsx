@@ -43,7 +43,7 @@ export function Cartridge({ project }: { project: Project }) {
       <span className="leading-snug text-[var(--phosphor-dim)]">
         {spinning ? '▸ SPIN-UP…' : project.oneLiner}
       </span>
-      <span className="mt-0.5 text-[9px] tracking-[0.08em] text-[var(--phosphor-dim)]">
+      <span className="mt-0.5 text-[10px] tracking-[0.08em] text-[var(--phosphor-dim)]">
         {project.tags.join(' / ')}
       </span>
     </a>

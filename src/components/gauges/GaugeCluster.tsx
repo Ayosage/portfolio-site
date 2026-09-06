@@ -15,7 +15,10 @@ export function GaugeCluster() {
       <ThemeDial />
       <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[10px] text-[var(--chrome-dim)]">
         STATUS
-        <div className="text-[var(--phosphor)]">● OPEN TO WORK</div>
+        <div className="whitespace-nowrap text-[var(--phosphor)]">
+          <span className="sm:hidden">OPEN</span>
+          <span className="hidden sm:inline">● OPEN TO WORK</span>
+        </div>
       </div>
       <Scope />
       <BrightnessKnob />

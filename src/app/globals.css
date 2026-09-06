@@ -86,6 +86,14 @@ body {
   font-family: var(--font-mono), monospace;
 }
 
+/* One visible focus ring for every control on the chassis. Phosphor holds
+   contrast against the chassis metal and the screen glass in all three
+   themes, including paper (near-black phosphor against a light chassis). */
+:focus-visible {
+  outline: 2px solid var(--phosphor);
+  outline-offset: 2px;
+}
+
 /* ---- Chassis plate: powder-coated metal ------------------------------- */
 .rig {
   isolation: isolate;

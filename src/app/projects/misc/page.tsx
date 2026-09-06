@@ -18,7 +18,7 @@ function MiscAnchor({ link }: { link: MiscLink }) {
     <a
       href={link.href}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className="border-b border-[var(--phosphor-dim)] text-[var(--phosphor)] hover:border-[var(--phosphor)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-[var(--phosphor)]"
+      className="border-b border-[var(--phosphor-dim)] text-[var(--phosphor)] hover:border-[var(--phosphor)]"
     >
       {link.label} {external ? '↗' : '▸'}
     </a>
@@ -28,10 +28,9 @@ function MiscAnchor({ link }: { link: MiscLink }) {
 export default function MiscIndex() {
   return (
     <main className="p-4 sm:p-6">
-      <EscBack />
       <p className="flex justify-between border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         <span>~/work/misc</span>
-        <span>[ESC] BACK</span>
+        <EscBack />
       </p>
       <h1 className="phosphor-glow mt-4 text-4xl font-bold uppercase tracking-tighter sm:text-6xl">
         {project.title}

@@ -36,7 +36,7 @@ export function ContactForm() {
             name="from"
             type="email"
             required
-            className="border border-[var(--hairline)] bg-transparent p-2"
+            className="border border-[var(--hairline)] bg-transparent p-2 focus:border-[var(--phosphor-dim)]"
           />
         </label>
         <label className="flex flex-col gap-1">
@@ -45,7 +45,7 @@ export function ContactForm() {
             name="message"
             required
             rows={5}
-            className="border border-[var(--hairline)] bg-transparent p-2"
+            className="border border-[var(--hairline)] bg-transparent p-2 focus:border-[var(--phosphor-dim)]"
           />
         </label>
         <button

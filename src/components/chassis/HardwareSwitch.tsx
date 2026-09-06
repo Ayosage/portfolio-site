@@ -36,7 +36,7 @@ export function HardwareSwitch(props: {
       aria-checked={on}
       aria-label={props.label}
       onClick={flip}
-      className="flex items-center gap-1 text-[10px] tracking-widest text-[var(--chrome-dim)]"
+      className="-my-[14.5px] flex items-center gap-1 py-[14.5px] text-[10px] tracking-widest text-[var(--chrome-dim)]"
     >
       {props.shortLabel ? (
         <>

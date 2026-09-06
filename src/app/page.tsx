@@ -22,7 +22,7 @@ export default function Home() {
           <li>
             <a
               href="https://github.com/Ayosage"
-              className="inline-block py-1.5 hover:underline"
+              className="inline-flex min-h-11 items-center py-2 hover:underline"
             >
               PORT-A ▸ GITHUB ↗
             </a>
@@ -30,7 +30,7 @@ export default function Home() {
           <li>
             <a
               href="https://www.linkedin.com/in/brandon-smith"
-              className="inline-block py-1.5 hover:underline"
+              className="inline-flex min-h-11 items-center py-2 hover:underline"
             >
               PORT-B ▸ LINKEDIN ↗
             </a>
@@ -38,7 +38,7 @@ export default function Home() {
           <li>
             <a
               href="mailto:aexbrandon@gmail.com"
-              className="inline-block py-1.5 hover:underline"
+              className="inline-flex min-h-11 items-center py-2 hover:underline"
             >
               PORT-C ▸ EMAIL ↗
             </a>

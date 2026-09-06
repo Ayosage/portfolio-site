@@ -48,10 +48,9 @@ export default async function CaseStudy({
   return (
     <main className="p-4 sm:p-6">
       <GardenTracker slug={project.slug} />
-      <EscBack />
       <p className="flex justify-between border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         <span>~/work/{project.slug}</span>
-        <span>[ESC] BACK</span>
+        <EscBack />
       </p>
       <h1 className="phosphor-glow mt-4 text-4xl font-bold uppercase tracking-tighter sm:text-6xl">
         {project.title}

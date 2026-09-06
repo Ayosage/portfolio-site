@@ -31,7 +31,7 @@ export function BrightnessKnob() {
       <span className="sr-only"> level {level} of 5, turn to change</span>
       <span aria-hidden="true" className="mt-1.5 flex flex-col items-center gap-1">
         <span className="knob" style={{ transform: `rotate(${ANGLE[level]}deg)` }} />
-        <span className="flex w-full justify-between text-[8px] tracking-[0.1em]">
+        <span className="flex w-full justify-between text-[10px] tracking-[0.1em]">
           <span>LO</span>
           <span>HI</span>
         </span>
