@@ -193,6 +193,36 @@ body {
     transition: none;
   }
 }
+/* HardwareSwitch thumb: translateX between the off/on rail positions. */
+.switch-thumb {
+  transition: transform 120ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch-thumb {
+    transition: none;
+  }
+}
+/* F-key row: instant press, eased release; hover border on pointer devices only. */
+.fkey {
+  transition:
+    border-color 120ms ease,
+    transform 100ms ease-out;
+}
+.fkey:active {
+  transition: border-color 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .fkey:hover {
+    border-color: var(--phosphor);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fkey,
+  .fkey:active {
+    transition-property: border-color;
+  }
+}
+
 .grille {
   background-color: var(--chassis-well);
   background-image: radial-gradient(circle, rgba(0, 0, 0, 0.75) 0 2px, transparent 2.3px);
@@ -283,5 +313,67 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cursor-blink {
     animation: none;
+  }
+}
+
+/* ---- Diskbay cartridge -------------------------------------------------- */
+.cartridge {
+  border-color: var(--phosphor-dim);
+  transition: border-color 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cartridge:hover {
+    border-color: var(--phosphor);
+  }
+}
+/* Spin-up wait: a 1px settle + a phosphor border pulse for the 250ms before
+   navigation. Reduced motion still navigates at 250ms, just without this. */
+.cartridge-spin {
+  transform: translateY(1px);
+  animation: cartridge-pulse 250ms ease-out;
+}
+@keyframes cartridge-pulse {
+  0%,
+  100% {
+    border-color: var(--phosphor-dim);
+  }
+  50% {
+    border-color: var(--phosphor);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cartridge-spin {
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ---- Boot overlay -------------------------------------------------------- */
+.boot-overlay {
+  opacity: 1;
+  transition: opacity 150ms ease-out;
+}
+.boot-overlay-exit {
+  opacity: 0;
+}
+
+/* ---- Screen garden ------------------------------------------------------- */
+/* Draw-in for newly-grown sprout paths only; already-seen paths never
+   redraw. `pathLength="1"` on the element normalizes the dash math. */
+.garden-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: garden-draw 600ms ease-out forwards;
+}
+@keyframes garden-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .garden-draw {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
   }
 }

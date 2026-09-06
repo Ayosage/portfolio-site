@@ -35,7 +35,7 @@ test('a cartridge label shows title, one-liner and tags', () => {
   expect(link).toHaveTextContent(/NEXT\.JS/)
 })
 
-test('click spins up then navigates', () => {
+test('click spins up then navigates within 250ms', () => {
   vi.useFakeTimers()
   mockReducedMotion(false)
   push.mockClear()
@@ -43,17 +43,23 @@ test('click spins up then navigates', () => {
   fireEvent.click(screen.getByRole('link', { name: /meridian/i }))
   expect(screen.getByText(/SPIN-UP/)).toBeInTheDocument()
   expect(push).not.toHaveBeenCalled()
-  act(() => vi.advanceTimersByTime(600))
+  act(() => vi.advanceTimersByTime(249))
+  expect(push).not.toHaveBeenCalled()
+  act(() => vi.advanceTimersByTime(1))
   expect(push).toHaveBeenCalledWith('/projects/meridian')
   vi.useRealTimers()
 })
 
-test('reduced motion navigates immediately', () => {
+test('reduced motion still navigates at 250ms, without the spin-up animation', () => {
+  vi.useFakeTimers()
   mockReducedMotion(true)
   push.mockClear()
   render(<DiskBay />)
   fireEvent.click(screen.getByRole('link', { name: /meridian/i }))
+  expect(push).not.toHaveBeenCalled()
+  act(() => vi.advanceTimersByTime(250))
   expect(push).toHaveBeenCalledWith('/projects/meridian')
+  vi.useRealTimers()
 })
 
 test('cmd/ctrl-click lets the browser open a new tab instead of intercepting', () => {
