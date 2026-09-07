@@ -5,6 +5,9 @@
   --screen: #0d110b;
   --phosphor: #d8f26e;
   --phosphor-dim: #8fa05c;
+  /* A hotter, more saturated phosphor for hover emphasis — distinct from
+     --phosphor at rest in every theme, including paper. */
+  --phosphor-hot: #f0ffb8;
   --hairline: #3a4a2a;
   --chassis: #23261d;
   --chassis-well: #1b1e15;
@@ -35,6 +38,7 @@
   --screen: #120e08;
   --phosphor: #ffb454;
   --phosphor-dim: #b37e3b;
+  --phosphor-hot: #ffe0a8;
   --hairline: #4a3a22;
   --glow: rgba(255, 180, 84, 0.4);
   --chrome-dim: #c48a45;
@@ -43,6 +47,10 @@
   --screen: #f2edde;
   --phosphor: #1a1a14;
   --phosphor-dim: #5a6050;
+  /* Paper's phosphor is already near-black ink, so "hot" can't mean
+     lighter — a scorched, branding-iron rust reads as emphasis instead of
+     a grey wash. */
+  --phosphor-hot: #7a2e12;
   --hairline: #b8b29e;
   --chassis: #d9d2be;
   --chassis-well: #cfc7b0;
@@ -318,19 +326,22 @@ body {
 
 /* ---- Diskbay cartridge -------------------------------------------------- */
 .cartridge {
-  border-color: var(--phosphor-dim);
   transition: border-color 120ms ease;
 }
 @media (hover: hover) and (pointer: fine) {
   .cartridge:hover {
-    border-color: var(--phosphor);
+    border-color: var(--phosphor-hot);
   }
 }
-/* Spin-up wait: a 1px settle + a phosphor border pulse for the 250ms before
-   navigation. Reduced motion still navigates at 250ms, just without this. */
+/* Spin-up wait: a 1px settle + a phosphor border pulse. Duration is driven
+   by the SPIN_UP_MS constant (src/lib/motion.ts) via the --spin-ms custom
+   property Cartridge.tsx sets inline, so the two can't drift; the 250ms
+   here is only a fallback if that's ever missing. Under reduced motion the
+   component navigates immediately instead of entering this state at all —
+   see Cartridge.tsx. */
 .cartridge-spin {
   transform: translateY(1px);
-  animation: cartridge-pulse 250ms ease-out;
+  animation: cartridge-pulse var(--spin-ms, 250ms) ease-out;
 }
 @keyframes cartridge-pulse {
   0%,
@@ -339,12 +350,6 @@ body {
   }
   50% {
     border-color: var(--phosphor);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cartridge-spin {
-    transform: none;
-    animation: none;
   }
 }
 

@@ -38,6 +38,18 @@ test('starts a fade at 1.2s but stays mounted through it, then unmounts', () => 
   vi.useRealTimers()
 })
 
+test('key/pointer skip during the fade unmounts immediately, no waiting out the fade', () => {
+  vi.useFakeTimers()
+  mockReducedMotion(false)
+  render(<BootOverlay />)
+  // 1200ms timer has started the fade; the 150ms unmount timer hasn't fired yet.
+  act(() => vi.advanceTimersByTime(1250))
+  expect(screen.getByText(/LOADING PORTFOLIO.SYS/)).toBeInTheDocument()
+  fireEvent.keyDown(window, { key: 'x' })
+  expect(screen.queryByText(/LOADING PORTFOLIO.SYS/)).not.toBeInTheDocument()
+  vi.useRealTimers()
+})
+
 test('never shows twice per session', () => {
   mockReducedMotion(false)
   sessionStorage.setItem('bs01-booted', '1')

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { Project } from '@/lib/projects'
+import { SPIN_UP_MS } from '@/lib/motion'
 
 export function Cartridge({ project }: { project: Project }) {
   const router = useRouter()
@@ -30,10 +31,15 @@ export function Cartridge({ project }: { project: Project }) {
       onClick={(e) => {
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
         e.preventDefault()
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          router.push(href)
+          return
+        }
         setSpinning(true)
-        spinUpTimeout.current = setTimeout(() => router.push(href), 250)
+        spinUpTimeout.current = setTimeout(() => router.push(href), SPIN_UP_MS)
       }}
-      className={`cartridge flex flex-col gap-1 border bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] p-2.5 text-[11px] ${spinning ? 'cartridge-spin' : ''}`}
+      style={spinning ? ({ '--spin-ms': `${SPIN_UP_MS}ms` } as React.CSSProperties) : undefined}
+      className={`cartridge flex flex-col gap-1 border border-[var(--phosphor)] bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] p-2.5 text-[11px] ${spinning ? 'cartridge-spin' : ''}`}
     >
       <span className="font-bold tracking-wider">▣ {project.title.toUpperCase()}</span>
       <span className="leading-snug text-[var(--phosphor-dim)]">
