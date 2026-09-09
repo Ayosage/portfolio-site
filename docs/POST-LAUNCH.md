@@ -32,7 +32,7 @@ Status key: `TODO` · `IN PR #n` · `DONE yyyy-mm-dd` · `WONTFIX (reason)`
 |---|---|---|---|---|---|---|
 | A1 | Contact form has no abuse guard | DONE 2026-09-03 | `sendPing` server action validates email + length only; no honeypot, no timing check, no rate limit. Anyone can script it and burn the Resend quota (100/day free) or flood the inbox | Hidden honeypot input + minimum time-to-submit (render timestamp in a hidden field, reject < 2 s) + per-IP token bucket (in-memory is fine on Vercel; Upstash if it ever matters) | Claude | Scripted burst of 20 submissions yields ≤ 3 deliveries; honest submission still delivers; tests cover each guard |
 | A2 | Security headers: only HSTS | DONE 2026-09-03 | `curl -sI https://www.brandon.party/` shows no CSP, X-Content-Type-Options, frame-ancestors, Referrer-Policy, Permissions-Policy | `headers()` in `next.config.ts`. CSP needs a hash (or nonce) for the inline theme-boot script in `layout.tsx`; start with `frame-ancestors 'none'`, `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, a minimal Permissions-Policy, then add CSP in report-only first | Claude | All five headers present on `/`; site renders in all three themes with CSP enforced; no console CSP violations |
-| A3 | Mail delivery unverified in production | TODO | Cannot tell from outside whether `RESEND_API_KEY` is set in Vercel. Without it the form returns `MAIL NOT CONFIGURED` | Submit one ping from the live form and confirm it lands. If not, set `RESEND_API_KEY` (Production scope) and optionally `CONTACT_TO` / `CONTACT_FROM` | Brandon | Test ping received in inbox with working reply-to |
+| A3 | Mail delivery unverified in production | DONE 2026-09-08 | Cannot tell from outside whether `RESEND_API_KEY` is set in Vercel. Without it the form returns `MAIL NOT CONFIGURED` | Submit one ping from the live form and confirm it lands. If not, set `RESEND_API_KEY` (Production scope) and optionally `CONTACT_TO` / `CONTACT_FROM` | Brandon | Test ping received in inbox with working reply-to. Done via Vercel CLI: `RESEND_API_KEY`, `CONTACT_FROM=BS-01 <ping@brandons.sh>` (Resend-verified domain), `CONTACT_TO` set in Production; redeployed; Brandon received the test ping |
 
 ### B. Verifiability (what a recruiter can actually check)
 
@@ -117,11 +117,53 @@ Order: H1–H8 in one PR (accessibility + targets, ~an hour, Lighthouse stays
 100). H9–H14 in a second, smaller motion PR, H9 first since it is the only
 row that costs the visitor time. Resume placeholder is D1.
 
+### I. Dos-and-don'ts audit 2026-09-08
+
+Audited local `main` (at the time 7 commits ahead of `origin/main`; PRs #10/#11
+were merged and deployed later the same day) and the live site against `webdev/docs/claude/DOS-AND-DONTS.md`, using
+Impeccable's context loader and mechanical detector (zero findings) and Emil
+Kowalski's motion review. Live host is now `www.brandons.sh`; `brandon.party`
+and `www.brandon.party` 307/308 to it. Not run: Lighthouse, fresh contrast
+measurement. Brief-earned exceptions kept on purpose, not logged as items:
+monospace everywhere, the lit-bench radial gradient (G1), chassis grain /
+brushed stripes / grille dots, phosphor and LED glow, case-study section
+numbers (they drive the garden), same-size cartridges, 10–11 px chrome text
+(H6).
+
+| # | Item | Status | Evidence | Fix | Owner | Done when |
+|---|---|---|---|---|---|---|
+| I1 | Canonical host still `www.brandon.party` | TODO | `SITE_URL` in `src/lib/site.ts`; live `<link rel=canonical>`, every `og:url` / `og:image`, all 8 sitemap `<loc>`s and the robots `Sitemap:` line point at a host that redirects to `www.brandons.sh` | Change `SITE_URL` to `https://www.brandons.sh`; update this file's header and the memory note; redeploy | Claude | `curl -s https://www.brandons.sh/ \| grep canonical` shows brandons.sh; sitemap and robots agree; share card fetches the image without a redirect |
+| I2 | 404 is the stock Next.js page | TODO | No `src/app/not-found.tsx`; live `/nope-404` renders white background + system font inside the CRT screen | `not-found.tsx` in the terminal voice (`~/404`, NO SUCH FILE, ESC BACK), same `pageMetadata` shape, `noindex` kept | Claude | 404 renders inside the glass in all three themes |
+| I3 | H1–H14 merged locally, never pushed | DONE 2026-09-08 (PRs #10/#11 merged on the dashboard; Vercel auto-deployed; live serial 993e727) | `git log origin/main..main` → 7 commits; live CSS has none of `cartridge-spin`, `garden-draw`, `boot-overlay-exit`, `switch-thumb`; live F-keys still `py-2.5` | `git push origin main` after I1 lands (one deploy) | Brandon | Live serial matches local HEAD; switches ≥ 44 px on live |
+| I4 | `access-control-allow-origin: *` on every HTML route | TODO | Present on `/`, `/about`, `/contact`; not set in `src/lib/headers.ts` | Find the source (Vercel project headers or `vercel.json` history) and remove it; no route needs cross-origin reads | Claude | Header absent on `/` and `/contact` |
+| I5 | Keyword easings everywhere | TODO | `globals.css`: knob, switch-thumb, fkey, cartridge, boot-overlay, garden-draw all use `ease-out` / `ease` | `--ease-out: cubic-bezier(0.23, 1, 0.32, 1)` token in `:root`; swap every transition/animation to it | Claude | `grep -E 'ease-out;\|ease;' globals.css` → 0 outside the token definition |
+| I6 | No press feedback on cartridges, submit button, hardware switches | TODO | Only `.fkey` has `active:translate-y`; `Cartridge.tsx`, `ContactForm.tsx` button, `HardwareSwitch.tsx` have no `:active` | `active:translate-y-[1px]` (hardware idiom, not scale) with the same 100 ms release transition as F-keys; reduced-motion keeps the instant press | Claude | Every pressable moves on press in the browser |
+| I7 | `tracking-tighter` (-0.05em) on every h1 | TODO | `page.tsx`, `about/page.tsx`, `ContactForm.tsx`, `projects/[slug]/page.tsx`, `projects/misc/page.tsx`; floor is -0.04em | `tracking-[-0.03em]` on all five | Claude | `grep tracking-tighter src` → 0 |
+| I8 | Home h1 scales to 7rem | TODO | `text-[clamp(3rem,14vw,7rem)]` in `page.tsx`; display cap is 6rem | `clamp(3rem,14vw,6rem)`; check the two-line name still fits at 1024 px | Claude | Computed size ≤ 96 px at 1280 |
+| I9 | Body measure under the 65ch floor | TODO | `max-w-[52ch]` home, `max-w-[60ch]` about and misc | Decide: raise to 65ch, or record 60ch as the terminal's deliberate line length in DESIGN.md (I13) | Brandon | Either the classes change or DESIGN.md says why not |
+| I10 | Headings not balanced | TODO | No `text-balance` in src | `text-balance` on every h1 and `SectionHeading` | Claude | Class present on each heading |
+| I11 | Selection, caret, numerals unthemed | TODO | No `::selection`, `caret-color`, or `tabular-nums` in src; gauges and spec sheet show numbers | `::selection { background: var(--phosphor); color: var(--screen) }`, `caret-color: var(--phosphor)` on inputs, `tabular-nums` on SOLAR, UPTIME, spec sheet | Claude | Selecting text on the screen reads phosphor-on-glass in all three themes |
+| I12 | 32 em dashes in UI strings | TODO | Title template `%s — Brandon Smith` (`site.ts`), `SectionHeading` (`01 — TITLE`), cartridge `EJECTED —`, three error strings in `actions.ts`, home tagline, about copy, OG alt. MDX is clean | Replace with the site's own separators: `▪` in titles and section headings, `:` or `.` in prose and errors | Claude | `grep -rn '—' src` → 0 |
+| I13 | No DESIGN.md / PRODUCT.md | TODO | Impeccable context loader: `NO_PRODUCT_MD`; fonts (JetBrains Mono + system sans prose) and palette live only in code | `/impeccable init` with Brandon (product truth), then `/impeccable document` to generate DESIGN.md from the code | Both | Both files exist and the loader reports no gap |
+| I14 | No privacy policy page | TODO | Contact form collects email; no `/privacy` route | `src/app/privacy/page.tsx` in the terminal voice: what is collected (email, message, IP for rate limiting), retention, contact for deletion; link from the contact page and About PORTS | Claude | Route live, linked, indexed |
+| I15 | No terms page | TODO | No `/terms` route; the list says always | Decide whether a portfolio with one form needs it. If yes, a short `/terms`; if no, record WONTFIX here | Brandon | Decision recorded |
+| I16 | No analytics | TODO | No analytics dependency or script; CSP `connect-src 'self'` | `@vercel/analytics` (same-origin `/_vercel/insights`, works under the current CSP), no cookie banner needed | Claude | One real pageview visible in the Vercel dashboard |
+| I17 | Scaffold SVGs still in `public/` | TODO | `file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg` | Delete all five | Claude | `ls public` → `favicon`, `resume.pdf` only |
+| I18 | Resume, LinkedIn slug, location placeholders | TODO | Same as D1–D3; re-confirmed 2026-09-08 (`resume.pdf` still 398 bytes) | See D1–D3 | Brandon | D1–D3 closed |
+
+Order: I1 first (one-line). I5–I8, I10–I12
+and I17 are one "craft" PR. I2, I14, I16 are one "pages" PR. I4 is a Vercel
+dashboard check. I9, I13, I15, I18 need Brandon.
+
 ## Suggested order
 
 A1 → C1+C2+C3 (one PR) → A2 → E1+E2 (one PR) → B2 (once B1 is decided). D1–D3 and A3 whenever Brandon has them; they're each a five-minute change.
+
+2026-09-08: I1 → craft PR (I5–I8, I10–I12, I17) → pages PR (I2, I14, I16) → I4. Brandon: I9, I13, I15, I18.
 
 ## Log
 
 - 2026-09-03 — Site live; PR #1 (design pass + deploy prep) and PR #2 (in-glass scrolling, Strict Mode boot fix) merged. Audit run; this file created.
 - 2026-09-03 — PRs #3–#6 merged (form guard, SEO, security headers, CI). Timing-guard bypass caught in review and fixed before merge. Section G added.
+- 2026-09-08 — Vercel CLI installed and linked (project `bdondev`). Production had zero env vars; set Resend key, sender and recipient; redeployed; test ping received. A3 DONE. Cloudflare Email Routing + DMARC management enabled on brandons.sh.
+- 2026-09-08 — Dos-and-don'ts audit against `webdev/docs/claude/DOS-AND-DONTS.md`. Section I added (18 items). Found the canonical-host drift to `www.brandons.sh` and that H1–H14 were never pushed.
