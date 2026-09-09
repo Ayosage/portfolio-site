@@ -53,9 +53,9 @@ export default function Home() {
             </a>
           </li>
           <li>
-            <a href="mailto:aexbrandon@gmail.com" className="inline-flex min-h-10 items-center hover:underline">
-              PORT-C ▸ EMAIL ↗
-            </a>
+            <Link href="/contact" className="inline-flex min-h-10 items-center hover:underline">
+              PORT-C ▸ EMAIL ▸
+            </Link>
           </li>
         </ul>
       </footer>

@@ -6,7 +6,7 @@ import { keysEnabled } from '@/lib/keys'
 const MAP: Record<string, string> = {
   '1': '/', w: '/',
   '2': '/about', a: '/about',
-  '3': '/resume.pdf', c: '/resume.pdf',
+  '3': '/cv', c: '/cv',
   '4': '/contact', p: '/contact',
 }
 

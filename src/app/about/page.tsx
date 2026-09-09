@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/site'
+import { CV } from '@/lib/cv'
 
 export const metadata: Metadata = pageMetadata({
   title: 'About',
@@ -73,7 +74,8 @@ export default function About() {
       </div>
 
       <a
-        href="/resume.pdf"
+        href={CV.pdf.href}
+        download={CV.pdf.filename}
         className="mt-7 inline-block border border-[var(--phosphor)] px-3.5 py-2 text-xs uppercase tracking-[0.04em]"
       >
         Download resume ▸ PDF

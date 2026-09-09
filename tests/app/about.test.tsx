@@ -15,7 +15,10 @@ test('about carries a spec sheet with role, stack and availability rows', () => 
   expect(screen.getByText(/open to work/i)).toBeInTheDocument()
 })
 
-test('about keeps the resume download link', () => {
+test('about resume button saves the PDF instead of opening it', () => {
   render(<About />)
-  expect(screen.getByRole('link', { name: /resume/i })).toHaveAttribute('href', '/resume.pdf')
+  const link = screen.getByRole('link', { name: /resume/i })
+  expect(link).toHaveAttribute('href', '/resume.pdf')
+  expect(link).toHaveAttribute('download')
+  expect(link).not.toHaveAttribute('target')
 })

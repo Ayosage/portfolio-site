@@ -17,6 +17,7 @@ test('sitemap lists every public route on the canonical host', () => {
   expect(urls).toEqual([
     'https://www.brandon.party',
     'https://www.brandon.party/about',
+    'https://www.brandon.party/cv',
     'https://www.brandon.party/contact',
     'https://www.brandon.party/projects/meridian',
     'https://www.brandon.party/projects/steward',
