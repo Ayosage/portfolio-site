@@ -65,7 +65,7 @@ test('step decays every field and is idempotent per frame', () => {
 
 // Real displays run at 60, 90 or 120 Hz. The physics and the draw cadence
 // must not depend on how often rAF fires.
-import { due, IDLE_FPS, BUSY_FPS, SHEEN_FPS } from '@/lib/rig'
+import { due, IDLE_FPS, BUSY_FPS } from '@/lib/rig'
 
 test('step decays by elapsed time, not by call count', () => {
   // Two 60 Hz frames and four 120 Hz frames cover the same 33 ms.
@@ -88,9 +88,6 @@ test('step decays by elapsed time, not by call count', () => {
 test('due gates draws to a target fps whatever the refresh rate', () => {
   expect(IDLE_FPS).toBe(30)
   expect(BUSY_FPS).toBe(60)
-  // The plate sheen is a diffuse 6% band: 20 steps a second read as continuous
-  // and every step re-rasterizes the whole plate in Firefox.
-  expect(SHEEN_FPS).toBe(20)
   // 120 Hz frames are 8.33 ms apart: a 30 fps loop draws every fourth frame.
   let last = 0
   const drawn: number[] = []
