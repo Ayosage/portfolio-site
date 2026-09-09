@@ -1,11 +1,11 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { rig, step } from '@/lib/rig'
+import { IDLE_FPS, due, rig, step } from '@/lib/rig'
 
 // Live trace on a mini tube: idle sine that swells with scroll energy and
 // degauss. Phosphor persistence is a translucent clear each frame; the glow
 // is a second, wider stroke (canvas shadowBlur is a software blur and is
-// slow in Firefox). Runs at 30 fps.
+// slow in Firefox). Runs at 30 fps whatever the display refresh.
 export function Scope() {
   const ref = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
@@ -17,7 +17,7 @@ export function Scope() {
     let alive = true
     let id = 0
     let phase = 0
-    let even = false
+    let lastDraw = -Infinity
     let w = c.clientWidth
     let h = c.clientHeight
     const size = () => {
@@ -32,11 +32,11 @@ export function Scope() {
     const tick = (t: number) => {
       if (!alive) return
       step(t)
-      even = !even
-      if (even) {
+      if (!due(t, lastDraw, IDLE_FPS)) {
         id = requestAnimationFrame(tick)
         return
       }
+      lastDraw = t
       ctx.setTransform(d, 0, 0, d, 0, 0)
       ctx.globalAlpha = 0.4
       ctx.fillStyle = '#0d110b'

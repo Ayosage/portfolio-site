@@ -16,7 +16,7 @@ export function Chassis({ children }: { children: React.ReactNode }) {
           className="rig relative flex h-dvh w-[min(100vw,1080px)] flex-col px-1 pb-20 pt-1 sm:h-[calc(100dvh-2rem)] sm:rounded-lg sm:px-[18px] sm:pb-[18px] sm:pt-[14px]"
         >
           <PointerParallax />
-          <span className="rig-sheen" aria-hidden="true" />
+          <span data-px className="rig-sheen" aria-hidden="true" />
           <i data-rivet aria-hidden="true" className="rivet hidden left-1.5 top-1.5 sm:block" />
           <i data-rivet aria-hidden="true" className="rivet hidden right-1.5 top-1.5 sm:block" />
           <i data-rivet aria-hidden="true" className="rivet rivet-rust hidden bottom-1.5 left-1.5 sm:block" />

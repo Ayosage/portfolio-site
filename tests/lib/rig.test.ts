@@ -62,3 +62,58 @@ test('step decays every field and is idempotent per frame', () => {
   expect(rig.energy).toBeLessThan(0.01)
   expect(rig.glitch).toBeLessThan(0.01)
 })
+
+// Real displays run at 60, 90 or 120 Hz. The physics and the draw cadence
+// must not depend on how often rAF fires.
+import { due, IDLE_FPS, BUSY_FPS, SHEEN_FPS } from '@/lib/rig'
+
+test('step decays by elapsed time, not by call count', () => {
+  // Two 60 Hz frames and four 120 Hz frames cover the same 33 ms.
+  step(0)
+  kick(1)
+  step(16.67)
+  step(33.33)
+  const at60 = rig.energy
+  rig.energy = 0
+  step(1000)
+  kick(1)
+  step(1008.33)
+  step(1016.67)
+  step(1025)
+  step(1033.33)
+  expect(rig.energy).toBeCloseTo(at60, 3)
+  expect(at60).toBeCloseTo(0.94 * 0.94, 2)
+})
+
+test('due gates draws to a target fps whatever the refresh rate', () => {
+  expect(IDLE_FPS).toBe(30)
+  expect(BUSY_FPS).toBe(60)
+  // The plate sheen is a diffuse 6% band: 20 steps a second read as continuous
+  // and every step re-rasterizes the whole plate in Firefox.
+  expect(SHEEN_FPS).toBe(20)
+  // 120 Hz frames are 8.33 ms apart: a 30 fps loop draws every fourth frame.
+  let last = 0
+  const drawn: number[] = []
+  for (let i = 1; i <= 12; i++) {
+    const t = i * 8.333
+    if (due(t, last, 30)) {
+      drawn.push(i)
+      last = t
+    }
+  }
+  expect(drawn).toEqual([4, 8, 12])
+  // 60 Hz frames are 16.67 ms apart: a 30 fps loop draws every other frame,
+  // a 60 fps loop draws every frame.
+  last = 0
+  const at60: number[] = []
+  for (let i = 1; i <= 4; i++) {
+    const t = i * 16.667
+    if (due(t, last, 30)) {
+      at60.push(i)
+      last = t
+    }
+  }
+  expect(at60).toEqual([2, 4])
+  expect(due(16.667, 0, 60)).toBe(true)
+  expect(due(8.333, 0, 60)).toBe(false)
+})
