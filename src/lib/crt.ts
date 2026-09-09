@@ -35,7 +35,8 @@ void main(){
 }`
 
 export type Gl = {
-  resize(): void
+  /** Size in CSS pixels; rendered at 1× regardless of DPR (the tube is soft). */
+  resize(cssW: number, cssH: number): void
   set(name: string, v: number): void
   draw(): void
   lose(): void
@@ -72,16 +73,15 @@ export function createGL(canvas: HTMLCanvasElement): Gl | null {
     return uniforms.get(n) ?? null
   }
   return {
-    resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
-      const w = Math.max(1, Math.floor(canvas.clientWidth * dpr))
-      const h = Math.max(1, Math.floor(canvas.clientHeight * dpr))
+    resize(cssW, cssH) {
+      const w = Math.max(1, Math.floor(cssW))
+      const h = Math.max(1, Math.floor(cssH))
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w
         canvas.height = h
         gl.viewport(0, 0, w, h)
+        gl.uniform2f(u('u_res'), w, h)
       }
-      gl.uniform2f(u('u_res'), w, h)
     },
     set(name, v) {
       gl.uniform1f(u(name), v)

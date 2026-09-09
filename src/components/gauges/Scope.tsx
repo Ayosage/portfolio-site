@@ -3,7 +3,9 @@ import { useEffect, useRef } from 'react'
 import { rig, step } from '@/lib/rig'
 
 // Live trace on a mini tube: idle sine that swells with scroll energy and
-// degauss. Phosphor persistence is a translucent clear each frame.
+// degauss. Phosphor persistence is a translucent clear each frame; the glow
+// is a second, wider stroke (canvas shadowBlur is a software blur and is
+// slow in Firefox). Runs at 30 fps.
 export function Scope() {
   const ref = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
@@ -15,26 +17,33 @@ export function Scope() {
     let alive = true
     let id = 0
     let phase = 0
+    let even = false
+    let w = c.clientWidth
+    let h = c.clientHeight
+    const size = () => {
+      w = c.clientWidth
+      h = c.clientHeight
+      c.width = Math.max(1, w * d)
+      c.height = Math.max(1, h * d)
+    }
+    size()
+    const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(size) : null
+    ro?.observe(c)
     const tick = (t: number) => {
       if (!alive) return
       step(t)
-      const w = c.clientWidth
-      const h = c.clientHeight
-      if (c.width !== w * d) {
-        c.width = w * d
-        c.height = h * d
+      even = !even
+      if (even) {
+        id = requestAnimationFrame(tick)
+        return
       }
       ctx.setTransform(d, 0, 0, d, 0, 0)
-      ctx.globalAlpha = 0.28
+      ctx.globalAlpha = 0.4
       ctx.fillStyle = '#0d110b'
       ctx.fillRect(0, 0, w, h)
       ctx.globalAlpha = 1
-      ctx.strokeStyle = '#d8f26e'
-      ctx.lineWidth = 1.4
-      ctx.shadowColor = '#d8f26e'
-      ctx.shadowBlur = 4
       const amp = 0.18 + rig.energy * 0.8 + rig.degauss * 0.6
-      phase += 0.11 + rig.energy * 0.3
+      phase += 0.2 + rig.energy * 0.5
       ctx.beginPath()
       for (let x = 0; x <= w; x += 2) {
         const u = x / w
@@ -42,14 +51,20 @@ export function Scope() {
         if (x === 0) ctx.moveTo(x, y)
         else ctx.lineTo(x, y)
       }
+      ctx.lineCap = 'round'
+      ctx.strokeStyle = 'rgba(216,242,110,0.28)'
+      ctx.lineWidth = 3.5
       ctx.stroke()
-      ctx.shadowBlur = 0
+      ctx.strokeStyle = '#d8f26e'
+      ctx.lineWidth = 1.3
+      ctx.stroke()
       id = requestAnimationFrame(tick)
     }
     id = requestAnimationFrame(tick)
     return () => {
       alive = false
       cancelAnimationFrame(id)
+      ro?.disconnect()
     }
   }, [])
   return (
