@@ -35,8 +35,6 @@
   --cart-side: #101208;
   --label: #d9d2be;
   --label-ink: #23261d;
-  /* Pointer position in -1..1, written by PointerParallax. Lighting only. */
-  --py: 0;
   --bright: 1;
   color-scheme: dark;
 }
