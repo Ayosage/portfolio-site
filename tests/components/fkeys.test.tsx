@@ -14,7 +14,7 @@ test('renders four real links', () => {
   render(<FKeyRow />)
   expect(screen.getByRole('link', { name: /F1 WORK/i })).toHaveAttribute('href', '/')
   expect(screen.getByRole('link', { name: /F2 ABOUT/i })).toHaveAttribute('href', '/about')
-  expect(screen.getByRole('link', { name: /F3 CV/i })).toHaveAttribute('href', '/resume.pdf')
+  expect(screen.getByRole('link', { name: /F3 CV/i })).toHaveAttribute('href', '/cv')
   expect(screen.getByRole('link', { name: /F4 PING/i })).toHaveAttribute('href', '/contact')
 })
 
@@ -22,6 +22,15 @@ test('keyboard shortcut navigates', () => {
   render(<FKeyRow />)
   fireEvent.keyDown(window, { key: '2' })
   expect(push).toHaveBeenCalledWith('/about')
+})
+
+test('F3 shortcuts open the in-console CV, not the PDF', () => {
+  push.mockClear()
+  render(<FKeyRow />)
+  fireEvent.keyDown(window, { key: '3' })
+  expect(push).toHaveBeenCalledWith('/cv')
+  fireEvent.keyDown(window, { key: 'c' })
+  expect(push).toHaveBeenLastCalledWith('/cv')
 })
 
 test('shortcuts ignored when KEYS switch is off', () => {

@@ -13,5 +13,12 @@ test('ports footer has the three contact links', () => {
   render(<Home />)
   expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute('href', 'https://github.com/Ayosage')
   expect(screen.getByRole('link', { name: /linkedin/i })).toBeInTheDocument()
-  expect(screen.getByRole('link', { name: /email/i })).toHaveAttribute('href', 'mailto:aexbrandon@gmail.com')
+  expect(screen.getByRole('link', { name: /email/i })).toBeInTheDocument()
+})
+
+test('email port routes to the contact form, not a mailto', () => {
+  render(<Home />)
+  const email = screen.getByRole('link', { name: /email/i })
+  expect(email).toHaveAttribute('href', '/contact')
+  expect(email).not.toHaveAttribute('target')
 })
