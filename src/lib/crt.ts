@@ -1,9 +1,10 @@
 // The tube. One fullscreen triangle, one fragment shader: curvature, scanlines
 // as a raster consequence, phosphor glow field, rolling bar, noise, boot
-// re-raster, glitch tear, degauss wobble. Colours are the green tokens.
+// re-raster, glitch tear, degauss wobble, and the glass reflection band that
+// slides with the pointer (u_px). Colours are the green tokens.
 export const CRT_FRAG = `
 precision mediump float;
-uniform vec2 u_res; uniform float u_time, u_boot, u_glitch, u_flash, u_degauss, u_scan, u_bright, u_motion;
+uniform vec2 u_res; uniform float u_time, u_boot, u_glitch, u_flash, u_degauss, u_scan, u_bright, u_motion, u_px;
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 vec2 curve(vec2 uv){ uv = uv * 2.0 - 1.0; vec2 o = abs(uv.yx) / vec2(7.0, 5.5); uv = uv + uv * o * o; return uv * 0.5 + 0.5; }
 void main(){
@@ -31,6 +32,12 @@ void main(){
   col *= mix(0.8, 1.25, clamp(u_bright, 0.0, 1.5) / 1.35);
   col += phos * u_flash;
   col *= inb * band;
+  // Glass reflection: a soft diagonal band on the flat face (uv, not the
+  // curved picture), swept by the pointer. Same look as the old DOM band
+  // (112deg, 6% white peak) but drawn here, where the tube already redraws.
+  float r = uv.x * 0.927 + (1.0 - uv.y) * 0.375 + u_px * 0.24;
+  float refl = 0.06 * exp(-pow((r - 0.62) / 0.11, 2.0)) + 0.012 * exp(-pow((r - 0.72) / 0.06, 2.0));
+  col += vec3(refl) * inb;
   gl_FragColor = vec4(col, 1.0);
 }`
 

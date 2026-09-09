@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useRef } from 'react'
 
-// Fingerprints on the glass (drawn once) and a reflection band that slides
-// with the pointer via --px. Both sit above the pane and never take clicks.
+// Fingerprints on the glass, drawn once. Sits above the pane and never takes
+// clicks. The pointer-driven reflection band is drawn by the tube shader.
 export function Glass() {
   const ref = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
@@ -43,10 +43,5 @@ export function Glass() {
     ro.observe(cv)
     return () => ro.disconnect()
   }, [])
-  return (
-    <>
-      <canvas ref={ref} className="crt-glass" aria-hidden="true" />
-      <div className="crt-reflect" aria-hidden="true" />
-    </>
-  )
+  return <canvas ref={ref} className="crt-glass" aria-hidden="true" />
 }

@@ -307,8 +307,6 @@ body {
     inset 0 12px 30px rgba(0, 0, 0, 0.55),
     inset 0 0 40px rgba(0, 0, 0, 0.35);
   transform: translateZ(0);
-  --gl: 0;
-  --on: 1;
 }
 .crt-gl {
   position: absolute;
@@ -347,33 +345,13 @@ body {
   height: 100%;
   pointer-events: none;
 }
-/* Reflection band: a wide layer slid by transform (compositor only). */
-.crt-reflect {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -70%;
-  width: 240%;
-  z-index: 3;
-  pointer-events: none;
-  background: linear-gradient(
-    112deg,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.06) 44%,
-    rgba(255, 255, 255, 0.015) 50%,
-    rgba(255, 255, 255, 0) 60%
-  );
-  transform: translateX(calc(var(--px) * -16%));
-  will-change: transform;
-}
-/* Content scrolls inside the glass; the pane tears with the picture. */
+/* Content scrolls inside the glass. The tear (transform) and the boot fade
+   (opacity) are inline styles written by CrtCanvas. */
 .screen-pane {
   position: relative;
   z-index: 1;
   scrollbar-width: thin;
   scrollbar-color: var(--phosphor-dim) transparent;
-  transform: translateX(calc(var(--gl) * 6px)) skewX(calc(var(--gl) * -1.5deg));
-  opacity: var(--on);
 }
 @media (min-width: 640px) {
   .screen-pane[data-fixed] {

@@ -86,16 +86,43 @@ export function degaussPulse(): void {
   rig.degauss = 1
 }
 
+/** Draw rate while nothing is happening on screen. */
+export const IDLE_FPS = 30
+/** Draw rate while the picture is booting, tearing, flashing or scrolling. */
+export const BUSY_FPS = 60
+/**
+ * Update rate for the plate sheen. Every step moves a plate-sized band, which
+ * Firefox answers by re-rasterizing every tile under it; a diffuse 6% band
+ * stepped 20 times a second still reads as a sweep.
+ */
+export const SHEEN_FPS = 20
+
+/**
+ * True when at least one period at `fps` has elapsed since `last`. rAF fires
+ * at the display's refresh rate (60, 90, 120 Hz); every loop gates its work
+ * through this so a 120 Hz display does not double the cost. The 1 ms slack
+ * lets 8.33 ms frames land exactly on 60 and 30 fps periods.
+ */
+export function due(now: number, last: number, fps: number): boolean {
+  return now - last >= 1000 / fps - 1
+}
+
+const REF_FRAME_MS = 1000 / 60
 let lastFrame = -1
-/** Per-frame decay. Idempotent per timestamp so several loops can call it. */
+/**
+ * Decay by elapsed time. Rates are expressed per 60 Hz frame and scaled by
+ * the real delta, so 120 Hz displays decay at the same speed. Idempotent per
+ * timestamp so several loops can call it in the same frame.
+ */
 export function step(now: number): void {
   if (now === lastFrame) return
+  const k = lastFrame < 0 ? 1 : Math.min(4, Math.max(0, now - lastFrame) / REF_FRAME_MS)
   lastFrame = now
-  rig.glitch += (rig.tglitch - rig.glitch) * 0.25
-  rig.tglitch = Math.max(0, rig.tglitch - 0.05)
-  rig.flash = Math.max(0, rig.flash - 0.05)
-  rig.degauss = Math.max(0, rig.degauss - 0.02)
-  rig.energy *= 0.94
+  rig.glitch += (rig.tglitch - rig.glitch) * (1 - Math.pow(0.75, k))
+  rig.tglitch = Math.max(0, rig.tglitch - 0.05 * k)
+  rig.flash = Math.max(0, rig.flash - 0.05 * k)
+  rig.degauss = Math.max(0, rig.degauss - 0.02 * k)
+  rig.energy *= Math.pow(0.94, k)
 }
 
 export function reducedMotion(): boolean {
