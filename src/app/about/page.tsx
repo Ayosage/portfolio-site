@@ -15,13 +15,22 @@ const SPEC: [string, React.ReactNode][] = [
   [
     'Ports',
     <span key="ports" className="flex flex-wrap gap-x-5 gap-y-1">
-      <a href="https://github.com/Ayosage" className="hover:underline">
+      <a
+        href="https://github.com/Ayosage"
+        className="inline-flex min-h-11 items-center py-2 hover:underline"
+      >
         GITHUB ↗
       </a>
-      <a href="https://www.linkedin.com/in/brandon-smith" className="hover:underline">
+      <a
+        href="https://www.linkedin.com/in/brandon-smith"
+        className="inline-flex min-h-11 items-center py-2 hover:underline"
+      >
         LINKEDIN ↗
       </a>
-      <a href="mailto:aexbrandon@gmail.com" className="hover:underline">
+      <a
+        href="mailto:aexbrandon@gmail.com"
+        className="inline-flex min-h-11 items-center py-2 hover:underline"
+      >
         EMAIL ↗
       </a>
     </span>,

@@ -22,7 +22,7 @@ export function ThemeDial() {
       className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-left text-[10px] text-[var(--chrome-dim)]"
     >
       THEME DIAL
-      <span className="mt-1 grid grid-cols-3 text-center text-[9px]">
+      <span className="mt-1 grid grid-cols-3 text-center text-[10px]">
         {THEMES.map((t) => (
           <span
             key={t}
