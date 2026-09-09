@@ -5,6 +5,7 @@ const push = vi.fn()
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }))
 
 import { DiskBay } from '@/components/diskbay/DiskBay'
+import { SPIN_UP_MS } from '@/lib/motion'
 
 function mockReducedMotion(matches: boolean) {
   window.matchMedia = vi.fn().mockReturnValue({ matches }) as unknown as typeof window.matchMedia
@@ -35,7 +36,7 @@ test('a cartridge label shows title, one-liner and tags', () => {
   expect(link).toHaveTextContent(/NEXT\.JS/)
 })
 
-test('click spins up then navigates', () => {
+test('click spins up then navigates within SPIN_UP_MS', () => {
   vi.useFakeTimers()
   mockReducedMotion(false)
   push.mockClear()
@@ -43,17 +44,20 @@ test('click spins up then navigates', () => {
   fireEvent.click(screen.getByRole('link', { name: /meridian/i }))
   expect(screen.getByText(/SPIN-UP/)).toBeInTheDocument()
   expect(push).not.toHaveBeenCalled()
-  act(() => vi.advanceTimersByTime(600))
+  act(() => vi.advanceTimersByTime(SPIN_UP_MS - 1))
+  expect(push).not.toHaveBeenCalled()
+  act(() => vi.advanceTimersByTime(1))
   expect(push).toHaveBeenCalledWith('/projects/meridian')
   vi.useRealTimers()
 })
 
-test('reduced motion navigates immediately', () => {
+test('reduced motion navigates immediately, without the spin-up animation', () => {
   mockReducedMotion(true)
   push.mockClear()
   render(<DiskBay />)
   fireEvent.click(screen.getByRole('link', { name: /meridian/i }))
   expect(push).toHaveBeenCalledWith('/projects/meridian')
+  expect(screen.queryByText(/SPIN-UP/)).not.toBeInTheDocument()
 })
 
 test('cmd/ctrl-click lets the browser open a new tab instead of intercepting', () => {

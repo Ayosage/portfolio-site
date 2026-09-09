@@ -6,15 +6,31 @@ import { MAX_STAGE, readSections, stageFor } from '@/lib/garden'
 // stage per case-study section read (same 'bs01-garden' events the old
 // gauge-well garden used). Non-interactive; clipped by .crt-screen.
 export function ScreenGarden() {
-  const [stage, setStage] = useState(0)
+  const [state, setState] = useState({ stage: 0, prevStage: 0 })
+  const [reduced, setReduced] = useState(false)
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setStage(stageFor(readSections().size))
-    const onGrow = (e: Event) => setStage((e as CustomEvent<number>).detail)
+    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    const initial = stageFor(readSections().size)
+    // Restoring progress from a previous visit isn't a growth moment — start
+    // with nothing "new" so those paths render already drawn.
+    setState({ stage: initial, prevStage: initial })
+    const onGrow = (e: Event) => {
+      const next = (e as CustomEvent<number>).detail
+      setState((s) => ({ stage: next, prevStage: s.stage }))
+    }
     window.addEventListener('bs01-garden', onGrow)
     return () => window.removeEventListener('bs01-garden', onGrow)
   }, [])
+
+  const { stage, prevStage } = state
   if (stage === 0) return null
+
+  // Only paths newer than the previously-seen stage draw in; paths already
+  // on screen before this render never redraw.
+  const drawClass = (n: number) => (n > prevStage && !reduced ? 'garden-draw' : undefined)
+
   return (
     <>
       <span className="sr-only" role="status">
@@ -26,10 +42,46 @@ export function ScreenGarden() {
         aria-hidden="true"
         className="pointer-events-none absolute bottom-0 right-3 h-11 w-auto opacity-70"
       >
-        {stage >= 1 && <path d="M18 44 C18 36 16 32 12 28" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}
-        {stage >= 2 && <path d="M30 44 C30 32 34 26 38 20" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}
-        {stage >= 3 && <path d="M52 44 C52 34 48 30 44 26 M52 44 C52 30 56 24 60 18" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}
-        {stage >= 4 && <path d="M76 44 C76 34 80 28 86 24" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />}
+        {stage >= 1 && (
+          <path
+            pathLength={1}
+            className={drawClass(1)}
+            d="M18 44 C18 36 16 32 12 28"
+            stroke="var(--phosphor-dim)"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        )}
+        {stage >= 2 && (
+          <path
+            pathLength={1}
+            className={drawClass(2)}
+            d="M30 44 C30 32 34 26 38 20"
+            stroke="var(--phosphor-dim)"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        )}
+        {stage >= 3 && (
+          <path
+            pathLength={1}
+            className={drawClass(3)}
+            d="M52 44 C52 34 48 30 44 26 M52 44 C52 30 56 24 60 18"
+            stroke="var(--phosphor-dim)"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        )}
+        {stage >= 4 && (
+          <path
+            pathLength={1}
+            className={drawClass(4)}
+            d="M76 44 C76 34 80 28 86 24"
+            stroke="var(--phosphor-dim)"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        )}
         {stage >= 5 && (
           <>
             <circle cx="12" cy="27" r="2" fill="var(--phosphor)" />
@@ -38,7 +90,14 @@ export function ScreenGarden() {
         )}
         {stage >= 6 && (
           <>
-            <path d="M98 44 C98 36 102 32 106 30" stroke="var(--phosphor-dim)" strokeWidth="1.5" fill="none" />
+            <path
+              pathLength={1}
+              className={drawClass(6)}
+              d="M98 44 C98 36 102 32 106 30"
+              stroke="var(--phosphor-dim)"
+              strokeWidth="1.5"
+              fill="none"
+            />
             <circle cx="86" cy="23" r="2" fill="var(--phosphor)" />
           </>
         )}

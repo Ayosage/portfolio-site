@@ -27,11 +27,25 @@ test('any key skips it', () => {
   expect(screen.queryByText(/LOADING PORTFOLIO.SYS/)).not.toBeInTheDocument()
 })
 
-test('auto-dismisses after 1.2s', () => {
+test('starts a fade at 1.2s but stays mounted through it, then unmounts', () => {
   vi.useFakeTimers()
   mockReducedMotion(false)
   render(<BootOverlay />)
-  act(() => vi.advanceTimersByTime(1300))
+  act(() => vi.advanceTimersByTime(1250))
+  expect(screen.getByText(/LOADING PORTFOLIO.SYS/)).toBeInTheDocument()
+  act(() => vi.advanceTimersByTime(150))
+  expect(screen.queryByText(/LOADING PORTFOLIO.SYS/)).not.toBeInTheDocument()
+  vi.useRealTimers()
+})
+
+test('key/pointer skip during the fade unmounts immediately, no waiting out the fade', () => {
+  vi.useFakeTimers()
+  mockReducedMotion(false)
+  render(<BootOverlay />)
+  // 1200ms timer has started the fade; the 150ms unmount timer hasn't fired yet.
+  act(() => vi.advanceTimersByTime(1250))
+  expect(screen.getByText(/LOADING PORTFOLIO.SYS/)).toBeInTheDocument()
+  fireEvent.keyDown(window, { key: 'x' })
   expect(screen.queryByText(/LOADING PORTFOLIO.SYS/)).not.toBeInTheDocument()
   vi.useRealTimers()
 })
@@ -58,7 +72,8 @@ test('still dismisses when React Strict Mode double-runs the effect (dev)', () =
     </StrictMode>,
   )
   expect(screen.getByText(/LOADING PORTFOLIO.SYS/)).toBeInTheDocument()
-  act(() => vi.advanceTimersByTime(1300))
+  act(() => vi.advanceTimersByTime(1200))
+  act(() => vi.advanceTimersByTime(150))
   expect(screen.queryByText(/LOADING PORTFOLIO.SYS/)).not.toBeInTheDocument()
   vi.useRealTimers()
 })

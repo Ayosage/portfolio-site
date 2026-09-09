@@ -48,10 +48,9 @@ export function HardwareSwitch(props: {
       )}
       <span className="inline-block h-3 w-6 rounded-full bg-[var(--chassis-well)] relative">
         <span
-          className="absolute top-[2px] h-2 w-2 rounded-full transition-none"
+          className="switch-thumb absolute top-[2px] left-[2px] h-2 w-2 rounded-full"
           style={{
-            left: on ? 'auto' : '2px',
-            right: on ? '2px' : 'auto',
+            transform: on ? 'translateX(12px)' : 'translateX(0)',
             background: on ? 'var(--phosphor)' : 'var(--phosphor-dim)',
           }}
         />

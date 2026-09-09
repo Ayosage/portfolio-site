@@ -5,6 +5,9 @@
   --screen: #0d110b;
   --phosphor: #d8f26e;
   --phosphor-dim: #8fa05c;
+  /* A hotter, more saturated phosphor for hover emphasis — distinct from
+     --phosphor at rest in every theme, including paper. */
+  --phosphor-hot: #f0ffb8;
   --hairline: #3a4a2a;
   --chassis: #23261d;
   --chassis-well: #1b1e15;
@@ -35,6 +38,7 @@
   --screen: #120e08;
   --phosphor: #ffb454;
   --phosphor-dim: #b37e3b;
+  --phosphor-hot: #ffe0a8;
   --hairline: #4a3a22;
   --glow: rgba(255, 180, 84, 0.4);
   --chrome-dim: #c48a45;
@@ -43,6 +47,10 @@
   --screen: #f2edde;
   --phosphor: #1a1a14;
   --phosphor-dim: #5a6050;
+  /* Paper's phosphor is already near-black ink, so "hot" can't mean
+     lighter — a scorched, branding-iron rust reads as emphasis instead of
+     a grey wash. */
+  --phosphor-hot: #7a2e12;
   --hairline: #b8b29e;
   --chassis: #d9d2be;
   --chassis-well: #cfc7b0;
@@ -193,6 +201,36 @@ body {
     transition: none;
   }
 }
+/* HardwareSwitch thumb: translateX between the off/on rail positions. */
+.switch-thumb {
+  transition: transform 120ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch-thumb {
+    transition: none;
+  }
+}
+/* F-key row: instant press, eased release; hover border on pointer devices only. */
+.fkey {
+  transition:
+    border-color 120ms ease,
+    transform 100ms ease-out;
+}
+.fkey:active {
+  transition: border-color 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .fkey:hover {
+    border-color: var(--phosphor);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fkey,
+  .fkey:active {
+    transition-property: border-color;
+  }
+}
+
 .grille {
   background-color: var(--chassis-well);
   background-image: radial-gradient(circle, rgba(0, 0, 0, 0.75) 0 2px, transparent 2.3px);
@@ -283,5 +321,64 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cursor-blink {
     animation: none;
+  }
+}
+
+/* ---- Diskbay cartridge -------------------------------------------------- */
+.cartridge {
+  transition: border-color 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cartridge:hover {
+    border-color: var(--phosphor-hot);
+  }
+}
+/* Spin-up wait: a 1px settle + a phosphor border pulse. Duration is driven
+   by the SPIN_UP_MS constant (src/lib/motion.ts) via the --spin-ms custom
+   property Cartridge.tsx sets inline, so the two can't drift; the 250ms
+   here is only a fallback if that's ever missing. Under reduced motion the
+   component navigates immediately instead of entering this state at all —
+   see Cartridge.tsx. */
+.cartridge-spin {
+  transform: translateY(1px);
+  animation: cartridge-pulse var(--spin-ms, 250ms) ease-out;
+}
+@keyframes cartridge-pulse {
+  0%,
+  100% {
+    border-color: var(--phosphor-dim);
+  }
+  50% {
+    border-color: var(--phosphor);
+  }
+}
+
+/* ---- Boot overlay -------------------------------------------------------- */
+.boot-overlay {
+  opacity: 1;
+  transition: opacity 150ms ease-out;
+}
+.boot-overlay-exit {
+  opacity: 0;
+}
+
+/* ---- Screen garden ------------------------------------------------------- */
+/* Draw-in for newly-grown sprout paths only; already-seen paths never
+   redraw. `pathLength="1"` on the element normalizes the dash math. */
+.garden-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: garden-draw 600ms ease-out forwards;
+}
+@keyframes garden-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .garden-draw {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
   }
 }
