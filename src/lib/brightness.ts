@@ -1,6 +1,8 @@
 // BRIGHTNESS knob on the gauge column. Five detents; 3 is the factory setting.
 // The level is stamped on <html> as data-brightness and CSS maps it to a veil
 // over the CRT and the phosphor glow radius (see globals.css).
+import { rig } from './rig'
+
 export const BRIGHTNESS_LEVELS = [1, 2, 3, 4, 5] as const
 export type Brightness = (typeof BRIGHTNESS_LEVELS)[number]
 export const DEFAULT_BRIGHTNESS: Brightness = 3
@@ -17,6 +19,7 @@ export function nextBrightness(b: Brightness): Brightness {
 
 export function applyBrightness(b: Brightness): void {
   document.documentElement.dataset.brightness = String(b)
+  rig.bright = b
   try {
     localStorage.setItem(BRIGHTNESS_KEY, String(b))
   } catch {

@@ -1,6 +1,6 @@
 import { SolarMeter } from './SolarMeter'
 import { UptimeGauge } from './UptimeGauge'
-import { ThemeDial } from './ThemeDial'
+import { Weather } from './Weather'
 import { Scope } from './Scope'
 import { BrightnessKnob } from './BrightnessKnob'
 
@@ -12,12 +12,13 @@ export function GaugeCluster() {
     >
       <SolarMeter />
       <UptimeGauge />
-      <ThemeDial />
-      <div className="border border-[var(--chassis-well)] bg-[var(--chassis-well)] p-1.5 text-[10px] text-[var(--chrome-dim)]">
+      <Weather />
+      <div className="well">
         STATUS
-        <div className="whitespace-nowrap text-[var(--phosphor)]">
+        <div className="well-val">
+          <span aria-hidden="true" className="lens mr-1 !h-[7px] !w-[7px] align-[-1px]" />
           <span className="sm:hidden">OPEN</span>
-          <span className="hidden sm:inline">● OPEN TO WORK</span>
+          <span className="hidden sm:inline">OPEN TO WORK</span>
         </div>
       </div>
       <Scope />

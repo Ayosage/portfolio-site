@@ -1,12 +1,10 @@
 @import 'tailwindcss';
 
-:root,
-[data-theme='green'] {
+:root {
   --screen: #0d110b;
   --phosphor: #d8f26e;
   --phosphor-dim: #8fa05c;
-  /* A hotter, more saturated phosphor for hover emphasis — distinct from
-     --phosphor at rest in every theme, including paper. */
+  /* A hotter, more saturated phosphor for hover emphasis. */
   --phosphor-hot: #f0ffb8;
   --hairline: #3a4a2a;
   --chassis: #23261d;
@@ -15,10 +13,8 @@
   --alert: #7a3020;
   --alert-text: #f0d8c8;
   --glow: rgba(216, 242, 110, 0.4);
-  /* Dim text on chassis/chrome surfaces (TopBezel, footer, gauge wells). Must hold
-     4.5:1 against both --chassis and --chassis-well in every theme — see contrast
-     table in fixwave-report.md. Distinct from --phosphor-dim, which is screen-surface
-     only (inside .crt-screen) and is tuned against --screen instead. */
+  /* Dim text on chassis/chrome surfaces. Holds 4.5:1 against --chassis and
+     --chassis-well. --phosphor-dim is screen-surface only, tuned against --screen. */
   --chrome-dim: #8fa05c;
   /* Bench (the surface the rig sits on) and the metal finish of the plate. */
   --bench: #0f110b;
@@ -31,52 +27,21 @@
   --rivet-hi: #7d8072;
   --rivet-mid: #4e5246;
   --rivet-lo: #1d1f17;
-  --knob-hi: #3a3e33;
+  --knob-hi: #3f4437;
   --knob-lo: #23261d;
-}
-[data-theme='amber'] {
-  --screen: #120e08;
-  --phosphor: #ffb454;
-  --phosphor-dim: #b37e3b;
-  --phosphor-hot: #ffe0a8;
-  --hairline: #4a3a22;
-  --glow: rgba(255, 180, 84, 0.4);
-  --chrome-dim: #c48a45;
-}
-[data-theme='paper'] {
-  --screen: #f2edde;
-  --phosphor: #1a1a14;
-  --phosphor-dim: #5a6050;
-  /* Paper's phosphor is already near-black ink, so "hot" can't mean
-     lighter — a scorched, branding-iron rust reads as emphasis instead of
-     a grey wash. */
-  --phosphor-hot: #7a2e12;
-  --hairline: #b8b29e;
-  --chassis: #d9d2be;
-  --chassis-well: #cfc7b0;
-  --keycap: #e5dfc9;
-  --alert: #b74626;
-  --alert-text: #f2edde;
-  --glow: transparent;
-  --chrome-dim: #4a4f42;
-  --bench: #b3ac97;
-  --bench-light: #c9c2ad;
-  --sheen-hi: #e2dcc9;
-  --sheen-lo: #d2cbb6;
-  --edge-hi: rgba(255, 255, 255, 0.55);
-  --edge-lo: rgba(0, 0, 0, 0.22);
-  --wear: 120, 118, 108;
-  --rivet-hi: #f0ece0;
-  --rivet-mid: #b8b3a2;
-  --rivet-lo: #6e6a5e;
-  --knob-hi: #efe9d6;
-  --knob-lo: #cfc7b0;
-}
-
-/* BRIGHTNESS detents → veil over the CRT (below 1) and glow radius (above 1). */
-:root {
+  /* Cartridge plastic and its paper label. */
+  --cart-hi: #3a3e33;
+  --cart-lo: #262a21;
+  --cart-side: #101208;
+  --label: #d9d2be;
+  --label-ink: #23261d;
+  /* Pointer position in -1..1, written by PointerParallax. Lighting only. */
+  --px: 0;
+  --py: 0;
   --bright: 1;
+  color-scheme: dark;
 }
+/* BRIGHTNESS detents → veil over the CRT (below 1) and glow radius (above 1). */
 [data-brightness='1'] { --bright: 0.55; }
 [data-brightness='2'] { --bright: 0.78; }
 [data-brightness='4'] { --bright: 1.18; }
@@ -87,24 +52,80 @@ html {
 }
 body {
   /* The rig sits in a pool of light; the bench falls off toward the edges.
-     A lighting gradient, allowed by the spec's lighting exception. */
+     Static on purpose: a pointer-coupled gradient here repaints the whole
+     viewport every frame. */
   background: radial-gradient(ellipse 62% 78% at 50% 48%, var(--bench-light) 0%, var(--bench) 60%)
     var(--bench);
   color: var(--phosphor);
   font-family: var(--font-mono), monospace;
+  overflow: hidden;
 }
-
-/* One visible focus ring for every control on the chassis. Phosphor holds
-   contrast against the chassis metal and the screen glass in all three
-   themes, including paper (near-black phosphor against a light chassis). */
+::selection {
+  background: var(--phosphor);
+  color: var(--screen);
+}
 :focus-visible {
   outline: 2px solid var(--phosphor);
   outline-offset: 2px;
 }
 
+/* ---- Bench garden: behind the rig, grows with interaction ----------------- */
+.bench-garden {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.bench-garden .stem {
+  fill: none;
+  stroke: var(--phosphor-dim);
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.bench-garden .leaf {
+  fill: color-mix(in srgb, var(--phosphor) 22%, transparent);
+  stroke: var(--phosphor-dim);
+  stroke-width: 0.9;
+  opacity: 0.9;
+}
+/* Newest growth is brighter and a touch heavier. No SVG filter: Firefox
+   rasterizes those in software over the whole fixed-position canvas. */
+.bench-garden .tip {
+  stroke: var(--phosphor);
+  opacity: 1;
+}
+.bench-garden .stem.tip {
+  stroke-width: 2.2;
+}
+.bench-garden .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: garden-draw 900ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+.bench-garden .leaf.draw {
+  opacity: 0;
+  animation: garden-leaf 700ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+@keyframes garden-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes garden-leaf {
+  to { stroke-dashoffset: 0; opacity: 0.9; }
+}
+
 /* ---- Chassis plate: powder-coated metal ------------------------------- */
+.stage {
+  position: relative;
+  z-index: 1;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+}
 .rig {
-  isolation: isolate;
+  /* Own stacking context so the grain/wear pseudo layers can sit at z -1. */
+  z-index: 0;
   background:
     repeating-linear-gradient(
       0deg,
@@ -115,8 +136,7 @@ body {
     ),
     linear-gradient(180deg, var(--sheen-hi) 0%, var(--chassis) 40%, var(--sheen-lo) 100%);
 }
-/* Grain, then paint worn through to bare metal at the corners and grab edges.
-   Both sit above the plate's fill and below everything mounted on it. */
+/* Grain, then paint worn through to bare metal at the corners and grab edges. */
 .rig::before,
 .rig::after {
   content: '';
@@ -129,12 +149,12 @@ body {
 .rig::before {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   background-size: 160px 160px;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+  /* Plain alpha, no blend mode: a mix-blend-mode child forces Firefox to
+     recomposite the whole plate in software every time the tube redraws. */
+  opacity: 0.045;
 }
 .rig::after {
   background:
-    /* one scratch, on the bare plate of the top bezel between serial and switches */
     linear-gradient(168deg, transparent 47%, rgba(var(--wear), 0.3) 49.5%, transparent 51%) left 46% top 10px / 140px 26px no-repeat,
     radial-gradient(ellipse 44px 10px at 0% 0%, rgba(var(--wear), 0.28), transparent 70%),
     radial-gradient(ellipse 28px 10px at 100% 100%, rgba(var(--wear), 0.22), transparent 70%),
@@ -147,8 +167,30 @@ body {
       inset 1px 1px 0 var(--edge-hi),
       inset -1px -1px 0 var(--edge-lo),
       inset 0 0 0 3px rgba(0, 0, 0, 0.16),
-      0 18px 40px rgba(0, 0, 0, 0.55);
+      0 30px 60px -10px rgba(0, 0, 0, 0.65),
+      0 10px 22px rgba(0, 0, 0, 0.4);
   }
+}
+/* Specular sheen that sweeps with the pointer. A band moved by transform, so
+   the plate itself is never repainted. */
+.rig-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.rig-sheen::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: 20%;
+  width: 60%;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: translateX(calc(var(--px) * 50%));
+  will-change: transform;
 }
 .rivet {
   position: absolute;
@@ -169,107 +211,113 @@ body {
     2px 6px 6px rgba(120, 60, 20, 0.28);
 }
 
-/* ---- Column hardware --------------------------------------------------- */
-.knob {
-  display: block;
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background:
-    repeating-conic-gradient(from 0deg, rgba(0, 0, 0, 0.25) 0 4deg, transparent 4deg 12deg),
-    radial-gradient(circle at 40% 35%, var(--knob-hi) 0 40%, var(--knob-lo) 42% 100%);
-  box-shadow:
-    inset 0 1px 1px var(--edge-hi),
-    inset 0 -2px 2px var(--edge-lo),
-    0 2px 4px rgba(0, 0, 0, 0.6);
-  transition: transform 160ms ease-out;
+/* ---- Top bezel: bat-handle toggles and the power lens -------------------- */
+.bezel-model b {
+  color: var(--phosphor);
+  text-shadow: 0 0 8px var(--glow);
 }
-.knob::after {
-  content: '';
+.tog {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--chrome-dim);
+}
+.tog[aria-checked='true'] {
+  color: var(--phosphor);
+  text-shadow: 0 0 6px var(--glow);
+}
+.tog-collar {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, var(--knob-lo) 0 45%, var(--knob-hi) 60% 100%);
+  box-shadow:
+    inset 0 2px 3px rgba(0, 0, 0, 0.7),
+    0 1px 0 var(--edge-hi);
+  perspective: 120px;
+}
+.tog-lever {
   position: absolute;
   left: 50%;
-  top: 3px;
-  width: 2px;
-  height: 12px;
-  margin-left: -1px;
-  background: var(--phosphor);
-  box-shadow: 0 0 4px var(--glow);
+  top: 50%;
+  width: 6px;
+  height: 14px;
+  margin-left: -3px;
+  transform-origin: 50% 100%;
+  transform: translateY(-100%) rotateX(calc(var(--on) * -100deg + 50deg));
+  background: linear-gradient(180deg, var(--rivet-hi), var(--rivet-mid));
+  border-radius: 3px 3px 1px 1px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
 }
-@media (prefers-reduced-motion: reduce) {
-  .knob {
-    transition: none;
-  }
+.tog-lever::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -3px;
+  width: 10px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--rivet-hi), var(--rivet-mid));
 }
-/* HardwareSwitch thumb: translateX between the off/on rail positions. */
-.switch-thumb {
-  transition: transform 120ms ease-out;
-}
-@media (prefers-reduced-motion: reduce) {
-  .switch-thumb {
-    transition: none;
-  }
-}
-/* F-key row: instant press, eased release; hover border on pointer devices only. */
-.fkey {
-  transition:
-    border-color 120ms ease,
-    transform 100ms ease-out;
-}
-.fkey:active {
-  transition: border-color 120ms ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .fkey:hover {
-    border-color: var(--phosphor);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .fkey,
-  .fkey:active {
-    transition-property: border-color;
-  }
+.lens {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0, var(--phosphor) 40%, color-mix(in srgb, var(--phosphor) 50%, #000) 100%);
+  box-shadow:
+    0 0 8px var(--glow),
+    0 0 2px var(--phosphor),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
 }
 
-.grille {
-  background-color: var(--chassis-well);
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.75) 0 2px, transparent 2.3px);
-  background-size: 8px 8px;
-  background-position: 2px 2px;
+/* ---- CRT ----------------------------------------------------------------- */
+.crt-frame {
+  position: relative;
+  padding: 8px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--chassis-well) 70%, #000) 0%, var(--chassis-well) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.6),
+    inset 0 -1px 0 var(--edge-hi),
+    0 1px 0 var(--edge-hi);
 }
-[data-theme='paper'] .grille {
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.28) 0 2px, transparent 2.3px);
+/* Hood: the bezel's top lip casts a shadow down the glass. */
+.crt-frame::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 0;
+  height: 14px;
+  z-index: 3;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  pointer-events: none;
 }
-[data-theme='paper'] .knob {
-  background:
-    repeating-conic-gradient(from 0deg, rgba(0, 0, 0, 0.09) 0 4deg, transparent 4deg 12deg),
-    radial-gradient(circle at 40% 35%, var(--knob-hi) 0 40%, var(--knob-lo) 42% 100%);
-}
-
-.prose-body {
-  font-family:
-    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
-}
-/* MDX case-study bodies are several <p>s inside one .prose-body; preflight
-   zeroes their margins, so restore a paragraph gap here. */
-.prose-body p + p {
-  margin-top: 0.75rem;
-}
-
 .crt-screen {
   position: relative;
   background: var(--screen);
-  border: 3px solid var(--chassis-well);
-  box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.6);
+  border-radius: 14px / 12px;
   overflow: hidden;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.6),
+    inset 0 12px 30px rgba(0, 0, 0, 0.55),
+    inset 0 0 40px rgba(0, 0, 0, 0.35);
+  transform: translateZ(0);
+  --gl: 0;
+  --on: 1;
 }
-/* Content scrolls inside the glass; keep the scrollbar thin and phosphor-tinted. */
-.screen-pane {
-  scrollbar-width: thin;
-  scrollbar-color: var(--phosphor-dim) transparent;
+.crt-gl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
-.crt-screen::before {
-  content: '';
+.crt-veil {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -277,34 +325,64 @@ body {
   background: #000;
   opacity: clamp(0, calc(1 - var(--bright)), 0.5);
 }
-/* Paper is a reflective screen: dimming it a little is plausible, blacking it out is not. */
-[data-theme='paper'] .crt-screen::before {
-  opacity: clamp(0, calc((1 - var(--bright)) * 0.5), 0.25);
-}
-.crt-screen::after {
-  content: '';
+.crt-raster {
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    color-mix(in srgb, var(--phosphor) 4%, transparent) 0 1px,
+    color-mix(in srgb, var(--phosphor) 5%, transparent) 0 1px,
     transparent 1px 3px
   );
 }
-[data-scanlines='off'] .crt-screen::after,
-[data-theme='paper'] .crt-screen::after {
+[data-scanlines='off'] .crt-raster {
   display: none;
 }
-/* Paper has no scanlines at all, so the switch would be a no-op — hide it. */
-[data-theme='paper'] [data-switch='scanlines'] {
-  display: none;
+.crt-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
-
+/* Reflection band: a wide layer slid by transform (compositor only). */
+.crt-reflect {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -70%;
+  width: 240%;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    112deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.06) 44%,
+    rgba(255, 255, 255, 0.015) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: translateX(calc(var(--px) * -16%));
+  will-change: transform;
+}
+/* Content scrolls inside the glass; the pane tears with the picture. */
+.screen-pane {
+  position: relative;
+  z-index: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--phosphor-dim) transparent;
+  transform: translateX(calc(var(--gl) * 6px)) skewX(calc(var(--gl) * -1.5deg));
+  opacity: var(--on);
+}
+@media (min-width: 640px) {
+  .screen-pane[data-fixed] {
+    overflow: hidden;
+  }
+}
 .phosphor-glow {
   text-shadow: 0 0 calc(14px * var(--bright)) var(--glow);
 }
-
 .cursor-blink {
   display: inline-block;
   width: 0.25em;
@@ -314,46 +392,14 @@ body {
   animation: cursor-blink 1.1s steps(1) infinite;
 }
 @keyframes cursor-blink {
-  50% {
-    opacity: 0;
-  }
+  50% { opacity: 0; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .cursor-blink {
-    animation: none;
-  }
+.prose-body {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
-
-/* ---- Diskbay cartridge -------------------------------------------------- */
-.cartridge {
-  transition: border-color 120ms ease;
+.prose-body p + p {
+  margin-top: 0.75rem;
 }
-@media (hover: hover) and (pointer: fine) {
-  .cartridge:hover {
-    border-color: var(--phosphor-hot);
-  }
-}
-/* Spin-up wait: a 1px settle + a phosphor border pulse. Duration is driven
-   by the SPIN_UP_MS constant (src/lib/motion.ts) via the --spin-ms custom
-   property Cartridge.tsx sets inline, so the two can't drift; the 250ms
-   here is only a fallback if that's ever missing. Under reduced motion the
-   component navigates immediately instead of entering this state at all —
-   see Cartridge.tsx. */
-.cartridge-spin {
-  transform: translateY(1px);
-  animation: cartridge-pulse var(--spin-ms, 250ms) ease-out;
-}
-@keyframes cartridge-pulse {
-  0%,
-  100% {
-    border-color: var(--phosphor-dim);
-  }
-  50% {
-    border-color: var(--phosphor);
-  }
-}
-
-/* ---- Boot overlay -------------------------------------------------------- */
 .boot-overlay {
   opacity: 1;
   transition: opacity 150ms ease-out;
@@ -362,23 +408,334 @@ body {
   opacity: 0;
 }
 
-/* ---- Screen garden ------------------------------------------------------- */
-/* Draw-in for newly-grown sprout paths only; already-seen paths never
-   redraw. `pathLength="1"` on the element normalizes the dash math. */
-.garden-draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: garden-draw 600ms ease-out forwards;
+/* ---- Gauge column --------------------------------------------------------- */
+.well {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  text-align: left;
+  border-radius: 4px;
+  padding: 6px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--chassis-well) 85%, #000), var(--chassis-well));
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.55),
+    inset 0 -1px 0 var(--edge-hi),
+    0 1px 0 var(--edge-hi);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--chrome-dim);
 }
-@keyframes garden-draw {
-  to {
-    stroke-dashoffset: 0;
+.well-val {
+  color: var(--phosphor);
+  font-size: 12px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.odo-digit {
+  position: relative;
+  width: 14px;
+  height: 18px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #000, #111 30%, #111 70%, #000);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.odo-reel {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.odo-reel span {
+  display: block;
+  height: 18px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--phosphor);
+}
+.wx-icon {
+  display: block;
+  width: 34px;
+  height: 34px;
+  filter: drop-shadow(0 0 4px var(--glow));
+}
+.wx-icon * {
+  stroke: var(--phosphor);
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.wx-icon .fill {
+  fill: color-mix(in srgb, var(--phosphor) 18%, transparent);
+}
+.dial-ticks line {
+  stroke: var(--chrome-dim);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+.dial-ticks line.on {
+  stroke: var(--phosphor);
+}
+.dial-ticks text {
+  fill: var(--chrome-dim);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  font-family: inherit;
+}
+/* Knurled skirt, machined cap, painted pointer groove. */
+.knob {
+  position: absolute;
+  left: 50%;
+  top: 36px;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 30%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 46%),
+    radial-gradient(circle at 50% 50%, var(--knob-hi) 0 56%, rgba(0, 0, 0, 0) 58%),
+    repeating-conic-gradient(from 0deg, #0b0d09 0 3deg, var(--knob-hi) 3deg 6deg, #14160f 6deg 9deg);
+  box-shadow:
+    0 2px 0 #0a0b08,
+    0 5px 9px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -3px 4px rgba(0, 0, 0, 0.5);
+  touch-action: none;
+  cursor: grab;
+  transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.knob[data-dragging] {
+  cursor: grabbing;
+  transition: none;
+}
+.knob::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, color-mix(in srgb, var(--knob-hi) 80%, #fff), var(--knob-hi) 45%, var(--knob-lo) 100%);
+  box-shadow:
+    inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+    0 1px 1px rgba(0, 0, 0, 0.6);
+}
+.knob::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  width: 3px;
+  height: 12px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--phosphor);
+  box-shadow:
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.6),
+    0 0 5px var(--glow);
+}
+.scope-canvas {
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin-top: 4px;
+  border-radius: 3px;
+  background: var(--screen);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+}
+.grille {
+  border-radius: 4px;
+  background-color: var(--chassis-well);
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.75) 0 2px, transparent 2.3px);
+  background-size: 8px 8px;
+  background-position: 2px 2px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Disk bay: hardware under the screen ---------------------------------- */
+.bay {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 6px;
+  padding: 6px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--chassis-well) 70%, #000), var(--chassis-well));
+  box-shadow:
+    inset 0 3px 6px rgba(0, 0, 0, 0.6),
+    inset 0 -1px 0 var(--edge-hi),
+    0 1px 0 var(--edge-hi);
+  overflow-x: auto;
+}
+@media (min-width: 640px) {
+  .bay {
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
   }
 }
+.slot {
+  position: relative;
+  padding: 6px 6px 8px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(5, 6, 3, 0.5), transparent 60%);
+  box-shadow:
+    inset 0 4px 8px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+.slot-sled {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 5px;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 0 var(--edge-hi);
+}
+.cart {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  padding: 6px 8px 8px;
+  border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(180deg, var(--cart-hi), var(--cart-lo));
+  box-shadow:
+    0 4px 0 var(--cart-side),
+    0 7px 10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(0);
+  transition:
+    transform 180ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  color: var(--label);
+}
+/* Seated: pushed into the slot, sitting on the sled, LED lit. */
+.cart[data-in='true'] {
+  transform: translateY(5px);
+  box-shadow:
+    0 1px 0 var(--cart-side),
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.cart::before {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: -1px;
+  width: 14px;
+  height: 4px;
+  border-radius: 0 0 2px 2px;
+  background: var(--cart-side);
+}
+.cart-label {
+  display: block;
+  background: var(--label);
+  color: var(--label-ink);
+  border-radius: 2px;
+  padding: 4px 6px;
+  font-size: 10px;
+  line-height: 1.25;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+.cart-led {
+  position: absolute;
+  left: 8px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2a1408;
+  box-shadow: inset 0 0 1px #000;
+}
+.cart[data-in='true'] .cart-led {
+  background: #ffb454;
+  box-shadow: 0 0 6px #ffb454;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cart:hover {
+    transform: translateY(-1px);
+  }
+  .cart[data-in='true']:hover {
+    transform: translateY(5px);
+  }
+}
+.cart:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 1px 0 var(--cart-side),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- F-key row: keycaps with travel --------------------------------------- */
+.fkey {
+  position: relative;
+  border-radius: 4px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--keycap) 88%, #fff), var(--keycap));
+  color: var(--phosphor);
+  box-shadow:
+    0 4px 0 color-mix(in srgb, var(--keycap) 55%, #000),
+    0 6px 8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 var(--edge-hi),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 90ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 90ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 120ms ease;
+}
+.fkey-alert {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--alert) 85%, #fff), var(--alert));
+  color: var(--alert-text);
+  box-shadow:
+    0 4px 0 color-mix(in srgb, var(--alert) 55%, #000),
+    0 6px 8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.fkey:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--keycap) 55%, #000),
+    0 2px 3px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 var(--edge-hi);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fkey:hover {
+    filter: brightness(1.08);
+  }
+}
+.fkey[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 16px;
+  height: 2px;
+  margin-left: -8px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .garden-draw {
+  .cursor-blink {
+    animation: none;
+  }
+  .bench-garden .draw,
+  .bench-garden .leaf.draw {
     animation: none;
     stroke-dasharray: none;
     stroke-dashoffset: 0;
+    opacity: 0.9;
+  }
+  .cart,
+  .fkey,
+  .knob,
+  .tog-lever,
+  .odo-reel {
+    transition: none;
   }
 }
