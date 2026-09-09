@@ -90,12 +90,6 @@ export function degaussPulse(): void {
 export const IDLE_FPS = 30
 /** Draw rate while the picture is booting, tearing, flashing or scrolling. */
 export const BUSY_FPS = 60
-/**
- * Update rate for the plate sheen. Every step moves a plate-sized band, which
- * Firefox answers by re-rasterizing every tile under it; a diffuse 6% band
- * stepped 20 times a second still reads as a sweep.
- */
-export const SHEEN_FPS = 20
 
 /**
  * True when at least one period at `fps` has elapsed since `last`. rAF fires
