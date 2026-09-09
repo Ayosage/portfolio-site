@@ -1,4 +1,5 @@
-// Single source of truth for the cartridge spin-up delay — the setTimeout in
-// Cartridge.tsx, the CSS pulse duration, and the tests all read this so the
-// three can't drift apart.
-export const SPIN_UP_MS = 250
+// Single source of truth for the cartridge seat time: the CRT collapse tween,
+// the navigation delay in Cartridge.tsx, and the tests all read this.
+export const SPIN_UP_MS = 160
+// Re-raster after a route change.
+export const RASTER_MS = 500

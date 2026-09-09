@@ -3,51 +3,60 @@ import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { Project } from '@/lib/projects'
 import { SPIN_UP_MS } from '@/lib/motion'
+import { collapse, reducedMotion } from '@/lib/rig'
+import { recordInteraction } from '@/lib/growth'
+import { playClick } from '@/lib/sound'
 
-export function Cartridge({ project }: { project: Project }) {
+export function Cartridge({
+  project,
+  seated,
+  onSeat,
+}: {
+  project: Project
+  seated: boolean
+  onSeat: (slug: string) => void
+}) {
   const router = useRouter()
   const [spinning, setSpinning] = useState(false)
-  const spinUpTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  useEffect(() => () => clearTimeout(timer.current), [])
+  // A seated cartridge is done spinning once its page has arrived.
   useEffect(() => {
-    return () => {
-      if (spinUpTimeout.current) clearTimeout(spinUpTimeout.current)
-    }
-  }, [])
-
-  if (!project.hasCaseStudy) {
-    return (
-      <div className="flex flex-col gap-1 border border-[var(--hairline)] p-2.5 text-[11px] text-[var(--phosphor-dim)]">
-        <span className="font-bold tracking-wider">▢ {project.title.toUpperCase()}</span>
-        <span className="leading-snug">EJECTED — {project.oneLiner.toUpperCase()}</span>
-      </div>
-    )
-  }
+    if (seated) setSpinning(false) // eslint-disable-line react-hooks/set-state-in-effect
+  }, [seated])
 
   const href = `/projects/${project.slug}`
   return (
-    <a
-      href={href}
-      onClick={(e) => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
-        e.preventDefault()
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          router.push(href)
-          return
-        }
-        setSpinning(true)
-        spinUpTimeout.current = setTimeout(() => router.push(href), SPIN_UP_MS)
-      }}
-      style={spinning ? ({ '--spin-ms': `${SPIN_UP_MS}ms` } as React.CSSProperties) : undefined}
-      className={`cartridge flex flex-col gap-1 border border-[var(--phosphor)] bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] p-2.5 text-[11px] ${spinning ? 'cartridge-spin' : ''}`}
-    >
-      <span className="font-bold tracking-wider">▣ {project.title.toUpperCase()}</span>
-      <span className="leading-snug text-[var(--phosphor-dim)]">
-        {spinning ? '▸ SPIN-UP…' : project.oneLiner}
-      </span>
-      <span className="mt-0.5 text-[10px] tracking-[0.08em] text-[var(--phosphor-dim)]">
-        {project.tags.join(' / ')}
-      </span>
-    </a>
+    <div className="slot">
+      <a
+        href={href}
+        data-in={seated || spinning ? 'true' : undefined}
+        aria-current={seated ? 'page' : undefined}
+        className="cart"
+        onClick={(e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+          e.preventDefault()
+          if (seated) return
+          playClick()
+          if (reducedMotion()) {
+            router.push(href)
+            return
+          }
+          setSpinning(true)
+          onSeat(project.slug)
+          recordInteraction(2)
+          collapse()
+          timer.current = setTimeout(() => router.push(href), SPIN_UP_MS)
+        }}
+      >
+        <span className="cart-label">
+          <b className="block text-[11px] tracking-[0.06em]">▣ {project.title.toUpperCase()}</b>
+          <span className="hidden text-[9px] opacity-85 sm:block">{spinning ? '▸ SEATING…' : project.oneLiner}</span>
+          <small className="mt-0.5 block text-[8px] tracking-[0.08em] opacity-75">{project.tags.join(' / ')}</small>
+        </span>
+        <span className="cart-led" aria-hidden="true" />
+      </a>
+      <span className="slot-sled" aria-hidden="true" />
+    </div>
   )
 }

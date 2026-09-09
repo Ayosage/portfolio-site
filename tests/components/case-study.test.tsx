@@ -8,10 +8,9 @@ import { SectionHeading } from '@/components/case-study/SectionHeading'
 import { CaseStudyMeta } from '@/components/case-study/CaseStudyMeta'
 import { EscBack } from '@/components/case-study/EscBack'
 
-test('section heading shows numbered title and garden hook', () => {
+test('section heading shows the numbered title', () => {
   render(<SectionHeading index={1} title="The Problem" />)
-  const h = screen.getByRole('heading', { name: /01 — THE PROBLEM/ })
-  expect(h).toHaveAttribute('data-garden-section', '1')
+  expect(screen.getByRole('heading', { name: /01 — THE PROBLEM/ })).toBeInTheDocument()
 })
 
 test('meta strip renders all fields', () => {

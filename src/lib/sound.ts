@@ -18,10 +18,28 @@ export function playClick(): void {
   if (!ctx) return
   const osc = ctx.createOscillator()
   const gain = ctx.createGain()
-  osc.frequency.value = 2200
-  gain.gain.setValueAtTime(0.04, ctx.currentTime)
-  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.02)
+  osc.type = 'square'
+  osc.frequency.setValueAtTime(1800, ctx.currentTime)
+  osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.02)
+  gain.gain.setValueAtTime(0.05, ctx.currentTime)
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.03)
   osc.connect(gain).connect(ctx.destination)
   osc.start()
-  osc.stop(ctx.currentTime + 0.02)
+  osc.stop(ctx.currentTime + 0.035)
+}
+/** Degauss: a low thump when the glass is tapped. */
+export function playThunk(): void {
+  if (!enabled) return
+  const ctx = getContext()
+  if (!ctx) return
+  const osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+  osc.type = 'sine'
+  osc.frequency.setValueAtTime(90, ctx.currentTime)
+  osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.18)
+  gain.gain.setValueAtTime(0.12, ctx.currentTime)
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.2)
+  osc.connect(gain).connect(ctx.destination)
+  osc.start()
+  osc.stop(ctx.currentTime + 0.22)
 }

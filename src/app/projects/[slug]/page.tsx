@@ -3,7 +3,6 @@ import type { ComponentType } from 'react'
 import { PROJECTS } from '@/lib/projects'
 import { pageMetadata } from '@/lib/site'
 import { EscBack } from '@/components/case-study/EscBack'
-import { GardenTracker } from '@/components/case-study/GardenTracker'
 import Stagepass from '../../../../content/projects/stagepass.mdx'
 import Meridian from '../../../../content/projects/meridian.mdx'
 import Steward from '../../../../content/projects/steward.mdx'
@@ -47,7 +46,6 @@ export default async function CaseStudy({
   if (!project || !Content) notFound()
   return (
     <main className="p-4 sm:p-6">
-      <GardenTracker slug={project.slug} />
       <p className="flex justify-between border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         <span>~/work/{project.slug}</span>
         <EscBack />

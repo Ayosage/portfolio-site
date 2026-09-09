@@ -1,6 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
+import { playClick } from '@/lib/sound'
 
+/** Bat-handle toggle in a machined collar. Same switch semantics as before. */
 export function HardwareSwitch(props: {
   id: string
   label: string
@@ -28,6 +30,7 @@ export function HardwareSwitch(props: {
       localStorage.setItem(props.storageKey, next ? 'on' : 'off')
     } catch {}
     props.onFlip(next)
+    playClick()
   }
   return (
     <button
@@ -36,7 +39,7 @@ export function HardwareSwitch(props: {
       aria-checked={on}
       aria-label={props.label}
       onClick={flip}
-      className="-my-[14.5px] flex items-center gap-1 py-[14.5px] text-[10px] tracking-widest text-[var(--chrome-dim)]"
+      className="tog -my-[11px] py-[11px] text-[10px] tracking-widest"
     >
       {props.shortLabel ? (
         <>
@@ -46,14 +49,8 @@ export function HardwareSwitch(props: {
       ) : (
         props.label
       )}
-      <span className="inline-block h-3 w-6 rounded-full bg-[var(--chassis-well)] relative">
-        <span
-          className="switch-thumb absolute top-[2px] left-[2px] h-2 w-2 rounded-full"
-          style={{
-            transform: on ? 'translateX(12px)' : 'translateX(0)',
-            background: on ? 'var(--phosphor)' : 'var(--phosphor-dim)',
-          }}
-        />
+      <span aria-hidden="true" className="tog-collar" style={{ '--on': on ? 1 : 0 } as CSSProperties}>
+        <span className="tog-lever" />
       </span>
     </button>
   )
