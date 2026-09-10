@@ -32,7 +32,7 @@ test('root metadata declares base url, canonical, open graph and twitter card', 
   expect(siteMetadata.alternates?.canonical).toBe('/')
   expect(siteMetadata.openGraph).toMatchObject({
     type: 'website',
-    siteName: 'Brandon Smith — BS-01 Field Terminal',
+    siteName: 'Brandon Smith ▪ BS-01 Field Terminal',
     url: '/',
   })
   expect(siteMetadata.twitter).toMatchObject({ card: 'summary_large_image' })

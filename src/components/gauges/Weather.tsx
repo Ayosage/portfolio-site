@@ -128,7 +128,7 @@ export function Weather() {
       <div className="flex items-baseline justify-between">
         <span>WEATHER</span>
         {state.status === 'ok' && state.r.city && (
-          <span className="max-w-[60%] truncate text-[8px] tracking-[0.14em] opacity-80">{state.r.city.toUpperCase()}</span>
+          <span className="max-w-[60%] truncate text-[10px] tracking-[0.1em] opacity-80">{state.r.city.toUpperCase()}</span>
         )}
       </div>
       {state.status === 'ok' ? (
@@ -137,8 +137,8 @@ export function Weather() {
             <WeatherIcon icon={state.r.icon} />
           </span>
           <span className="well-val text-[14px] leading-none">{state.r.temp}°C</span>
-          <span className="truncate text-[9px] tracking-[0.08em] text-[var(--phosphor)]">{state.r.label}</span>
-          <span className="col-span-full mt-0.5 hidden text-[9px] tracking-[0.08em] sm:block">
+          <span className="truncate text-[10px] tracking-[0.08em] text-[var(--phosphor)]">{state.r.label}</span>
+          <span className="col-span-full mt-0.5 hidden text-[10px] tracking-[0.08em] sm:block">
             WIND {state.r.wind} · HUM {state.r.hum}%
           </span>
         </div>

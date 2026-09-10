@@ -19,7 +19,7 @@ export function ContactForm() {
       </p>
       <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">Contact</h1>
       <p className="mt-2 text-xs text-[var(--phosphor-dim)]">
-        {'// or email direct: '}
+        {'// or email me: '}
         <a className="underline" href="mailto:aexbrandon@gmail.com">
           aexbrandon@gmail.com
         </a>
@@ -55,7 +55,7 @@ export function ContactForm() {
           {pending ? 'Sending…' : 'Send ▸'}
         </button>
         <p role="status" className="min-h-4 text-[var(--phosphor-dim)]">
-          {state.status === 'sent' && '▸ SENT. I read everything that comes through.'}
+          {state.status === 'sent' && '▸ SENT. I read every message.'}
           {state.status === 'error' && `▸ ERROR: ${state.error}`}
         </p>
       </form>

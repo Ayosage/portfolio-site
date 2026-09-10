@@ -38,10 +38,10 @@ export async function sendPing(_prev: PingState, formData: FormData): Promise<Pi
   })
   // Bots get a convincing success and nothing is sent.
   if (verdict === 'bot') return { status: 'sent' }
-  if (verdict === 'too-fast') return { status: 'error', error: 'TOO FAST — TRY AGAIN' }
+  if (verdict === 'too-fast') return { status: 'error', error: 'SENT TOO FAST. WAIT A MOMENT AND TRY AGAIN' }
 
   if (!limiter.allow(await clientKey())) {
-    return { status: 'error', error: 'RATE LIMITED — EMAIL DIRECT INSTEAD' }
+    return { status: 'error', error: 'TOO MANY PINGS FROM HERE. EMAIL ME INSTEAD' }
   }
 
   const apiKey = process.env.RESEND_API_KEY
@@ -58,7 +58,7 @@ export async function sendPing(_prev: PingState, formData: FormData): Promise<Pi
   })
   if (!sent.ok) {
     console.error('[BS-01 PING] delivery failed:', sent.error)
-    return { status: 'error', error: `${sent.error} — EMAIL DIRECT INSTEAD` }
+    return { status: 'error', error: `${sent.error}. EMAIL ME INSTEAD` }
   }
   return { status: 'sent' }
 }

@@ -4,7 +4,7 @@ import { SITE_DESCRIPTION } from '@/lib/site'
 // Site-wide share card: the BS-01 bezel and CRT glass in the default green
 // theme. Case-study routes inherit it. Rendered at build time by next/og
 // (Satori), which only knows flexbox — no grid, no CSS vars.
-export const alt = 'Brandon Smith — BS-01 Field Terminal'
+export const alt = 'Brandon Smith ▪ BS-01 Field Terminal'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
