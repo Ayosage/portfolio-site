@@ -48,7 +48,7 @@ export default function Home() {
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/in/brandon-smith" className="inline-flex min-h-10 items-center hover:underline">
+            <a href="https://www.linkedin.com/in/brandon-joshua-s-7001b21b9/" className="inline-flex min-h-10 items-center hover:underline">
               PORT-B ▸ LINKEDIN ↗
             </a>
           </li>

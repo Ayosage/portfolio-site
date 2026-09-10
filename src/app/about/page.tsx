@@ -11,8 +11,8 @@ export const metadata: Metadata = pageMetadata({
 const SPEC: [string, React.ReactNode][] = [
   ['Role', 'Full-stack engineer'],
   ['Stack', 'TypeScript · Next.js · Postgres · Solidity'],
-  ['Location', 'Remote-friendly'],
-  ['Availability', '● Open to work'],
+  ['Location', CV.location],
+  ['Availability', `● Open to work · ${CV.regions}`],
   [
     'Ports',
     <span key="ports" className="flex flex-wrap gap-x-5 gap-y-1">
@@ -23,7 +23,7 @@ const SPEC: [string, React.ReactNode][] = [
         GITHUB ↗
       </a>
       <a
-        href="https://www.linkedin.com/in/brandon-smith"
+        href="https://www.linkedin.com/in/brandon-joshua-s-7001b21b9/"
         className="inline-flex min-h-11 items-center py-2 hover:underline"
       >
         LINKEDIN ↗
