@@ -29,9 +29,9 @@ export const CV = {
       role: 'Software Engineer III',
       dates: '2025 – NOW',
       notes: [
-        'Own AWS management and observability development for the platform: account and infrastructure automation, metrics, logging and alerting for production services.',
-        'Continue the Apple Card integration work: reliability, security requirements and production readiness in a regulated environment.',
-        'Platform modernization moving legacy systems toward cloud-native architecture: AWS infrastructure in Terraform, services deployed on Kubernetes.',
+        'Own AWS management for the platform: account and infrastructure automation in Terraform, services deployed on Kubernetes.',
+        'Build observability for production services: metrics, logging and alerting, with the runbooks and dashboards teams use to operate them.',
+        'Deliver Apple Card integration services to production: reliability, security requirements and release readiness in a regulated environment.',
       ],
     },
     {
@@ -39,17 +39,9 @@ export const CV = {
       role: 'Software Engineer II',
       dates: 'MAR 2023 – 2025',
       notes: [
-        'Developed and modernized Spring-based backend services behind large-scale financial products.',
-        'Apple Card integration work alongside AWS management and observability tooling.',
-        'Full-stack features in TypeScript, Node.js and React.',
-      ],
-    },
-    {
-      org: 'District Winery',
-      role: 'Assistant Winemaker',
-      dates: 'AUG 2022 – NOV 2022',
-      notes: [
-        'High-volume production: fermentation monitoring, blending, filtration, bottling and quality control.',
+        'Developed and modernized Spring-based backend services for the Apple Card integration, supporting large-scale financial products.',
+        'Moved legacy services toward cloud-native architecture on AWS as part of the platform modernization program.',
+        'Built full-stack features in TypeScript, Node.js and React.',
       ],
     },
     {
@@ -57,17 +49,15 @@ export const CV = {
       role: 'Assistant Lab Manager',
       dates: 'AUG 2020 – MAR 2023',
       notes: [
-        'Ran laboratory quality systems for the brewery.',
-        'Designed Raspberry Pi integrations connecting lab instruments to data collection and analysis programs.',
-        'Automated workflows and improved traceability, consistency and production metric analysis.',
+        'Built Raspberry Pi integrations connecting lab instruments to data collection and analysis programs, replacing manual entry and improving traceability of production metrics.',
       ],
     },
     {
-      org: 'PA Renaissance Faire',
-      role: 'Assistant Winemaker & Distiller',
-      dates: 'FEB 2017 – AUG 2020',
+      org: 'PA Renaissance Faire · District Winery',
+      role: 'Winemaking & Distilling',
+      dates: '2017 – 2022',
       notes: [
-        'Owned projects from concept through fermentation, distillation, packaging and release, balancing experimentation with disciplined production and quality control.',
+        'Production from fermentation through packaging and release, with quality control.',
       ],
     },
   ] as CvEntry[],
@@ -90,15 +80,9 @@ export const CV = {
       dates: 'CERT',
       notes: [],
     },
-    {
-      org: 'Professional Bartending School, Arlington',
-      role: 'Diploma in Mixology',
-      dates: 'DIPLOMA',
-      notes: [],
-    },
   ] as CvEntry[],
   skills: [
-    ['Languages', 'TypeScript · Java · Go · SQL · Solidity'],
+    ['Languages', 'TypeScript · Java · SQL · Solidity'],
     ['Frontend', 'React · Next.js · React Three Fiber · Tailwind'],
     ['Backend', 'Node · Spring · Postgres · MongoDB · Drizzle · Colyseus · discord.js'],
     ['Web3', 'Solidity · Foundry · ERC-721 · Base'],
