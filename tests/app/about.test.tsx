@@ -13,6 +13,16 @@ test('about carries a spec sheet with role, stack and availability rows', () => 
   expect(screen.getByRole('rowheader', { name: /stack/i })).toBeInTheDocument()
   expect(screen.getByRole('rowheader', { name: /availability/i })).toBeInTheDocument()
   expect(screen.getByText(/open to work/i)).toBeInTheDocument()
+  expect(screen.getByText(/remote/i)).toBeInTheDocument()
+})
+
+test('github and linkedin ports open in a new tab without a referrer', () => {
+  render(<About />)
+  for (const name of [/github/i, /linkedin/i]) {
+    const link = screen.getByRole('link', { name })
+    expect(link).toHaveAttribute('target', '_blank')
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+  }
 })
 
 test('about resume button saves the PDF instead of opening it', () => {

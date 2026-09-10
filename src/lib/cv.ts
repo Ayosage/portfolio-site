@@ -21,7 +21,7 @@ export const CV = {
   summary:
     'Full-stack engineer working across web and web3. I build products where the hard parts, payments, infra and chain state, stay out of the user’s way. Day job: Software Engineer II at JPMorgan Chase, modernizing Spring services and building AWS infrastructure for regulated financial products.',
   location: 'Philadelphia, PA',
-  regions: 'Philadelphia · NYC · New Jersey · Delaware',
+  regions: 'Philadelphia · NYC · New Jersey · Delaware · Remote',
   pdf: { href: '/resume.pdf', filename: 'Brandon-Smith-CV.pdf' },
   experience: [
     {

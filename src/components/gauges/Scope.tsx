@@ -68,7 +68,7 @@ export function Scope() {
     }
   }, [])
   return (
-    <div className="well hidden sm:block">
+    <div data-gauge="scope" className="well hidden sm:block">
       SCOPE
       <canvas ref={ref} role="img" aria-label="scope trace" className="scope-canvas" />
     </div>

@@ -21,7 +21,7 @@ export function Chassis({ children }: { children: React.ReactNode }) {
           <i data-rivet aria-hidden="true" className="rivet rivet-rust hidden bottom-1.5 left-1.5 sm:block" />
           <i data-rivet aria-hidden="true" className="rivet hidden bottom-1.5 right-1.5 sm:block" />
           <TopBezel />
-          <div className="grid min-h-0 flex-1 grid-rows-[1fr_auto] gap-1.5 sm:grid-rows-none sm:grid-cols-[1fr_140px] sm:gap-2.5">
+          <div className="grid min-h-0 flex-1 grid-rows-[1fr_auto] gap-1.5 sm:grid-rows-[minmax(0,1fr)] sm:grid-cols-[1fr_140px] sm:gap-2.5">
             <Screen>{children}</Screen>
             <GaugeCluster />
           </div>

@@ -17,13 +17,13 @@ const SPEC: [string, React.ReactNode][] = [
     'Ports',
     <span key="ports" className="flex flex-wrap gap-x-5 gap-y-1">
       <a
-        href="https://github.com/Ayosage"
+        href="https://github.com/Ayosage" target="_blank" rel="noopener noreferrer"
         className="inline-flex min-h-11 items-center py-2 hover:underline"
       >
         GITHUB ↗
       </a>
       <a
-        href="https://www.linkedin.com/in/brandon-joshua-s-7001b21b9/"
+        href="https://www.linkedin.com/in/brandon-joshua-s-7001b21b9/" target="_blank" rel="noopener noreferrer"
         className="inline-flex min-h-11 items-center py-2 hover:underline"
       >
         LINKEDIN ↗

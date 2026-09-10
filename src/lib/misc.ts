@@ -14,6 +14,14 @@ export const MISC: MiscGroup[] = [
     category: 'Websites',
     items: [
       {
+        name: 'This site (BS-01)',
+        links: [
+          { label: 'LIVE', href: 'https://www.brandons.sh' },
+          { label: 'SOURCE', href: 'https://github.com/Ayosage/portfolio-site' },
+        ],
+        stack: 'Next.js 16 / React 19 / Tailwind 4 / WebGL / Resend / Vercel',
+      },
+      {
         name: 'Steeple Lofts',
         links: [
           { label: 'LIVE', href: 'https://www.steepleapartments.com' },

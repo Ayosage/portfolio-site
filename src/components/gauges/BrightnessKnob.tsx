@@ -98,7 +98,7 @@ export function BrightnessKnob() {
 
   const a = drag ?? ANGLE[level]
   return (
-    <div className="well hidden sm:block" role="group" aria-label="brightness control">
+    <div data-gauge="knob" className="well hidden sm:block" role="group" aria-label="brightness control">
       <div className="flex items-baseline justify-between">
         <span>BRIGHTNESS</span>
         <span className="well-val">{level}/5</span>

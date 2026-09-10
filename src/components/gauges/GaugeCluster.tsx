@@ -8,7 +8,7 @@ export function GaugeCluster() {
   return (
     <aside
       aria-label="gauge cluster"
-      className="grid grid-cols-4 gap-1 sm:flex sm:flex-col sm:gap-2 [&>*]:min-w-0"
+      className="gauge-cluster grid grid-cols-4 gap-1 sm:flex sm:min-h-0 sm:flex-col sm:gap-2 sm:overflow-hidden [&>*]:min-w-0"
     >
       <SolarMeter />
       <UptimeGauge />
