@@ -73,6 +73,9 @@ export default function Cv() {
         <span className="text-[var(--phosphor-dim)]">{'> '}</span>
         {CV.name} <span className="text-[var(--phosphor-dim)]">·</span> {CV.headline}
       </p>
+      <p className="mt-1 text-[11px] uppercase tracking-[0.08em] text-[var(--phosphor-dim)]">
+        {CV.location} <span aria-hidden="true">·</span> open to work: {CV.regions}
+      </p>
 
       <div className="mt-5 flex flex-wrap gap-2 text-xs uppercase tracking-[0.04em]">
         <a
