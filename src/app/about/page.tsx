@@ -10,7 +10,7 @@ export const metadata: Metadata = pageMetadata({
 
 const SPEC: [string, React.ReactNode][] = [
   ['Role', 'Full-stack engineer'],
-  ['Stack', 'TypeScript · Next.js · Postgres · Solidity'],
+  ['Stack', 'TypeScript · Java · Next.js · Postgres · AWS · Solidity'],
   ['Location', CV.location],
   ['Availability', `● Open to work · ${CV.regions}`],
   [
