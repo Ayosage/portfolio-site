@@ -19,19 +19,28 @@ export const CV = {
   name: 'Brandon Smith',
   headline: 'Full-stack engineer',
   summary:
-    'Full-stack engineer working across web and web3. I build products where the hard parts, payments, infra and chain state, stay out of the user’s way. Day job: Software Engineer II at JPMorgan Chase, modernizing Spring services and building AWS infrastructure for regulated financial products.',
+    'Full-stack engineer working across web and web3. I build products where the hard parts, payments, infra and chain state, stay out of the user’s way. Day job: Software Engineer III at JPMorgan Chase, modernizing Spring services and building AWS infrastructure and observability for regulated financial products.',
   location: 'Philadelphia, PA',
   regions: 'Philadelphia · NYC · New Jersey · Delaware · Remote',
   pdf: { href: '/resume.pdf', filename: 'Brandon-Smith-CV.pdf' },
   experience: [
     {
       org: 'JPMorgan Chase & Co.',
-      role: 'Software Engineer II',
-      dates: 'MAR 2023 – NOW',
+      role: 'Software Engineer III',
+      dates: '2025 – NOW',
       notes: [
-        'Develop and modernize Spring-based backend services behind large-scale financial products.',
-        'Apple Card integration work: reliability, security requirements and production readiness in a regulated environment.',
+        'Own AWS management and observability development for the platform: account and infrastructure automation, metrics, logging and alerting for production services.',
+        'Continue the Apple Card integration work: reliability, security requirements and production readiness in a regulated environment.',
         'Platform modernization moving legacy systems toward cloud-native architecture: AWS infrastructure in Terraform, services deployed on Kubernetes.',
+      ],
+    },
+    {
+      org: 'JPMorgan Chase & Co.',
+      role: 'Software Engineer II',
+      dates: 'MAR 2023 – 2025',
+      notes: [
+        'Developed and modernized Spring-based backend services behind large-scale financial products.',
+        'Apple Card integration work alongside AWS management and observability tooling.',
         'Full-stack features in TypeScript, Node.js and React.',
       ],
     },
@@ -63,6 +72,12 @@ export const CV = {
     },
   ] as CvEntry[],
   education: [
+    {
+      org: 'Kutztown University',
+      role: 'B.S. Biology',
+      dates: 'DEGREE',
+      notes: [],
+    },
     {
       org: 'Amazon Web Services',
       role: 'AWS Certified Cloud Practitioner',
