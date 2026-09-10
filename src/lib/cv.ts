@@ -85,12 +85,6 @@ export const CV = {
       notes: [],
     },
     {
-      org: 'Reading Area Community College',
-      role: 'Associate in Business Administration',
-      dates: 'DEGREE',
-      notes: [],
-    },
-    {
       org: 'Codecademy',
       role: 'Certificate in Web Development',
       dates: 'CERT',
