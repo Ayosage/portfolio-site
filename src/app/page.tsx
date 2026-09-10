@@ -18,7 +18,7 @@ export default function Home() {
 
       <section aria-label="media index" className="mt-4 border border-[var(--hairline)] sm:mt-5">
         <p className="flex justify-between border-b border-[var(--hairline)] px-2 py-1 text-[10px] tracking-[0.06em] text-[var(--phosphor-dim)]">
-          <span>MEDIA ▪ SEATED IN THE DISK BAY BELOW</span>
+          <span>MEDIA<span className="hidden sm:inline"> ▪ SEATED IN THE DISK BAY BELOW</span></span>
           <span>{FEATURED.length} SLOTS</span>
         </p>
         <ul className="py-0.5">
