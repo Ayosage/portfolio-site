@@ -20,8 +20,8 @@ export function ContactForm() {
       <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">Contact</h1>
       <p className="mt-2 text-xs text-[var(--phosphor-dim)]">
         {'// or email me: '}
-        <a className="underline" href="mailto:aexbrandon@gmail.com">
-          aexbrandon@gmail.com
+        <a className="underline" href="mailto:BrandonJoshuaPHL@gmail.com">
+          BrandonJoshuaPHL@gmail.com
         </a>
       </p>
       <form action={action} className="mt-6 flex max-w-md flex-col gap-3 text-xs">

@@ -53,7 +53,7 @@ export async function sendPing(_prev: PingState, formData: FormData): Promise<Pi
 
   const sent = await deliverPing(input, {
     apiKey,
-    to: process.env.CONTACT_TO ?? 'aexbrandon@gmail.com',
+    to: process.env.CONTACT_TO ?? 'BrandonJoshuaPHL@gmail.com',
     from: process.env.CONTACT_FROM,
   })
   if (!sent.ok) {

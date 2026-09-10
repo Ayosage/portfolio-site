@@ -29,7 +29,7 @@ const SPEC: [string, React.ReactNode][] = [
         LINKEDIN ↗
       </a>
       <a
-        href="mailto:aexbrandon@gmail.com"
+        href="mailto:BrandonJoshuaPHL@gmail.com"
         className="inline-flex min-h-11 items-center py-2 hover:underline"
       >
         EMAIL ↗
