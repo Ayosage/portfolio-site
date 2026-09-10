@@ -530,8 +530,7 @@ body {
 .bay {
   position: relative;
   display: grid;
-  /* Phones: four cartridges as a 2x2 grid, nothing hidden off-screen. */
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
   padding: 6px;
   border-radius: 6px;
@@ -542,9 +541,11 @@ body {
     0 1px 0 var(--edge-hi);
   overflow: visible;
 }
-@media (min-width: 640px) {
+/* Phones: the bay is desktop hardware. The home media index lists the same
+   four projects and the F-keys stay, so the screen gets the height back. */
+@media (max-width: 639px) {
   .bay {
-    grid-template-columns: repeat(4, 1fr);
+    display: none;
   }
 }
 .slot {
@@ -611,12 +612,6 @@ body {
   font-size: 10px;
   line-height: 1.25;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
-}
-/* Phones: title-only label, padded up to a 44px touch target. */
-@media (max-width: 639px) {
-  .cart-label {
-    padding: 11px 8px;
-  }
 }
 .cart-led {
   position: absolute;
