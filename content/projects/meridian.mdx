@@ -6,11 +6,11 @@ import { SectionHeading } from '@/components/case-study/SectionHeading'
 <SectionHeading index={1} title="The Problem" />
 
 <div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
-Online board games usually pick one: they look good, or they can't be
-cheated. Meridian is a full implementation of the Catan base game, with
-original name and art, that does both. Snake-draft setup, dice production,
-the robber and discards, building, trades and development cards, played on a
-painted-miniature 3D board with friends in their own browsers.
+Meridian is a full implementation of the Catan base game with original name
+and art: snake-draft setup, dice production, the robber and discards,
+building, trades and development cards, on a painted-miniature 3D board,
+with friends in their own browsers. The server owns the rules, so nobody can
+cheat.
 </div>
 
 <SectionHeading index={2} title="Architecture" />
@@ -44,7 +44,7 @@ the game ends. Server-side bots fill seats for a solo game.
 **Rules are data.** Rulesets are declarative and validated at load, so
 variants and expansions are content drops rather than engine changes.
 
-**Performance is a budget, not a hope.** Instanced geometry, a draw-call
+**Frame rate is budgeted.** Instanced geometry, a draw-call
 budget, and a low quality tier that drops the ambient-occlusion pass keep
 mid-range laptops at a steady frame rate.
 </div>
