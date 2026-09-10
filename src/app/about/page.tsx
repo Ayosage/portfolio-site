@@ -4,7 +4,7 @@ import { CV } from '@/lib/cv'
 
 export const metadata: Metadata = pageMetadata({
   title: 'About',
-  description: 'Brandon Smith, full-stack engineer in Philadelphia. Java and AWS at JPMorgan Chase; games, bots and web3 on the side.',
+  description: 'Brandon Smith is a full-stack engineer in Philadelphia. He works at JPMorgan Chase and builds games, bots and tools on the side.',
   path: '/about',
 })
 
@@ -47,11 +47,11 @@ export default function About() {
       <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">About</h1>
       <div className="prose-body mt-4 max-w-[60ch] text-sm leading-relaxed">
         <p>
-          Full-stack engineer in Philadelphia. By day I build and modernize Java and
-          Spring services at JPMorgan Chase and run the AWS infrastructure and
-          observability behind them. On my own time I ship games, bots and web3
-          products end to end, and I keep the hard parts (payments, infra, chain
-          state) out of the user&apos;s way.
+          I&apos;m a full-stack engineer in Philadelphia. I work at JPMorgan Chase on
+          Java and Spring services and the AWS infrastructure behind them. Outside
+          work I build my own projects: a multiplayer board game, a Discord bot for
+          game nights, a production tracker for winemakers. Before software I ran a
+          brewery lab and made wine, which is where CellarKeep comes from.
         </p>
       </div>
 

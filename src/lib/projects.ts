@@ -45,7 +45,7 @@ export const PROJECTS: Project[] = [
   {
     slug: 'stagepass',
     title: 'StagePass',
-    oneLiner: 'Ticketing with web3 under the hood',
+    oneLiner: 'Event ticketing backed by an on-chain ledger',
     tags: ['NEXT.JS', 'SOLIDITY'],
     hasCaseStudy: true,
     featured: false,

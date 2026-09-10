@@ -6,7 +6,7 @@ export const SITE_URL = 'https://www.brandon.party'
 
 export const SITE_NAME = 'Brandon Smith ▪ BS-01 Field Terminal'
 export const SITE_DESCRIPTION =
-  'Brandon Smith, full-stack engineer in Philadelphia. Java, TypeScript and AWS at JPMorgan Chase; games, bots and web3 on the side.'
+  'Brandon Smith, full-stack engineer in Philadelphia. Java, TypeScript and AWS at JPMorgan Chase. Side projects: a board game, a Discord bot, a winemaking tracker.'
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
