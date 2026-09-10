@@ -6,7 +6,7 @@ import { pageMetadata } from '@/lib/site'
 
 export const metadata: Metadata = pageMetadata({
   title: 'CV',
-  description: `${CV.name} — ${CV.headline}. Experience, projects and skills, readable on screen or as a PDF.`,
+  description: `${CV.name}'s CV: experience, projects and skills, on screen or as a PDF.`,
   path: '/cv',
 })
 

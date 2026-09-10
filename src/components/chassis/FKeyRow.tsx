@@ -24,7 +24,7 @@ export function FKeyRow() {
         const shared = {
           onClick: playClick,
           'aria-current': current ? ('page' as const) : undefined,
-          className: `fkey ${k.alert ? 'fkey-alert' : ''} flex-1 px-2 py-3 text-center text-[11px] tracking-[0.04em] sm:py-2`,
+          className: `fkey ${k.alert ? 'fkey-alert' : ''} flex-1 min-h-11 px-2 py-3 text-center text-[11px] tracking-[0.04em] sm:min-h-0 sm:py-2`,
         }
         return (
           <Link key={k.href} href={k.href} {...shared}>

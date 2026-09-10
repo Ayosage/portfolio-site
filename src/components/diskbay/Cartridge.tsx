@@ -51,8 +51,8 @@ export function Cartridge({
       >
         <span className="cart-label">
           <b className="block text-[11px] tracking-[0.06em]">▣ {project.title.toUpperCase()}</b>
-          <span className="hidden text-[9px] opacity-85 sm:block">{spinning ? '▸ SEATING…' : project.oneLiner}</span>
-          <small className="mt-0.5 block text-[8px] tracking-[0.08em] opacity-75">{project.tags.join(' / ')}</small>
+          <span className="hidden text-[10px] opacity-85 sm:block">{spinning ? '▸ SEATING…' : project.oneLiner}</span>
+          <small className="mt-0.5 hidden text-[10px] tracking-[0.08em] opacity-75 sm:block">{project.tags.join(' / ')}</small>
         </span>
         <span className="cart-led" aria-hidden="true" />
       </a>

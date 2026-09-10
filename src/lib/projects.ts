@@ -13,7 +13,7 @@ export const PROJECTS: Project[] = [
   {
     slug: 'meridian',
     title: 'Meridian',
-    oneLiner: 'Online board game, server-authoritative',
+    oneLiner: 'Online board game with an authoritative server',
     tags: ['R3F', 'COLYSEUS'],
     hasCaseStudy: true,
     featured: true,

@@ -27,7 +27,7 @@ export async function deliverPing(ping: Ping, deps: Deps): Promise<MailResult> {
       to: [deps.to],
       reply_to: ping.from,
       subject: `[BS-01 PING] from ${ping.from}`,
-      text: `${ping.message}\n\n— sent via the portfolio contact form; reply goes to ${ping.from}`,
+      text: `${ping.message}\n\nSent via the portfolio contact form. Reply goes to ${ping.from}.`,
     }),
   })
   if (!res.ok) return { ok: false, error: `MAIL REJECTED (${res.status})` }

@@ -13,12 +13,12 @@ export default function Home() {
         Smith<span aria-hidden="true" className="cursor-blink" />
       </h1>
       <p className="mt-3 max-w-[60ch] text-[12px] leading-relaxed text-[var(--phosphor-dim)]">
-        {"// full-stack engineer — payments, infra and web3, built properly and kept out of the user's way"}
+        {'// full-stack engineer in Philadelphia. Backend and cloud at JPMorgan Chase by day; games, bots and web3 by night.'}
       </p>
 
       <section aria-label="media index" className="mt-4 border border-[var(--hairline)] sm:mt-5">
         <p className="flex justify-between border-b border-[var(--hairline)] px-2 py-1 text-[10px] tracking-[0.06em] text-[var(--phosphor-dim)]">
-          <span>MEDIA — DISK BAY BELOW THE SCREEN</span>
+          <span>MEDIA ▪ SEATED IN THE DISK BAY BELOW</span>
           <span>{FEATURED.length} SLOTS</span>
         </p>
         <ul className="py-0.5">
