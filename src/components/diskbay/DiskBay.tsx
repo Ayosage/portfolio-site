@@ -28,13 +28,13 @@ export function DiskBay() {
   }, [pathname])
 
   return (
-    <section aria-label="disk bay — selected work" className="bay mt-2">
-      <p className="col-span-full flex justify-between gap-3 px-0.5 pb-0.5 text-[9px] tracking-[0.14em] text-[var(--chrome-dim)]">
-        <span>DISK BAY — INSERT MEDIA</span>
+    <section aria-label="disk bay: selected work" className="bay mt-2">
+      <p className="col-span-full flex justify-between gap-3 px-0.5 pb-0.5 text-[10px] tracking-[0.14em] text-[var(--chrome-dim)]">
+        <span>DISK BAY ▪ INSERT MEDIA</span>
         <span aria-live="polite" className="text-[var(--phosphor)]">
           {status}
         </span>
-        <span>{FEATURED.length} SLOTS</span>
+        <span className="hidden sm:inline">{FEATURED.length} SLOTS</span>
       </p>
       {FEATURED.map((p) => (
         <Cartridge

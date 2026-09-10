@@ -4,7 +4,7 @@ import { CV } from '@/lib/cv'
 
 export const metadata: Metadata = pageMetadata({
   title: 'About',
-  description: 'Brandon Smith — full-stack engineer working across web and web3.',
+  description: 'Brandon Smith, full-stack engineer in Philadelphia. Java and AWS at JPMorgan Chase; games, bots and web3 on the side.',
   path: '/about',
 })
 
@@ -29,7 +29,7 @@ const SPEC: [string, React.ReactNode][] = [
         LINKEDIN ↗
       </a>
       <a
-        href="mailto:aexbrandon@gmail.com"
+        href="mailto:BrandonJoshuaPHL@gmail.com"
         className="inline-flex min-h-11 items-center py-2 hover:underline"
       >
         EMAIL ↗
@@ -47,8 +47,11 @@ export default function About() {
       <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">About</h1>
       <div className="prose-body mt-4 max-w-[60ch] text-sm leading-relaxed">
         <p>
-          Full-stack engineer working across web and web3. I build products where the
-          hard parts — payments, infra, chain state — stay out of the user&apos;s way.
+          Full-stack engineer in Philadelphia. By day I build and modernize Java and
+          Spring services at JPMorgan Chase and run the AWS infrastructure and
+          observability behind them. On my own time I ship games, bots and web3
+          products end to end, and I keep the hard parts (payments, infra, chain
+          state) out of the user&apos;s way.
         </p>
       </div>
 

@@ -4,7 +4,7 @@ import { ContactForm } from './ContactForm'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Contact',
-  description: 'Send a ping to Brandon Smith.',
+  description: 'Send Brandon Smith a message. Every one gets read.',
   path: '/contact',
 })
 

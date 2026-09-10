@@ -4,15 +4,15 @@ import type { Metadata } from 'next'
 // (canonical, sitemap, Open Graph url) must agree with that.
 export const SITE_URL = 'https://www.brandon.party'
 
-export const SITE_NAME = 'Brandon Smith — BS-01 Field Terminal'
+export const SITE_NAME = 'Brandon Smith ▪ BS-01 Field Terminal'
 export const SITE_DESCRIPTION =
-  'Full-stack engineer. Payments, infra, web3 — the hard parts stay invisible.'
+  'Brandon Smith, full-stack engineer in Philadelphia. Java, TypeScript and AWS at JPMorgan Chase; games, bots and web3 on the side.'
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
-    template: '%s — Brandon Smith',
+    template: '%s ▪ Brandon Smith',
   },
   description: SITE_DESCRIPTION,
   alternates: { canonical: '/' },

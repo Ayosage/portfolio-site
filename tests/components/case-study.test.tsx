@@ -10,7 +10,7 @@ import { EscBack } from '@/components/case-study/EscBack'
 
 test('section heading shows the numbered title', () => {
   render(<SectionHeading index={1} title="The Problem" />)
-  expect(screen.getByRole('heading', { name: /01 — THE PROBLEM/ })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /01 ▪ THE PROBLEM/ })).toBeInTheDocument()
 })
 
 test('meta strip renders all fields', () => {
