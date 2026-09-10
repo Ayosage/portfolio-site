@@ -61,7 +61,8 @@ test('experience and education render entries when present and a designed empty 
       expect(within(section).getByText(/no entries on file/i)).toBeInTheDocument()
     } else {
       for (const e of entries) {
-        expect(within(section).getByText(e.org)).toBeInTheDocument()
+        // The same employer can appear more than once (consecutive roles).
+        expect(within(section).getAllByText(e.org).length).toBeGreaterThan(0)
         expect(within(section).getByText(e.role.toUpperCase())).toBeInTheDocument()
       }
     }
