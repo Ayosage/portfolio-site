@@ -22,7 +22,8 @@ test('every misc item renders as name, links, stack', () => {
 
 test('external links open in a new tab without a referrer; internal ones stay in-app', () => {
   render(<MiscIndex />)
-  const live = screen.getByRole('link', { name: /LIVE/ })
+  const row = screen.getByText('STEEPLE LOFTS').closest('li')!
+  const live = within(row).getByRole('link', { name: /LIVE/ })
   expect(live).toHaveAttribute('href', 'https://www.steepleapartments.com')
   expect(live).toHaveAttribute('target', '_blank')
   expect(live).toHaveAttribute('rel', 'noopener noreferrer')

@@ -16,6 +16,15 @@ test('ports footer has the three contact links', () => {
   expect(screen.getByRole('link', { name: /email/i })).toBeInTheDocument()
 })
 
+test('github and linkedin ports open in a new tab without a referrer', () => {
+  render(<Home />)
+  for (const name of [/github/i, /linkedin/i]) {
+    const link = screen.getByRole('link', { name })
+    expect(link).toHaveAttribute('target', '_blank')
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+  }
+})
+
 test('email port routes to the contact form, not a mailto', () => {
   render(<Home />)
   const email = screen.getByRole('link', { name: /email/i })

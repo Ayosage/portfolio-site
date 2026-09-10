@@ -43,12 +43,12 @@ export default function Home() {
       <footer className="mt-auto border-t border-[var(--hairline)] pt-3 text-[11px]">
         <ul className="flex flex-wrap gap-x-6 gap-y-1">
           <li>
-            <a href="https://github.com/Ayosage" className="inline-flex min-h-10 items-center hover:underline">
+            <a href="https://github.com/Ayosage" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center hover:underline">
               PORT-A ▸ GITHUB ↗
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/in/brandon-joshua-s-7001b21b9/" className="inline-flex min-h-10 items-center hover:underline">
+            <a href="https://www.linkedin.com/in/brandon-joshua-s-7001b21b9/" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center hover:underline">
               PORT-B ▸ LINKEDIN ↗
             </a>
           </li>
