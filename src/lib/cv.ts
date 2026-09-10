@@ -30,8 +30,8 @@ export const CV = {
       dates: '2025 – NOW',
       notes: [
         'Own AWS management for the platform: account and infrastructure automation in Terraform, services deployed on Kubernetes.',
-        'Build observability for production services: metrics, logging and alerting, with the runbooks and dashboards teams use to operate them.',
-        'Deliver Apple Card integration services to production: reliability, security requirements and release readiness in a regulated environment.',
+        'Build observability for production services in Splunk, Dynatrace, CloudWatch and Datadog: metrics, logging and alerting.',
+        'Deliver Apple Card Promotional Services to production: reliability, security requirements and release readiness in a regulated environment.',
       ],
     },
     {
@@ -39,7 +39,7 @@ export const CV = {
       role: 'Software Engineer II',
       dates: 'MAR 2023 – 2025',
       notes: [
-        'Developed and modernized Spring-based backend services for the Apple Card integration, supporting large-scale financial products.',
+        'Developed and modernized Java 21 and Spring backend services for Apple Card Promotional Services, supporting large-scale financial products.',
         'Moved legacy services toward cloud-native architecture on AWS as part of the platform modernization program.',
         'Built full-stack features in TypeScript, Node.js and React.',
       ],
@@ -82,11 +82,12 @@ export const CV = {
     },
   ] as CvEntry[],
   skills: [
-    ['Languages', 'TypeScript · Java · SQL · Solidity'],
+    ['Languages', 'TypeScript · Java 21 · SQL · Solidity'],
     ['Frontend', 'React · Next.js · React Three Fiber · Tailwind'],
     ['Backend', 'Node · Spring · Postgres · MongoDB · Drizzle · Colyseus · discord.js'],
     ['Web3', 'Solidity · Foundry · ERC-721 · Base'],
     ['Cloud', 'AWS · Terraform · Kubernetes · Docker · CI/CD'],
+    ['Observability', 'Splunk · Dynatrace · CloudWatch · Datadog'],
     ['Ship', 'Vercel · Fly · GitHub Actions · Resend'],
   ] as CvSkillRow[],
   ports: [
