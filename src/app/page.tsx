@@ -13,7 +13,7 @@ export default function Home() {
         Smith<span aria-hidden="true" className="cursor-blink" />
       </h1>
       <p className="mt-3 max-w-[60ch] text-[12px] leading-relaxed text-[var(--phosphor-dim)]">
-        {'// full-stack engineer in Philadelphia. Backend and cloud at JPMorgan Chase by day; games, bots and web3 by night.'}
+        {'// full-stack engineer in Philadelphia. Java, TypeScript and AWS at JPMorgan Chase.'}
       </p>
 
       <section aria-label="media index" className="mt-4 border border-[var(--hairline)] sm:mt-5">

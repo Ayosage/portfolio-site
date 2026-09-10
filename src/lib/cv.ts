@@ -19,7 +19,7 @@ export const CV = {
   name: 'Brandon Smith',
   headline: 'Full-stack engineer',
   summary:
-    'Software engineer at JPMorgan Chase since 2023: Java 21 and Spring services for Apple Card Promotional Services, plus the AWS infrastructure and observability behind them. On the side, full-stack and web3 projects shipped end to end.',
+    'I\'m a software engineer at JPMorgan Chase, where I\'ve worked since 2023 on Java 21 and Spring services for Apple Card Promotional Services and the AWS infrastructure and observability behind them. Outside work I build full-stack and web3 projects.',
   location: 'Philadelphia, PA',
   regions: 'Philadelphia · NYC · New Jersey · Delaware · Remote',
   pdf: { href: '/resume.pdf', filename: 'Brandon-Smith-CV.pdf' },

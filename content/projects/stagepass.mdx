@@ -6,16 +6,16 @@ import { SectionHeading } from '@/components/case-study/SectionHeading'
 <SectionHeading index={1} title="The Problem" />
 
 <div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
-Event ticketing is hostile to fans: tickets get duplicated, scalped, and lost
+Event ticketing is rough on fans: tickets get duplicated, scalped and lost
 in email. StagePass is a two-sided ticketing product where organizers create
 events and sell tickets, and attendees buy with a normal card checkout, get a
 QR ticket, and get scanned in at the door.
 
-Under the hood every ticket is an ERC-721 on Base Sepolia and every ownership
-change is an on-chain transfer. No end user ever sees that. No wallets to
-connect, no crypto language, no NFT branding. The chain is there for the
-guarantees a plain database can't give: supply caps enforced at the ledger,
-append-only ownership history, no double-entry.
+Every ticket is an ERC-721 on Base Sepolia and every ownership change is an
+on-chain transfer. Attendees never see that: nobody connects a wallet or
+reads crypto language. The chain is there for the guarantees a plain
+database can't give: supply caps enforced at the ledger and an append-only
+ownership history.
 </div>
 
 <SectionHeading index={2} title="Architecture" />

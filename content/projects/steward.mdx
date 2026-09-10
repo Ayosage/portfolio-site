@@ -21,7 +21,7 @@ result webhooks, over Postgres with Drizzle. The game registry is a static
 config module rather than a table, because a new game is a code change
 anyway.
 
-The heart of it is a documented game-adapter contract. Steward launches a
+The core is a documented game-adapter contract. Steward launches a
 match with a bearer token and a per-match callback. The match embed carries
 a Join button that mints a seat token bound to the clicker's Discord ID and
 replies with their private link. When the game ends it posts a signed result
