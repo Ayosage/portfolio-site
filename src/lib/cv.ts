@@ -29,7 +29,7 @@ export const CV = {
       role: 'Software Engineer III',
       dates: '2025 – NOW',
       notes: [
-        'Own AWS management for the platform: account and infrastructure automation in Terraform, services deployed on Kubernetes.',
+        'Own AWS management for 15 services across 8 environments, including batch applications and Lambda functions: account and infrastructure automation in Terraform, services deployed on Kubernetes.',
         'Build observability for production services in Splunk, Dynatrace, CloudWatch and Datadog: metrics, logging and alerting.',
         'Deliver Apple Card Promotional Services to production: reliability, security requirements and release readiness in a regulated environment.',
       ],
