@@ -1,7 +1,7 @@
 import { CaseStudyMeta } from '@/components/case-study/CaseStudyMeta'
 import { SectionHeading } from '@/components/case-study/SectionHeading'
 
-<CaseStudyMeta role="Backend" stack="discord.js v14 / Postgres / Drizzle" year="2026" />
+<CaseStudyMeta role="Backend" stack="discord.js v14 / Postgres / Drizzle / Fly.io" year="2026" live />
 
 <SectionHeading index={1} title="The Problem" />
 
@@ -33,9 +33,9 @@ that does can join the library.
 <SectionHeading index={3} title="Decisions" />
 
 <div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
-**Identity binds at join, not at launch.** Seat tokens are minted when a
-player clicks Join, so late joiners work naturally and there is no second
-sync call between Steward and the game. Bare-code joins still play, they just
+**Identity binds at join.** The host's seat is minted with the launch;
+everyone else's when they click Join, so late joiners work naturally and
+there is no second sync call between Steward and the game. Bare-code joins still play, they just
 earn no stats.
 
 **Idempotent results.** Seats upsert by token, and the first transition to
