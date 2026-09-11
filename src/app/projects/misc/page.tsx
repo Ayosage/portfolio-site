@@ -1,5 +1,6 @@
 import { PROJECTS } from '@/lib/projects'
-import { MISC, type MiscLink } from '@/lib/misc'
+import { LinkAnchor } from '@/components/case-study/LinkAnchor'
+import { MISC } from '@/lib/misc'
 import { pageMetadata } from '@/lib/site'
 import { EscBack } from '@/components/case-study/EscBack'
 import { SectionHeading } from '@/components/case-study/SectionHeading'
@@ -12,18 +13,6 @@ export const metadata = pageMetadata({
   path: '/projects/misc',
 })
 
-function MiscAnchor({ link }: { link: MiscLink }) {
-  const external = link.href.startsWith('http')
-  return (
-    <a
-      href={link.href}
-      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className="border-b border-[var(--phosphor-dim)] text-[var(--phosphor)] hover:border-[var(--phosphor)]"
-    >
-      {link.label} {external ? '↗' : '▸'}
-    </a>
-  )
-}
 
 export default function MiscIndex() {
   return (
@@ -53,7 +42,7 @@ export default function MiscIndex() {
                   {item.links.length === 0 ? (
                     <span className="text-[var(--phosphor-dim)]">NO PUBLIC LINK</span>
                   ) : (
-                    item.links.map((l) => <MiscAnchor key={l.label + l.href} link={l} />)
+                    item.links.map((l) => <LinkAnchor key={l.label + l.href} label={l.label} href={l.href} />)
                   )}
                 </span>
                 <span className="text-[11px] uppercase tracking-[0.06em] text-[var(--phosphor-dim)]">

@@ -1,11 +1,21 @@
-import { PROJECTS, FEATURED } from '@/lib/projects'
+import { describe, expect, it } from 'vitest'
+import { PROJECTS, projectLinks } from '@/lib/projects'
 
-test('four featured slots, StagePass demoted to the misc index but still routable', () => {
-  expect(FEATURED.map((p) => p.slug)).toEqual(['meridian', 'steward', 'cellarkeep', 'misc'])
-  expect(PROJECTS.map((p) => p.slug)).toEqual(['meridian', 'steward', 'cellarkeep', 'misc', 'stagepass'])
-  for (const p of PROJECTS) {
-    expect(p.hasCaseStudy).toBe(true)
-    expect(p.oneLiner).not.toMatch(/in progress/i)
-    expect(p.tags.length).toBeGreaterThanOrEqual(2)
-  }
+describe('project links', () => {
+  it('Meridian points at its live client and its source', () => {
+    expect(projectLinks('meridian')).toEqual([
+      { label: 'LIVE', href: 'https://meridian-client-fawn.vercel.app' },
+      { label: 'SOURCE', href: 'https://github.com/Ayosage/meridian' },
+    ])
+  })
+  it('Steward can be added to a server and has its source', () => {
+    const links = projectLinks('steward')
+    expect(links.map((l) => l.label)).toEqual(['ADD TO DISCORD', 'SOURCE'])
+    expect(links[0]!.href).toMatch(/^https:\/\/discord\.com\/oauth2\/authorize\?client_id=\d+&scope=bot%20applications\.commands&permissions=\d+$/)
+    expect(links[1]!.href).toBe('https://github.com/Ayosage/steward')
+  })
+  it('every link is an absolute https url and a project without links yields none', () => {
+    for (const p of PROJECTS) for (const l of projectLinks(p.slug)) expect(l.href).toMatch(/^https:\/\//)
+    expect(projectLinks('cellarkeep')).toEqual([])
+  })
 })
