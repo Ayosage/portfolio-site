@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation'
 import type { ComponentType } from 'react'
-import { PROJECTS } from '@/lib/projects'
+import { PROJECTS, gamesOf } from '@/lib/projects'
 import { pageMetadata } from '@/lib/site'
 import { EscBack } from '@/components/case-study/EscBack'
 import { LinkAnchor } from '@/components/case-study/LinkAnchor'
+import { GamesList } from '@/components/case-study/GamesList'
 import Stagepass from '../../../../content/projects/stagepass.mdx'
 import Meridian from '../../../../content/projects/meridian.mdx'
 import Steward from '../../../../content/projects/steward.mdx'
@@ -47,6 +48,7 @@ export default async function CaseStudy({
   const project = PROJECTS.find((p) => p.slug === slug && p.hasCaseStudy)
   const Content = CASE_STUDIES[slug]
   if (!project || !Content) notFound()
+  const games = gamesOf(slug)
   return (
     <main className="p-4 sm:p-6">
       <p className="flex justify-between border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
@@ -63,6 +65,10 @@ export default async function CaseStudy({
           ))}
         </p>
       )}
+      {games.length > 0 && project.blurb && (
+        <p className="prose-body mt-3 max-w-[60ch] text-sm leading-relaxed">{project.blurb}</p>
+      )}
+      {games.length > 0 && <GamesList games={games} />}
       <Content />
     </main>
   )
