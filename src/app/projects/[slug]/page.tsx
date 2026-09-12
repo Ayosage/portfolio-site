@@ -7,12 +7,14 @@ import { LinkAnchor } from '@/components/case-study/LinkAnchor'
 import Stagepass from '../../../../content/projects/stagepass.mdx'
 import Meridian from '../../../../content/projects/meridian.mdx'
 import Steward from '../../../../content/projects/steward.mdx'
+import Wordy from '../../../../content/projects/wordy.mdx'
 import Cellarkeep from '../../../../content/projects/cellarkeep.mdx'
 
 const CASE_STUDIES: Record<string, ComponentType> = {
   stagepass: Stagepass,
   meridian: Meridian,
   steward: Steward,
+  wordy: Wordy,
   cellarkeep: Cellarkeep,
 }
 

@@ -2,6 +2,7 @@ import { vi } from 'vitest'
 vi.mock('../../content/projects/stagepass.mdx', () => ({ default: () => null }))
 vi.mock('../../content/projects/meridian.mdx', () => ({ default: () => null }))
 vi.mock('../../content/projects/steward.mdx', () => ({ default: () => null }))
+vi.mock('../../content/projects/wordy.mdx', () => ({ default: () => null }))
 vi.mock('../../content/projects/cellarkeep.mdx', () => ({ default: () => null }))
 
 import { metadata as aboutMeta } from '@/app/about/page'
@@ -23,8 +24,8 @@ test('case study title names the project', async () => {
   expect(String(meta.title)).toMatch(/StagePass/)
 })
 
-test('all four case studies are statically generated', () => {
-  expect(generateStaticParams().map((p) => p.slug)).toEqual(['meridian', 'steward', 'cellarkeep', 'stagepass'])
+test('all five case studies are statically generated', () => {
+  expect(generateStaticParams().map((p) => p.slug)).toEqual(['meridian', 'steward', 'wordy', 'cellarkeep', 'stagepass'])
 })
 
 test('meridian case study title names the project', async () => {
