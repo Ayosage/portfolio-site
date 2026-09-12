@@ -42,6 +42,18 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: 'wordy',
+    title: 'Wordy Champions',
+    oneLiner: 'PvP Wordle for two to eight, six rounds',
+    tags: ['REACT', 'DURABLE OBJECTS'],
+    hasCaseStudy: true,
+    featured: false,
+    links: [
+      { label: 'LIVE', href: 'https://wordy-client.vercel.app' },
+      { label: 'SOURCE', href: 'https://github.com/Ayosage/wordy-champions' },
+    ],
+  },
+  {
     slug: 'cellarkeep',
     title: 'CellarKeep',
     oneLiner: 'Production tracker for wine, mead and cider',

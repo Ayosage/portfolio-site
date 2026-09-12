@@ -1,0 +1,51 @@
+import { CaseStudyMeta } from '@/components/case-study/CaseStudyMeta'
+import { SectionHeading } from '@/components/case-study/SectionHeading'
+
+<CaseStudyMeta role="Full-stack" stack="React / Cloudflare Durable Objects / match-core" year="2026" live />
+
+<SectionHeading index={1} title="The Problem" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+Wordle is a solo game. Wordy Champions makes it a race. Two to eight
+players get the same five-letter word each round and have six guesses and
+three minutes to solve it. Fewest guesses wins the round, fastest breaks the
+tie, and points add up over six rounds. It launches from Discord with
+the /wordy command through Steward, or from a four-letter code on the web.
+</div>
+
+<SectionHeading index={2} title="Architecture" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+Each match is one Cloudflare Durable Object. The object owns the state in
+SQLite storage, holds every player's WebSocket, and uses one alarm for the
+round clock and the pause between rounds. The rules are a pure TypeScript
+package: word lists, tile marking, scoring, and the round state machine,
+with no network code.
+
+The object itself comes from match-core, the engine I pulled out of
+Meridian. A game supplies an adapter (create, apply, view, deadline,
+expire) and the engine handles seats, reconnects, the lobby, launch tokens,
+and the result webhook. Wordy is the second game on it.
+
+The client is Vite and React. Other players show as colour rows only, so
+nobody can read a word off a neighbour's board.
+</div>
+
+<SectionHeading index={3} title="Decisions" />
+
+<div className="prose-body mt-2 max-w-[60ch] text-sm leading-relaxed">
+**Two point sources.** Placement points work like a kart race: first to
+solve gets the most. Guess points reward solving in fewer tries. A slow solve
+in two guesses can still beat a fast solve in five.
+
+**The host starts the match.** Nothing starts on its own. The host sets the
+table size on the web and presses Start when everyone is in.
+
+**Bots exist only for tests.** The Worker refuses bots unless a test flag is
+set, so a production match is always humans. Locally, one person can play a
+whole match against solver bots.
+
+**One browser test plays a full match.** Two headless browsers create a
+match, join, guess, and reach the final standings against the real Worker
+runtime.
+</div>
