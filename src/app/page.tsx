@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FEATURED } from '@/lib/projects'
+import { FEATURED, gamesOf } from '@/lib/projects'
 
 export default function Home() {
   return (
@@ -26,7 +26,7 @@ export default function Home() {
             <li key={p.slug}>
               <Link
                 href={`/projects/${p.slug}`}
-                className="grid grid-cols-[4ch_1fr] items-baseline gap-x-2 px-2 py-1.5 text-[12px] hover:bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] sm:grid-cols-[5ch_12ch_1fr_auto]"
+                className="grid grid-cols-[4ch_1fr] items-baseline gap-x-2 px-2 py-1.5 text-[12px] hover:bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] sm:grid-cols-[5ch_16ch_1fr_auto]"
               >
                 <span className="text-[var(--phosphor-dim)]">SL{i + 1}</span>
                 <span className="font-bold tracking-wider">{p.title.toUpperCase()}</span>
@@ -35,6 +35,25 @@ export default function Home() {
                   {p.tags.join(' / ')}
                 </span>
               </Link>
+              {p.games && (
+                <ul aria-label={`games on ${p.title}`} className="pb-1">
+                  {gamesOf(p.slug).map((g, j, all) => (
+                    <li key={g.slug}>
+                      <Link
+                        href={`/projects/${g.slug}`}
+                        className="grid grid-cols-[4ch_1fr] items-baseline gap-x-2 px-2 py-1 text-[12px] hover:bg-[color-mix(in_srgb,var(--phosphor)_10%,transparent)] sm:grid-cols-[5ch_16ch_1fr_auto]"
+                      >
+                        <span aria-hidden="true" className="text-right text-[var(--phosphor-dim)]">{j === all.length - 1 ? '└' : '├'}</span>
+                        <span className="font-bold tracking-wider">{g.title.toUpperCase()}</span>
+                        <span className="col-start-2 text-[var(--phosphor-dim)] sm:col-start-auto">{g.oneLiner}</span>
+                        <span className="hidden text-[10px] tracking-[0.08em] text-[var(--phosphor-dim)] sm:inline">
+                          {g.tags.join(' / ')}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
