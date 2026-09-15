@@ -17,7 +17,7 @@ export function ContactForm() {
       <p className="border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         ~/contact
       </p>
-      <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">Contact</h1>
+      <h1 className="phosphor-glow mt-5 text-balance text-4xl font-bold uppercase tracking-[-0.03em]">Contact</h1>
       <p className="mt-2 text-xs text-[var(--phosphor-dim)]">
         {'// or email me: '}
         <a className="underline" href="mailto:BrandonJoshuaPHL@gmail.com">
@@ -50,7 +50,7 @@ export function ContactForm() {
         </label>
         <button
           disabled={pending}
-          className="border border-[var(--phosphor)] p-2 uppercase disabled:opacity-50"
+          className="press border border-[var(--phosphor)] p-2 uppercase disabled:opacity-50"
         >
           {pending ? 'Sending…' : 'Send ▸'}
         </button>

@@ -82,7 +82,7 @@ export default function OpenGraphImage() {
             paddingTop: 16,
           }}
         >
-          MADE BY HAND ▪ RUNS ON SUNLIGHT ▪ www.brandon.party
+          MADE BY HAND ▪ RUNS ON SUNLIGHT ▪ www.brandons.sh
         </div>
       </div>
     ),

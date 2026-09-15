@@ -3,33 +3,33 @@ import sitemap from '@/app/sitemap'
 import { SITE_URL, pageMetadata, siteMetadata } from '@/lib/site'
 
 test('site url is the canonical www host, no trailing slash', () => {
-  expect(SITE_URL).toBe('https://www.brandon.party')
+  expect(SITE_URL).toBe('https://www.brandons.sh')
 })
 
 test('robots allows everything and points at the sitemap', () => {
   const r = robots()
   expect(r.rules).toEqual({ userAgent: '*', allow: '/' })
-  expect(r.sitemap).toBe('https://www.brandon.party/sitemap.xml')
+  expect(r.sitemap).toBe('https://www.brandons.sh/sitemap.xml')
 })
 
 test('sitemap lists every public route on the canonical host', () => {
   const urls = sitemap().map((e) => e.url)
   expect(urls).toEqual([
-    'https://www.brandon.party',
-    'https://www.brandon.party/about',
-    'https://www.brandon.party/cv',
-    'https://www.brandon.party/contact',
-    'https://www.brandon.party/projects/meridian',
-    'https://www.brandon.party/projects/steward',
-    'https://www.brandon.party/projects/wordy',
-    'https://www.brandon.party/projects/cellarkeep',
-    'https://www.brandon.party/projects/misc',
-    'https://www.brandon.party/projects/stagepass',
+    'https://www.brandons.sh',
+    'https://www.brandons.sh/about',
+    'https://www.brandons.sh/cv',
+    'https://www.brandons.sh/contact',
+    'https://www.brandons.sh/projects/meridian',
+    'https://www.brandons.sh/projects/steward',
+    'https://www.brandons.sh/projects/wordy',
+    'https://www.brandons.sh/projects/cellarkeep',
+    'https://www.brandons.sh/projects/misc',
+    'https://www.brandons.sh/projects/stagepass',
   ])
 })
 
 test('root metadata declares base url, canonical, open graph and twitter card', () => {
-  expect(String(siteMetadata.metadataBase)).toBe('https://www.brandon.party/')
+  expect(String(siteMetadata.metadataBase)).toBe('https://www.brandons.sh/')
   expect(siteMetadata.alternates?.canonical).toBe('/')
   expect(siteMetadata.openGraph).toMatchObject({
     type: 'website',

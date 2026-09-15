@@ -68,7 +68,7 @@ export default function Cv() {
       <p className="border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         ~/cv
       </p>
-      <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">CV</h1>
+      <h1 className="phosphor-glow mt-5 text-balance text-4xl font-bold uppercase tracking-[-0.03em]">CV</h1>
       <p className="mt-2 text-[12px] uppercase tracking-[0.08em]">
         <span className="text-[var(--phosphor-dim)]">{'> '}</span>
         {CV.name} <span className="text-[var(--phosphor-dim)]">·</span> {CV.headline}

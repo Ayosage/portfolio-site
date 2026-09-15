@@ -21,7 +21,7 @@ export default function MiscIndex() {
         <span>~/work/misc</span>
         <EscBack />
       </p>
-      <h1 className="phosphor-glow mt-4 text-4xl font-bold uppercase tracking-tighter sm:text-6xl">
+      <h1 className="phosphor-glow mt-4 text-balance text-4xl font-bold uppercase tracking-[-0.03em] sm:text-6xl">
         {project.title}
       </h1>
       <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-[var(--phosphor-dim)]">

@@ -39,7 +39,7 @@ export function HardwareSwitch(props: {
       aria-checked={on}
       aria-label={props.label}
       onClick={flip}
-      className="tog -my-[11px] py-[11px] text-[10px] tracking-widest"
+      className="tog press -my-[11px] py-[11px] text-[10px] tracking-widest"
     >
       {props.shortLabel ? (
         <>

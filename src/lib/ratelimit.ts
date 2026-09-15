@@ -31,3 +31,9 @@ export function createLimiter(cfg: { perKey: Window; global: Window }) {
     },
   }
 }
+
+/** Best-effort caller identity for rate limiting: the edge-assigned client IP. */
+export function clientKeyFrom(h: { get(name: string): string | null }): string {
+  const fwd = h.get('x-forwarded-for')
+  return fwd?.split(',')[0].trim() || h.get('x-real-ip') || 'unknown'
+}
