@@ -7,7 +7,7 @@ export default function Home() {
       <p className="border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         ~/brandon-smith
       </p>
-      <h1 className="phosphor-glow mt-3.5 text-[clamp(2.2rem,min(10vw,15vh),5.6rem)] font-bold uppercase leading-[0.85] tracking-tighter">
+      <h1 className="phosphor-glow mt-3.5 text-balance text-[clamp(2.2rem,min(10vw,15vh),5.6rem)] font-bold uppercase leading-[0.85] tracking-[-0.03em]">
         Brandon {' '}
         <br />
         Smith<span aria-hidden="true" className="cursor-blink" />

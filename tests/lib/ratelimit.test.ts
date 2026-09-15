@@ -1,4 +1,4 @@
-import { createLimiter } from '@/lib/ratelimit'
+import { clientKeyFrom, createLimiter } from '@/lib/ratelimit'
 
 const t0 = 1_700_000_000_000
 const make = () =>
@@ -35,4 +35,17 @@ test('refused attempts do not consume budget', () => {
   for (let i = 0; i < 6; i++) lim.allow('a', t0) // 3 allowed, 3 refused
   expect(lim.allow('b', t0)).toBe(true)
   expect(lim.allow('c', t0)).toBe(true)
+})
+
+const bag = (h: Record<string, string>) => ({ get: (n: string) => h[n] ?? null })
+
+test('client key is the first hop of x-forwarded-for', () => {
+  expect(clientKeyFrom(bag({ 'x-forwarded-for': '9.9.9.9, 10.0.0.1' }))).toBe('9.9.9.9')
+})
+test('client key falls back to x-real-ip, then to a shared bucket', () => {
+  expect(clientKeyFrom(bag({ 'x-real-ip': '8.8.8.8' }))).toBe('8.8.8.8')
+  expect(clientKeyFrom(bag({}))).toBe('unknown')
+})
+test('an empty x-forwarded-for does not become the key', () => {
+  expect(clientKeyFrom(bag({ 'x-forwarded-for': '', 'x-real-ip': '8.8.8.8' }))).toBe('8.8.8.8')
 })

@@ -3,7 +3,7 @@ import { headers } from 'next/headers'
 import { validatePing } from '@/lib/contact'
 import { deliverPing } from '@/lib/mail'
 import { checkTrap } from '@/lib/guard'
-import { createLimiter } from '@/lib/ratelimit'
+import { clientKeyFrom, createLimiter } from '@/lib/ratelimit'
 
 export type PingState = { status: 'idle' | 'sent' | 'error'; error?: string }
 
@@ -15,9 +15,7 @@ const limiter = createLimiter({
 })
 
 async function clientKey(): Promise<string> {
-  const h = await headers()
-  const fwd = h.get('x-forwarded-for')
-  return fwd?.split(',')[0].trim() || h.get('x-real-ip') || 'unknown'
+  return clientKeyFrom(await headers())
 }
 
 export async function sendPing(_prev: PingState, formData: FormData): Promise<PingState> {

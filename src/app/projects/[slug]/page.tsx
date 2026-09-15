@@ -55,7 +55,7 @@ export default async function CaseStudy({
         <span>~/work/{project.slug}</span>
         <EscBack />
       </p>
-      <h1 className="phosphor-glow mt-4 text-4xl font-bold uppercase tracking-tighter sm:text-6xl">
+      <h1 className="phosphor-glow mt-4 text-balance text-4xl font-bold uppercase tracking-[-0.03em] sm:text-6xl">
         {project.title}
       </h1>
       {project.links && project.links.length > 0 && (

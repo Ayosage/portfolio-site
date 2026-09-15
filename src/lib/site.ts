@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 // Canonical host. Vercel redirects the apex to www; everything we emit
 // (canonical, sitemap, Open Graph url) must agree with that.
-export const SITE_URL = 'https://www.brandon.party'
+export const SITE_URL = 'https://www.brandons.sh'
 
 export const SITE_NAME = 'Brandon Smith ▪ BS-01 Field Terminal'
 export const SITE_DESCRIPTION =

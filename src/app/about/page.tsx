@@ -44,7 +44,7 @@ export default function About() {
       <p className="border-b border-[var(--hairline)] pb-2 text-[11px] text-[var(--phosphor-dim)]">
         ~/about
       </p>
-      <h1 className="phosphor-glow mt-5 text-4xl font-bold uppercase tracking-tighter">About</h1>
+      <h1 className="phosphor-glow mt-5 text-balance text-4xl font-bold uppercase tracking-[-0.03em]">About</h1>
       <div className="prose-body mt-4 max-w-[60ch] text-sm leading-relaxed">
         <p>
           I&apos;m a full-stack engineer in Philadelphia. I work at JPMorgan Chase on
@@ -56,7 +56,7 @@ export default function About() {
       </div>
 
       <div className="mt-7 max-w-[560px] border border-[var(--hairline)]">
-        <table aria-label="spec sheet" className="w-full border-collapse text-[11px]">
+        <table aria-label="spec sheet" className="w-full border-collapse text-[11px] tabular-nums">
           <caption className="px-2 py-1 text-left text-[10px] tracking-[0.06em] text-[var(--phosphor-dim)]">
             SPEC SHEET
           </caption>
